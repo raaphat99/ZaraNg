@@ -1,0 +1,346 @@
+.header {
+    display: grid;
+    grid-template-columns: 135.587px 289.9px 289.913px 405.888px 289.9px;
+    padding: 20px 16px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    column-gap: 35px;
+    align-items: start;
+    transition: all 0.5s linear;
+}
+.header:hover{
+    background-color: rgb(255, 255, 255,0.9);
+}
+.menu-btn {
+    box-sizing: border-box;
+    background-color: #fff;
+    display: flex;
+    border: 0px none rgb(0, 0, 0);
+    cursor: pointer;
+    height: 20px;
+    width: 30px;
+}
+
+.logo-section {
+    grid-area: 1 / 2;
+    height: 109px;
+    transition: height 0.5s linear;
+}
+
+.LogoLink, .Search-bar, .LinkContainer ,.Shopping{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 11px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    transition: all 0.5s ease, margin-left 0.5s ease-in-out;
+}
+
+.LogoSVG {
+    height: 100%;
+    max-width: 100%;
+    transition: height 0.5s linear;
+}
+.search-bar-Container { 
+    transition: right 0.5s linear;
+    grid-area: 1 / 4;
+    margin-top: 8px;
+
+}
+
+.Search {
+    background-color: #fff;
+    color: #000;
+    border: 0.8px solid #000;
+    height: 30px;
+    padding-right: 24px;
+    display: flex;
+    justify-content: flex-end;
+    width: 400px;
+    font-size: 11px;
+    cursor: pointer;
+    align-items: center;
+    text-decoration: none solid rgb(0, 0, 0);
+    
+}
+.user-actions {
+    grid-column: 5/ 6; 
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    gap: 15px; 
+    font-size: 10px;
+    white-space: nowrap;
+    margin-right: 40px; 
+}
+.style-10 {
+    list-style:  none;
+    border: 0 none rgb(0, 0, 0);
+    text-transform: uppercase;
+    display: none; 
+    position: absolute; 
+    right: 65px; 
+    transition: all 0.5s ease; 
+}
+.style-13 {
+    box-sizing: border-box;
+    fill: rgb(0, 0, 0);
+    height: 20px;
+    width: 25px;
+    font-size: 12px;
+}
+.style-17,.style-16{
+    box-sizing: border-box;
+    height: 50px;
+    width: 25px;
+    font-size: 12px;
+    text-decoration: none;
+    color: black;
+}
+
+
+/* Media queries for smooth resizing and moving logo to the left */
+@media (max-width: 1400px) {
+    .header {
+        grid-template-columns: 100px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 90px;
+    }
+    .LogoSVG {
+        height: 90px;
+    }
+    .Search{
+        width: 400px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 1350px) {
+    .header {
+        grid-template-columns: 90px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 87px;
+    }
+    .LogoSVG {
+        height: 87px;
+    }
+    .Search{
+        width: 400px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .header {
+        grid-template-columns: 80px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 84px;
+    }
+    .LogoSVG {
+        height: 84px;
+    }
+    .Search{
+        width: 400px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 1250px) {
+    .header {
+        grid-template-columns: 70px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 80px;
+    }
+    .LogoSVG {
+        height: 80px;
+    }
+    .Search{
+        width: 400px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .header {
+        grid-template-columns: 60px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 77px;
+    }
+    .LogoSVG {
+        height: 77px;
+    }
+    .Search{
+        width: 300px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 1150px) {
+    .header {
+        grid-template-columns: 50px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 74px;
+    }
+    .LogoSVG {
+        height: 74px;
+    }
+    .Search{
+        width: 300px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .header {
+        grid-template-columns: 40px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 70px;
+    }
+    .LogoSVG {
+        height: 70px;
+    }
+    .Search{
+        width: 280px;
+    height: 30px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .header {
+        grid-template-columns: 30px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 67px;
+    }
+    .LogoSVG {
+        height: 67px;
+    }
+    .Search{
+        width: 250px;
+    height: 30px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .header {
+        grid-template-columns: 20px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 64px;
+    }
+    .LogoSVG {
+        height: 64px;
+    }
+    .Search{
+        width: 260px;
+    height: 30px;
+    }
+}
+
+@media (max-width: 950px) {
+    .header {
+        grid-template-columns: 40px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 60px;
+    }
+    .LogoSVG {
+        height: 60px;
+    }
+    .Search{
+        width: 260px;
+    height: 30px;
+    }
+}
+
+@media (max-width: 900px) {
+    .header {
+        grid-template-columns: 45px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 57px;
+    }
+    .LogoSVG {
+        height: 57px;
+    }
+    .Search{
+        width: 240px;
+    height: 30px;
+    }
+}
+
+@media (max-width: 850px) {
+    .header {
+        grid-template-columns: 35px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 55px;
+    }
+    .LogoSVG {
+        height: 55px;
+    }
+    .Search{
+        width: 240px;
+    height: 30px;
+    }
+}
+
+@media (max-width: 800px) {
+    .header {
+        grid-template-columns: 15px 1fr 1fr 1fr 1fr;
+    }
+    .logo-section {
+        height: 55px;
+    }
+    .LogoSVG {
+        height: 55px;
+    }
+    .Search{
+        width: 240px;
+    height: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        grid-template-columns: 25px 289.9px 289.913px 405.888px 289.9px; 
+    }
+    .logo-section {
+        height: 109px;
+    }
+    .LogoSVG {
+        height: 109px;
+    }.user-actions,.search-bar-Container{
+        display: none;
+    }
+    .style-10 {
+        display: flex; 
+        
+    }
+  
+}
+
+@media (min-width: 1401px) {
+    .header {
+        grid-template-columns: 100px 289.9px 289.913px 405.888px 289.9px;
+    }
+    .logo-section {
+        height: 100px;
+    }
+    .LogoSVG {
+        height: 100px;
+    }
+}
