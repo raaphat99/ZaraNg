@@ -1,0 +1,77 @@
+<div class="find-size-modal" [class.show]="isOpen">
+  <div class="find-size-modal-content">
+    <button class="close-btn" (click)="closeModal()">×</button>
+    <header class="notifications-header">
+      <h1 >NOTIFICATIONS</h1>
+      <p class="subheader">
+        Stay updated with your account and order activity.
+      </p>
+      <hr />
+    </header>
+    <div class="notification-list" >
+      <!-- Check if the notifications list is empty -->
+      <div *ngIf="notifications.length === 0" class="empty-notifications">
+        <div aria-hidden="true">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="inherit"
+            stroke="inherit"
+            class="styleSvgNotif"
+          >
+            <path
+              d="m3.146 3.854 25 25 .708-.707-25-25-.708.707ZM27.5 7.7v16.547l1 1V6.7H9.953l1 1H27.5ZM3.5 6.753V25.3h18.547l-1-1H4.5V7.753l-1-1Z"
+            ></path>
+            <path
+              d="m14.953 11.7-1-1H24v1h-9.047ZM19.753 16.5l-1-1H24v1h-4.247ZM12.8 20.3h4.247l1 1H12.8v-1ZM24 20.747l-.447-.447H24v.447ZM7.8 16.8a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM7.8 21.6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+            ></path>
+          </svg>
+        </div>
+        <span class="Tesxt1">No notifications</span>
+        <p class="style-9">
+          <span class="Text2"
+            >Here you can find information about new collections and other
+            announcements.</span
+          >
+        </p>
+      </div>
+
+      <div
+        class="notification-card"
+        *ngFor="let notification of notifications"
+        [class.read]="notification.read"
+      >
+        <div class="notification-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            style="padding-right: 10px; margin-top: 10px"
+            height="16"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="#000"
+              d="M12 2a6 6 0 00-6 6v5.585l-1.707 1.707A1 1 0 005 17h14a1 1 0 00.707-1.707L18 13.585V8a6 6 0 00-6-6zm0 16c-1.654 0-3 1.346-3 3h6c0-1.654-1.346-3-3-3z"
+            />
+          </svg>
+        </div>
+        <div class="notification-content">
+          <h2 >{{ notification.title }}</h2>
+          <p>{{ notification.message }}</p>
+          <span class="notification-date">{{ notification.date | date }}</span>
+        </div>
+        <button
+          class="action-button"
+          *ngIf="!notification.read"
+          (click)="markAsRead(notification)"
+        >
+          Mark as Read
+        </button>
+      </div>
+      
+    </div>
+  </div>
+</div>

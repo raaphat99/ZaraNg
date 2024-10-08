@@ -88,11 +88,9 @@
         </a>
       </li>
       <li class="ItemLI">
-        <a
-          class="LinkStyle"
-          data-qa-id="my-account-notifications"
-          [routerLink]="['/Notifications']"
-                  >
+                  <a class="LinkStyle" data-qa-id="my-account-notifications"
+                  style="cursor: pointer;" (click)="Notifications.openModal($event)">
+
           <div class="ContainerText"><span class="Text">Notifications</span>
           </div>
 
@@ -214,11 +212,10 @@
     </a>
   </li>
   <li class="ItemLI">
-    <a
-      class="LinkStyle"
-      data-qa-id="my-account-notifications"
-      [routerLink]="['/Notifications']"
-    >
+ 
+    <a class="LinkStyle" data-qa-id="my-account-notifications"
+    style="cursor: pointer;" (click)="Notifications.openModal($event)">
+
       <div class="ContainerText">
         <span class="Text">Notifications</span>
       </div>
@@ -243,5 +240,4 @@
     </a>
   </li>
 </ul>
-
-
+<app-notification #Notifications></app-notification>
