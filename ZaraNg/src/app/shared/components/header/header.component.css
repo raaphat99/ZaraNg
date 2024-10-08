@@ -35,6 +35,7 @@
     justify-content: flex-start;
     text-decoration: none;
     color: rgb(0, 0, 0);
+    font-family: inherit;
     font-size: 11px;
     line-height: 16px;
     text-transform: uppercase;
@@ -57,6 +58,7 @@
 .Search {
     background-color: #fff;
     color: #000;
+    font-family: inherit;
     border: 0.8px solid #000;
     height: 30px;
     padding-right: 24px;
@@ -102,6 +104,7 @@
     font-size: 12px;
     text-decoration: none;
     color: black;
+    font-family: inherit;
 }
 
 
@@ -236,13 +239,14 @@
 
 @media (max-width: 1000px) {
     .header {
-        grid-template-columns: 20px 1fr 1fr 1fr 1fr;
+        grid-template-columns: 50px 1fr 1fr 1fr 1fr;
     }
     .logo-section {
         height: 64px;
     }
     .LogoSVG {
         height: 64px;
+        max-width:200px ;
     }
     .Search{
         width: 260px;
@@ -259,6 +263,7 @@
     }
     .LogoSVG {
         height: 60px;
+        max-width:180px ;
     }
     .Search{
         width: 260px;
@@ -275,6 +280,7 @@
     }
     .LogoSVG {
         height: 57px;
+        max-width:160px ;
     }
     .Search{
         width: 240px;
@@ -291,6 +297,7 @@
     }
     .LogoSVG {
         height: 55px;
+        max-width:140px ;
     }
     .Search{
         width: 240px;
@@ -303,10 +310,11 @@
         grid-template-columns: 15px 1fr 1fr 1fr 1fr;
     }
     .logo-section {
-        height: 55px;
+        height: 50px;
     }
     .LogoSVG {
-        height: 55px;
+        height: 50px;
+        max-width:120px ;
     }
     .Search{
         width: 240px;
@@ -323,6 +331,8 @@
     }
     .LogoSVG {
         height: 109px;
+        max-width:100% ;
+
     }.user-actions,.search-bar-Container{
         display: none;
     }
