@@ -1,0 +1,204 @@
+.grid-container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 33.33% 1fr; 
+}
+
+.column-1 {
+    padding: 2em;
+}
+
+.column-2 {
+    display: none;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 14px;
+    font-weight: 540;
+    margin-bottom: 1.3em;
+}
+
+p {
+    margin: 0;
+}
+
+.receive-location,
+.order-summary {
+    border: 1px solid black;
+}
+
+.receive-location {
+    margin-bottom: 2.5em;
+}
+
+.row-1 {
+    display: flex;
+    width: 100%;
+}
+
+#home,
+#store,
+#drop-point {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    min-height: 80px;
+    font-size: 10px;
+}
+
+#home,
+#store {
+    border-right: 1px solid black;
+}
+
+#user-address {
+    border-top: 1px solid black;
+    padding: 1em;
+}
+
+#user-address p {
+    font-size: 11px;
+}
+
+#user-address a {
+    font-size: 10px;
+    text-decoration: underline;
+    color: inherit;
+    cursor: pointer;
+    outline: none;
+}
+
+#user-address a:hover,
+#user-address a:focus,
+#user-address a:active {
+    outline: none;
+}
+
+.order-summary #title {
+    padding: 1em;
+    font-size: 12px;
+}
+
+.image-gallery {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    /* Change the cursor to grab */
+    cursor: grab;
+    /* Prevent text/image selection during dragging */
+    user-select: none;
+}
+
+.image-gallery:active {
+    cursor: grabbing;
+}
+
+.image-container {
+    display: flex;
+    margin: 0;
+    max-width: 100%;
+}
+
+.image-container img {
+    /* Allows images to grow and fill the space equally */
+    flex-grow: 1;
+    /* Allows images to shrink when necessary */
+    flex-shrink: 1;
+    flex-basis: 122px;
+    /* Ensures images don’t grow beyond their container */
+    max-width: 100%;
+    height: auto;
+    /* Makes sure the images cover the container evenly */
+    object-fit: cover;
+    border: 1px solid black;
+    border-right: none;
+    border-bottom: none;
+}
+
+.image-gallery img:first-child {
+    border-left: none;
+}
+
+/* width */
+.image-gallery::-webkit-scrollbar {
+    height: 1.5px;
+}
+
+/* Track */
+.image-gallery::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.image-gallery::-webkit-scrollbar-thumb {
+    background: black;
+}
+
+/* Handle on hover */
+.image-gallery::-webkit-scrollbar-thumb:hover {
+    background: gray;
+}
+
+.shipping-details {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.shipping-details-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5em;
+    font-size: 11px;
+    color: black;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+}
+
+.radio-group input[type="radio"] {
+    margin: 0px;
+    margin-right: 0.5em;
+}
+
+.shipping-details p {
+    margin-bottom: 1em;
+    font-size: 10px;
+    text-transform: none;
+}
+
+.shipping-details span {
+    color: #666;
+    font-size: 10px;
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* One column layout on small screens */
+    }
+
+    .column-1 {
+        grid-column: span 1; /* Span the full width */
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1040px) {
+    .grid-container {
+        grid-template-columns: 50% 1fr; /* First column takes 50% on medium screens */
+    }
+}

@@ -1,0 +1,54 @@
+.not-found-container {
+    background-image: url('/assets/images/background-images/not-found.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found-body {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(241, 241, 241);
+    padding: 1em;
+    width: 80%;
+    opacity: 80%;
+}
+
+.not-found-body h1,
+.not-found-body a {
+    color: black;
+    text-transform: uppercase;
+}
+
+.not-found-body h1 {
+    font-size: 14px;
+}
+
+.not-found-body p {
+    color: rgb(60, 60, 60);
+    font-size: 12px;
+    margin-bottom: 5em;
+}
+
+.not-found-body a {
+    border: 1px solid black;
+    display: inline-block;
+    width: fit-content;
+    padding: 1em;
+    font-size: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.not-found-body a:hover {
+    color: gray
+}
+
+@media (max-width: 992px) {
+    .not-found-body p {
+        margin: 1.5em 0;
+    }
+}
