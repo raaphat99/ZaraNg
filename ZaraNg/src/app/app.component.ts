@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
 import { HeaderComponent } from './shared/components/header/header.component';
 import { CartComponent } from "./features/shopping/cart/cart.component";
 import { WishlistComponent } from "./features/shopping/wishlist/wishlist.component";
@@ -7,6 +8,7 @@ import { WishlistComponent } from "./features/shopping/wishlist/wishlist.compone
 @Component({
   selector: 'app-root',
   standalone: true,
+
   imports: [RouterOutlet, HeaderComponent, CartComponent, WishlistComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
