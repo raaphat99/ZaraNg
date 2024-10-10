@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
+import { ZaraStoreModalComponent } from "../zara-store-modal/zara-store-modal.component";
 
 @Component({
   selector: 'app-shipping-method-selection',
   standalone: true,
-  imports: [AddressModalComponent],
+  imports: [AddressModalComponent, ZaraStoreModalComponent],
   templateUrl: './shipping-method-selection.component.html',
   styleUrl: './shipping-method-selection.component.css',
 })
@@ -15,12 +16,6 @@ export class ShippingMethodSelectionComponent implements OnInit {
   scrollLeft = 0;
   velocity = 0;
   animationFrame: any;
-  isAddressModalActive = false;
-
-  openModal(event: MouseEvent) {
-    event.preventDefault();
-    this.isAddressModalActive = true;
-  }
 
   constructor(private renderer: Renderer2) {}
 
