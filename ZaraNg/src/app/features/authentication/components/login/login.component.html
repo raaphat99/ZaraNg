@@ -1,0 +1,151 @@
+<div id="container">
+  <div class="login">
+    <p>LOG IN TO YOUR ACCOUNT</p>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-inputs">
+        <div
+          class="input-unit"
+          [ngClass]="{
+            'form-instruction': getMessageType('email') === 'instruction',
+            'form-warning': getMessageType('email') === 'warning'
+          }"
+        >
+          <input
+            class="form-input"
+            type="text"
+            name="email"
+            [(ngModel)]="user.email"
+            placeholder=" "
+            required
+            (focus)="onFocus('email')"
+            (blur)="onBlur('email')"
+          />
+          <label
+            for="email"
+            [class.float]="user.email || focusedFields['email']"
+            >E-MAIL</label
+          >
+        </div>
+        <div
+          class="form-message"
+          *ngIf="getMessageType('email')"
+          [ngClass]="{
+            'form-instruction': getMessageType('email') === 'instruction',
+            'form-warning': getMessageType('email') === 'warning'
+          }"
+        >
+          <svg
+            class="form-message__icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+            ></path>
+          </svg>
+          <span>{{ getMessage("email") }}</span>
+        </div>
+      </div>
+
+      <div class="form-inputs">
+        <div
+          class="input-unit"
+          [ngClass]="{
+            'form-instruction': getMessageType('password') === 'instruction',
+            'form-warning': getMessageType('password') === 'warning'
+          }"
+        >
+          <input
+            class="form-input"
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="user.password"
+            placeholder=" "
+            required
+            (focus)="onFocus('password')"
+            (blur)="onBlur('password')"
+          />
+          <label
+            for="password"
+            [class.float]="user.password || focusedFields['password']"
+            >PASSWORD</label
+          >
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+          >
+            <svg
+              *ngIf="!showPassword"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#292727"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg
+              *ngIf="showPassword"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#292727"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+              ></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          </button>
+        </div>
+        <div
+          class="form-message"
+          *ngIf="getMessageType('password')"
+          [ngClass]="{
+            'form-instruction': getMessageType('password') === 'instruction',
+            'form-warning': getMessageType('password') === 'warning'
+          }"
+        >
+          <svg
+            class="form-message__icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+            ></path>
+          </svg>
+          <span>{{ getMessage("password") }}</span>
+        </div>
+      </div>
+
+      <app-button type="submit" myClass="btn-login" text="LOG IN"></app-button>
+    </form>
+    <a href="">Have you forgotten your password?</a>
+  </div>
+  <div class="register">
+    <p>NEED AN ACCOUNT?</p>
+    <app-button myClass="btn-register" text="REGISTER"></app-button>
+  </div>
+</div>
