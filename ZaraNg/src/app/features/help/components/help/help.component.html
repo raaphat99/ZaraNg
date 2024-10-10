@@ -1,0 +1,110 @@
+<div class="firstdiv" style="background-image: url('img4.jpg'); "></div>
+<div class="grid-container">
+    <div class="header">Frequently Asked Questions</div>
+    <button class="grid-item" id="fbtn">HOW TO RETURN</button>
+    <button class="grid-item" id="sbtn">ITEMS AVAILABILITY</button>
+    <button class="grid-item" id="tbtn">ORDER STATUS</button>
+    <button class="grid-item" id="ffbtn">REFUNDS</button>
+    <button class="grid-item" id="fobtn">RETRIEVE MY STORE RECEIPT</button>
+</div>
+
+
+<div class="grid-container1">
+    <div class=" header1">
+        <p>All help topics</p>
+    </div> 
+    <div class="grid-item1" id="div1" [ngStyle]="{ 'height': itemHeight1+'px' }">
+        <div class="grid-row "><p class="pdtopp">MY ZARA ACCOUNT</p></div>
+        <div class="grid-row"><a href="https://www.zara.com/eg/en/help-center/RegisterAndLogin" class="pdtopp">REGISTRATION AND LOG IN</a></div>
+        <div class="grid-row" ><a href="https://www.zara.com/eg/en/help-center/ProfileManagement" class="pdtop">MANAGING MY PROFILE</a></div>
+        <div class="grid-row" ><a href="https://www.zara.com/eg/en/help-center/Wishlist" class="pdtop">MY FAVOURITES</a></div>
+    
+        <div class="grid-row" *ngIf="isVisible1">
+            <a href="https://www.zara.com/eg/en/help-center/MyZaraQR" class="pdtop">MY ZARA QR CODE</a>
+        </div>
+    
+        <div class="grid-row">
+            <a (click)="toggleView(1)" class="pdtopp" style=" text-decoration: underline;">
+                {{ isVisible1 ? 'View less' : 'View more' }}
+            </a>
+        </div>
+    </div>
+    <div class="grid-item1" id="div2"  [ngStyle]="{ 'height': itemHeight1+'px' }">
+        <div class="grid-row"><p class="pdtopp">ITEMS AND SIZES</p></div>
+        <div class="grid-row" ><a  class="pdtopp">ITEMS AVAILABILITY</a></div>
+        <div class="grid-row" ><a  class="pdtop">WHAT’S MY SIZE?</a></div> 
+        <div class="grid-row"><a  class="pdtop">COMPOSITION AND CARE</a></div>
+       
+        <div class="grid-row" *ngIf="isVisible2" >
+            <a class="pdtop">ITEMS WARRANTY</a>
+        </div>
+        <div class="grid-row" *ngIf="isVisible2">
+            <a  class="pdtop">PRICING POLICY</a>
+        </div>
+        <div class="grid-row" *ngIf="isVisible2" >
+            <a  class="pdtop">WITHDRAWN ITEMS</a>
+        </div>
+      
+        <div class="grid-row"> <a (click)="toggleView(2)" class="pdtopp" style=" text-decoration: underline;">
+            {{ isVisible2 ? 'View less' : 'View more' }}
+        </a>
+    </div>
+    </div>  
+ <div class="grid-item1" id="div3"  [ngStyle]="{ 'height': itemHeight1+'px' }">
+        <div class="grid-row"><p class="pdtopp">SHIPPING</p></div>
+        <div class="grid-row" ><a  class="pdtopp">SHIPPING METHODS, TIMES AND<br> COSTS</a></div>
+        <div class="grid-row" ><a  class="pdtop">ORDERS IN SEVERAL SHIPMENTS</a></div>
+        <div class="grid-row" ><a  class="pdtop">WHERE DO WE SHIP?</a></div>
+    </div>  
+<div class="grid-item1" id="div4"  [ngStyle]="{ 'height': itemHeight1+'px' }">
+    <div class="grid-row"><p class="pdtopp">PAYMENTS AND INVOICES</p></div>
+    <div class="grid-row" ><a  class="pdtopp">PAYMENT METHODS</a></div>
+    <div class="grid-row" ><a  class="pdtop">PAYMENT SECURITY</a></div>
+    <div class="grid-row" ><a  class="pdtop">INVOICES</a></div>
+</div>  
+<div class="grid-item1" id="div5"  [ngStyle]="{ 'height': itemHeight2+'px' }">
+    <div class="grid-row"><p class="pdtopp">MY PURCHASES</p></div>
+    <div class="grid-row" ><a  class="pdtop">ONLINE SHOPPING</a></div>
+    <div class="grid-row" ><a  class="pdtop">ORDER STATUS</a></div>
+    <div class="grid-row" ><a  class="pdtop">CHANGE OR CANCEL AN ONLINE<br> ORDER</a></div>
+    <div class="grid-row" *ngIf="isVisible3" >
+        <a  class="pdtop">ISSUES WITH MY ORDER</a>
+    </div>
+    <div class="grid-row" *ngIf="isVisible3">
+        <a  class="pdtop">IN-STORE PURCHASES</a>
+    </div>
+    <div class="grid-row" *ngIf="isVisible3" >
+        <a  class="pdtop">RETRIEVE MY STORE RECEIPT</a>
+    </div>
+    <div class="grid-row" *ngIf="isVisible3" >
+        <a  class="pdtop">ONLINE PURCHASE FROM A STORE <br> DEVICE
+        </a>
+    </div>
+    <div class="grid-row"> <a (click)="toggleView(3)" style="padding-top: 20px; text-decoration: underline;">
+        {{ isVisible3 ? 'View less' : 'View more' }}
+    </a>
+    </div>
+</div>  
+<div class="grid-item1" id="div6" [ngStyle]="{ 'height': itemHeight2+'px' }">
+    <div class="grid-row"><p class="pdtopp" >EXCHANGES, RETURNS <br> AND REFUNDS</p></div>
+    <div class="grid-row" ><a  class="pdtop" >HOW TO RETURN</a></div>
+    <div class="grid-row" ><a  class="pdtop" >HOW TO EXCHANGE</a></div>
+    <div class="grid-row" ><a  class="pdtop" >REFUNDS</a></div>
+    <div class="grid-row" *ngIf="isVisible4" >
+        <a  class="pdtop">SPECIAL RETURN CONDITIONS </a>
+    </div>
+    <div class="grid-row"> <a (click)="toggleView(4)" class="pdtopp" style=" text-decoration: underline;">
+        {{ isVisible4 ? 'View less' : 'View more' }}
+    </a>
+    </div>
+</div> 
+<div class="grid-item1" id="div7" [ngStyle]="{ 'height': itemHeight2+'px' }">
+    <div class="grid-row"><p class="pdtopp">ZARA EXPERIENCES</p></div>
+    <div class="grid-row" ><a  class="pdtopp">OUR USED CLOTHING DONATION 
+        <br>PROGRAMME</a></div>
+    <div class="grid-row" ><a  class="pdtop">STORE MODE IN THE APP</a></div>
+    <div class="grid-row" ><a  class="pdtop">NEWSLETTER</a></div>
+</div>  
+
+</div>
+
