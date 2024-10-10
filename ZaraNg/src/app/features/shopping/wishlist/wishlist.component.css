@@ -1,0 +1,337 @@
+* {
+    line-height: 16px;
+    letter-spacing: .1px;
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    color: #000;
+    box-sizing: border-box;
+}
+
+nav {
+    display: grid;
+    grid-template-columns: 5fr 5fr;
+    /* margin: 0 auto; */
+    /* padding: 3px; */
+    border-bottom: 0.8px solid black;
+    width: 100%;  
+    margin-top: 10px; 
+    top: 0;
+}
+.nav-icons {
+display: grid;
+grid-template-columns: 1fr 1fr;
+
+}
+.nav-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    height: 30px;
+    
+}
+.icon {
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+.bold {
+    font-weight: bold;
+  }
+.user-name {
+    font-size: 12px;
+    color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-right: 20px; 
+    text-transform: uppercase; 
+    height: 45px;
+}
+#userName{
+    margin-left: 20px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    letter-spacing: .7px;
+}
+#shoppingBagIcon{
+    margin-bottom: 20px;
+    height: 24px;
+    width: 24px;
+}
+
+.content , .content1 {
+    /* margin-top: 40px; */
+    text-align: center;
+    width: 100%;
+    display: flex;
+}
+.message {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    margin-top: 70px;
+    justify-content:flex-start;
+    align-items: flex-start;
+    text-align: left;
+    margin-left: 180px ;
+}
+#shoppingBagBtn{
+    border-top: 0.8px solid #000;
+    border-right: 0.8px solid #000;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 160px;
+
+}
+#favoritesBtn{
+    border-top: 0.8px solid #000;
+    border-right: 0.8px solid #000;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 160px;
+    padding: 8px 8px ;
+}
+#shoppingBagContent{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+.product-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;        
+}
+.product-card {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 0.8px solid #e5e5e5;
+    /* padding: 20px 0; */
+    /* max-width: 300px; */
+    /* margin: 0 auto; */    
+    width: 16.66%;
+}
+.product-image {
+    width: 100%;
+    height: 100%;
+    background-color: #f5f5f5;
+    /* margin-bottom: 20px; */
+    border: 0.8px solid black;
+    border-bottom: 0px;
+    border-top: 0px;
+    border-left: 0px;
+    
+}
+.product-details {
+    width: 100%;
+    border: 0.8px solid black;
+    text-align: left;
+    border-left: 0px;
+}
+.product-name {
+    margin-left: 8px;
+    font-size: 11px;
+    color: #666;
+    white-space: nowrap;
+}
+.product-info {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 5px;
+    margin-left: 8px;
+}
+.product-price {
+    margin-left: 8px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    color: #666;
+}
+.Addbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Make the button span the full width */
+    margin-top: 10px; /* Space above the button */
+}
+
+.Addbtn button {
+    background-color: white; 
+    border: .8px solid black; 
+    color: black; 
+    font-size: 11px; 
+    padding: 10px 20px; 
+    text-transform: uppercase; 
+    cursor: pointer;
+    transition: all 0.3s ease; 
+    width: 100%; 
+    font-weight: 400; 
+    border-left: 0px;
+    border-right:0px;
+}
+
+.Addbtn button:hover {
+    color: #a6a6a6; 
+    border: 1px solid black; 
+}
+svg {
+    width: 15px;
+    height: 15px;
+}
+.fav{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+  .nameX{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 7px;
+    /* margin-right: 20px; */
+  }
+
+.wishlist-icon{
+  cursor: pointer;
+  height:15px;
+  width: 15px;
+  margin-right: 10px;
+}
+.deletion-message , .addedToW-message{
+    background-color: black; /* Dark background */
+    color: white; /* White text */
+    padding: 12px 20px; /* Comfortable padding */
+    display: flex; /* Flexbox for alignment */
+    justify-content: space-between; /* Space between text and button */
+    align-items: center; /* Center items vertically */
+    margin: 10px 0; /* Space above and below */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    font-size: 11px; /* Adjust font size */
+    animation: slideInLeft 0.5s ease;
+    position: fixed; /* Fix to specific location */
+    bottom: 20px; /* Position at bottom */
+    left: 30px; /* Position on left side */
+    z-index: 999; /* Ensure it's on top of other elements */
+    width: 350px; /* Allow flexibility in width */
+    height: 40px;
+    white-space: nowrap;
+}
+
+.deletion-message button , .addedToW-message button{
+    background: none; /* No background */
+    border: none; /* No border */
+    color: #e5e5e5; /* White text */
+    cursor: pointer; /* Pointer cursor */
+    font-size: 12px; /* Ensure font size matches */
+}
+  
+.deletion-message button:hover  , .addedToW-message button:hover {
+    opacity: 0.7; /* Slight fade on hover */
+}
+
+#deletionMessage , #addedToWMessage{
+    margin-right: 85px;
+    background-color: black;
+    color: white;
+    font-size: 11px;
+}
+
+@keyframes slideInLeft {
+    0% {
+      transform: translateX(-100%); /* Start off-screen to the left */
+      opacity: 0; /* Start fully transparent */
+    }
+    100% {
+      transform: translateX(0); /* End at the final position */
+      opacity: 1; /* End fully visible */
+    }
+  }
+
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 1024px) {
+    nav {
+        grid-template-columns: 1fr;
+    }
+
+    .message {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .product-card {
+        width: 50%;
+    }
+
+    .deletion-message {
+        bottom: 110px;
+        left: 30px;
+        width: 350px;
+        height: 50px;
+        padding: 10px 15px;
+        white-space: nowrap;
+        
+    }
+
+    .product-name, .product-price, .product-info {
+        font-size: 10px;
+    }
+
+    .quantity-btn {
+        padding: 5.5px 9px;
+    }
+    .checkout-footer {
+        height: 75px; 
+        justify-content: space-between;
+      }
+    
+      .terms-acceptance {
+
+        margin-left: 20px; 
+        font-size: 8px; 
+        white-space: normal;
+        text-align: left; 
+      }
+    
+      .total-section {
+        padding-right: 10px; 
+        text-align: right; 
+        margin-right: 10px; 
+      }
+    
+      .total-label, .total-amount {
+        font-size: 10px; 
+        margin-right: 5px; 
+      }
+    
+      .continue-button {
+        width: 160px; 
+        height: 75px; 
+        font-size: 10px; 
+      }
+    
+      .total-row {
+        justify-content: space-between; 
+        align-items: center; 
+      }
+    
+      .total-label, .total-amount {
+        margin-right: 10px;
+      }
+    }
+
+
+

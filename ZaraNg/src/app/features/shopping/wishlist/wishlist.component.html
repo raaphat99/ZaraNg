@@ -1,0 +1,71 @@
+
+    <div class="container">
+        <nav>
+            <div class="nav-icons">
+              <button id="shoppingBagBtn" class="nav-icon">
+                  SHOPPING BAG ({{ cartItemsCount }})
+              </button>
+              <button id="favoritesBtn" class="nav-icon" (click)="toggleFavorite()">
+                <div class="fav">
+                  <div [ngClass]="{ 'bold': isFavoriteActive }">
+                    FAVOURITES
+                  </div>
+                        <svg id="favIconheader" preserveAspectRatio="xMidYMid slice" width="24" heigth="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"></path></svg>
+                     </div>
+                </button>
+            </div>
+        </nav>
+        <nav class="user-name">
+            <div id="userName">
+               Ahmed'S List 
+            </div>
+        </nav>
+        <div class="content">
+            <div class="content1">
+             <!-- Show 'Your Basket is Empty' message when cart is empty -->
+                <div *ngIf="isCartEmpty()" id="shoppingBagMessage" class="message">
+                    <svg id="shoppingBagIcon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.708 5a2.5 2.5 0 0 1 4.584 0H9.708zM8.645 5a3.502 3.502 0 0 1 6.71 0H19v15H5V5h3.645zM6 6v13h12V6H6z"></path></svg>
+                    <p>YOUR BASKET IS EMPTY</p>
+                    <p>The items you add will be shown here</p>
+                  </div>
+
+                <div *ngIf="!isCartEmpty()" id="shoppingBagContent">
+                    <div class="product-container">
+                    <div class="product-card" *ngFor="let product of wishlistItems; let i = index">
+                        <div class="product-image">
+                            <!-- Replace with actual product image -->
+                            <img [src]="product.img" alt="Product Image" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <div class="product-details">
+                            <div class="nameX">
+                            <div class="product-name">{{product.name}}</div>
+                            <div class="svgbtns">
+                                <svg class="wishlist-icon" preserveAspectRatio="xMidYMid slice" width="24" heigth="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 15.238L17 20V4H7v16l5-4.762z"></path></svg>
+                        </div>
+                        </div>
+                            <div class="product-price">{{product.price}} EGP</div>
+                            <div class="product-info">{{product.size}} </div>
+                            <div class="Addbtn">
+                                <button (click)="addToCart(product)">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let product of wishlistItems; let i = index">
+                  <div *ngIf="addedToCart" class="addedToW-message">
+                    <span id="addedToWMessage">Size {{product.size}} added to your sjopping bag</span>
+                    <button (click)="onContinue()">VIEW</button>
+                  </div>
+                </div>
+            </div>
+            <div id="favoritesMessage" class="message" style="display: none;" onclick="onFavorite()">
+                <p>You don't have any favorites yet.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
