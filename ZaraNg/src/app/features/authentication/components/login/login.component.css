@@ -1,0 +1,222 @@
+
+* {
+    box-sizing: border-box;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    line-height: 16px;
+    letter-spacing: 0.8px;
+}
+
+p{
+    font-size: 1.5rem;
+    margin-bottom: 60px;
+    font-weight: lighter;
+    color: rgb(53, 49, 49);
+}
+svg{
+    width: 20px;
+    height: 15px;
+    margin-right: 5px;
+    margin-top: 5px;
+    display: inline-block;
+}
+#container {
+    margin-top:40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%
+}
+.login {
+
+    display: flex;
+    height: 600px;
+    flex:1;
+    flex-direction: column;
+    margin:auto;
+    margin-left: 210px;
+}
+.register {
+    display: flex;
+    height: 600px;
+    flex:1;
+    flex-direction: column;
+    margin:auto;
+   margin-left: 50px;
+}
+.register p{
+    margin-bottom: 20px;
+
+}
+span{
+    
+      color: rgb(51, 50, 50);
+      font-size: .7rem;
+}
+a{
+    color:gray;
+    width: 60%;
+    font-size: .8rem;
+    text-decoration: none;
+    margin-top: 25px;
+}
+a:hover{
+    text-decoration: none;
+}
+.form-input:focus{
+    
+  border-bottom: 1px solid rgb(51, 50, 50);
+    
+  outline: none;
+}
+.form-inputs{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input-unit {
+    position: relative;
+    width: 60%;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    height: 30px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgb(51, 50, 50);
+    margin-bottom: 5px;
+    outline: none;
+    padding: 0;
+    font-size: .9rem;
+    background-color: transparent;
+    padding: 0 30px 0 0;
+}
+.form-input::placeholder {
+    color: transparent; 
+}
+
+.input-unit label {
+    
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        color: black;
+        font-size: .7rem;
+        transition: all 0.3s ease;
+        pointer-events: none; 
+    
+}
+.form-input:focus + label,
+.form-input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: .6rem;
+    color: rgb(51, 50, 50);
+    transform: translateY(-100%);
+}
+
+
+.form-message {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  font-size: 0.8rem;
+}
+
+.form-message__icon {
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
+}
+
+.form-instruction {
+  color: black;
+}
+
+.form-instruction .form-message__icon {
+  fill: black;
+}
+
+.form-warning {
+  color: #ff0000;
+}
+.form-warning .form-input{
+  border-color: #ff0000;
+  
+}
+.form-warning span{
+  color: #ff0000;
+}
+
+.form-warning .form-message__icon {
+  fill: #ff0000;
+}
+
+.btn{
+    border: 1px solid rgb(88, 88, 88);
+    color: white;
+    
+    padding: 10px 20px;
+    
+    cursor: pointer;
+    font-size: .9rem;
+    margin-top: 30px;
+   }
+.password-toggle {
+    position: absolute;
+    right: 0;
+    
+    margin-right: 30px;
+    top:50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+.input-unit {
+  flex: 1;
+  padding-right: 40px; 
+  }
+  .password-toggle svg {
+    width: 15px;
+    height: 15px;
+  }
+  @media screen and (max-width: 1024px) {
+    p{
+      font-size: 1.2rem;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    #container{
+      margin-top: 200px;
+        flex-direction: column;
+        transition: all 2s ease;
+    }
+    .register,
+    .login {
+        margin-left: 150px;
+        transition: all 2s ease;
+    }
+    @media screen and (max-width: 480px) {
+        #container{
+            flex-direction: column;
+            transition: all 2s ease;
+        }
+        .register,
+        .login {
+            width: 100%;
+            margin-left: 50px;
+            transition: all 2s ease;
+            
+        }
+    }
+   
+  }
