@@ -1,7 +1,7 @@
 <div class="PostionContainer">
     <ul class="ListContainer">
       <li class="ItemLI">
-        <a class="LinkStyle" data-qa-id="my-account-orders" [routerLink]="['/purchases']">
+          <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'purchases']">
           <div class="ContainerText">
             <span class="Text">Purchases</span>
           </div>
@@ -23,7 +23,8 @@
         </a>
       </li>
       <li class="ItemLI">
-        <a class="LinkStyle" data-qa-id="my-account-returns" [routerLink]="['/Returns']">
+          <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'Returns']">
+
           <div class="ContainerText">
             <span class="Text">Returns</span>
           </div>
@@ -46,7 +47,7 @@
         </a>
       </li>
       <li class="ItemLI">
-        <a class="LinkStyle" data-qa-id="my-account-wishlist" [routerLink]="['/wishlist']">
+          <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'wishlist']">
           <div class="FavouritesStyle">
             <div class="ContainerText">
             <span class="Text">Favourites</span>
@@ -112,7 +113,7 @@
         </a>
       </li>
       <li class="ItemLI">
-        <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/Wallet']">
+        <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'wallet']">
           <div class="ContainerText">
             <span class="Text">Payment methods</span>
           </div>
@@ -135,7 +136,7 @@
         </a>
       </li>
       <li class="ItemLI">
-        <a class="LinkStyle" data-qa-id="my-account-profile"[routerLink]="['/Profile']">
+        <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'Profile']">
           <div class="ContainerText">
             <span class="Text">Profile</span>
           </div>
@@ -160,22 +161,14 @@
 
 <ul class="styleListResponsive">
   <li class="ItemLI">
-    <a
-      class="LinkStyle"
-      data-qa-id="my-account-orders"
-      [routerLink]="['/purchases']"
-    >
+    <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'purchases']">
       <div class="ContainerText">
         <span class="Text">Purchases</span>
       </div>
     </a>
   </li>
   <li class="ItemLI">
-    <a
-      class="LinkStyle"
-      data-qa-id="my-account-returns"
-      [routerLink]="['/Returns']"
-    >
+    <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'Returns']">
       <div class="ContainerText">
         <span class="Text">Returns</span>
       </div>
@@ -222,11 +215,8 @@
     </a>
   </li>
   <li class="ItemLI">
-    <a
-      class="LinkStyle"
-      data-qa-id="my-account-wallet"
-      [routerLink]="['/Wallet']"
-    >
+      <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'wallet']">
+
       <div class="ContainerText">
         <span class="Text">Payment methods</span>
       </div>

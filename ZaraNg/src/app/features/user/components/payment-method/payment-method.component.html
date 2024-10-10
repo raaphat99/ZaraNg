@@ -1,0 +1,71 @@
+<div class="payment-methods">
+  <div class="fullTextCon">
+    <h1 class="TextPay">Payment Methods</h1>
+  </div>
+
+  <!-- No Payment Methods Available -->
+  <div *ngIf="paymentMethods.length === 0">
+    <div class="FullContainer">
+      <div class="SubContainer">
+        <div class="ContainerEmptyPayment">
+          <div aria-hidden="true">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="styleSVG"
+            >
+              <path
+                d="m3.146 3.854 25 25 .708-.707-25-25-.708.707ZM27.5 7.7v16.547l1 1V6.7H9.953l1 1H27.5ZM3.5 6.753V25.3h18.547l-1-1H4.5V7.753l-1-1Z"
+              ></path>
+              <path
+                d="m14.953 11.7-1-1H24v1h-9.047ZM19.753 16.5l-1-1H24v1h-4.247ZM12.8 20.3h4.247l1 1H12.8v-1ZM24 20.747l-.447-.447H24v.447ZM7.8 16.8a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM7.8 21.6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+              ></path>
+            </svg>
+          </div>
+          <div class="ContainerText">
+            <span class="TextStyle">
+              When you finalize an order, you can save your payment details to
+              make your next purchases quicker and easier. This saves having to
+              enter your card information again for other orders.
+            </span>
+            <br class="style-330" />
+            <span class="TextStyle">
+              In this section you can consult and change your list of credit
+              cards at any time.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display Payment Methods -->
+  <div *ngIf="paymentMethods.length > 0" class="payment-method-list">
+    <div class="payment-method-card" *ngFor="let method of paymentMethods">
+      <img [src]="method.icon" class="payment-icon" alt="{{ method.name }}" />
+
+      <div class="payment-details">
+        <p class="card-holder">Card Holder: {{ method.cardHolder }}</p>
+        <p class="last-4-digits">
+          Last 4 Digits: **** **** **** {{ method.last4Digits }}
+        </p>
+        <p class="expiration-date">
+          Expiration Date: {{ method.expirationDate }}
+        </p>
+        <button class="delete-button" (click)="confirmDelete(method)">Delete</button>
+      
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Confirmation Message -->
+ <div *ngIf="showDeleteConfirmation" class="confirmation-message">
+  <p>Are you sure you want to delete the payment method for {{ cardHolderNameToDelete }}?</p>
+  <button id="yesBTN" (click)="deletePaymentMethod()">Yes</button>
+  <button  id="NObtn"(click)="cancelDelete()">No</button>
+</div>
+
