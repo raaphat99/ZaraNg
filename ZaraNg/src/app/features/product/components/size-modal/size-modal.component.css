@@ -1,0 +1,119 @@
+.find-size-modal {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    border-left: 1px solid black;
+    background-color: white;
+    transition: right 0.3s ease;
+    z-index: 1000;
+
+    &.show {
+        right: 0;
+    }
+}
+
+.find-size-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: black;
+    margin-bottom: 1em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+}
+
+input,
+select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+}
+
+input[type="text"] {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6em 0;
+    color: inherit;
+    border: none;
+    outline: none;
+    font-size: inherit;
+    border-bottom: 1px solid lightgray;
+}
+
+select {
+    font-family: Helvetica, sans-serif;
+    width: 100%;
+    padding: 10px; 
+    border: 1px solid black;
+    border-radius: 0;
+    background-color: white;
+    color: black; 
+    font-size: 12px;
+    text-align: center;
+    appearance: none;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none; 
+}
+
+option {
+    text-align: center;
+    padding: 10px;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.close-btn {
+    font-size: 2rem;
+    text-align: right;
+    margin-bottom: 0.5em;
+}
+
+.modal-btn {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 1em;
+    margin: 0.5em 0;
+}
+
+.modal-btn:hover {
+    opacity: 70%;
+}
+
+
+@media (max-width: 768px) {
+    .modal {
+        width: 100%;
+        right: -100%;
+    }
+
+    .modal.show {
+        right: 0;
+    }
+}

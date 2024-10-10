@@ -1,0 +1,68 @@
+<div class="modal-overlay" [class.active]="isZaraStoreModalOpen" (click)="toggleModal($event)">
+    <div class="modal" [class.active]="isZaraStoreModalOpen" (click)="$event.stopPropagation()">
+        <div class="modal-content">
+
+            <div class="header">
+                <span class="close-btn" (click)="toggleModal($event)"><svg width="24" height="24" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit"
+                        style="box-sizing:border-box;fill:rgb(0, 0, 0);">
+                        <path
+                            d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"
+                            style="box-sizing:border-box;"></path>
+                    </svg></span>
+                <h2>Search for and select the zara store</h2>
+            </div>
+
+            <div class="search-container">
+                <div class="alert-info">
+                    Some stores may be temporarily unavailable
+                </div>
+
+                <div class="search-group">
+                    <form [formGroup]="searchForm">
+                        <input type="text" formControlName="searchQuery" placeholder="Enter location"
+                            class="search-input">
+                        <button class="search-button" (click)="searchStores()">Search</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="store-list-container">
+                <h3>LIST</h3>
+
+                <div *ngIf="stores.length > 0" class="store-item-wrapper">
+                    <ul>
+                        <li *ngFor="let store of stores">
+                            <div class="store-location">
+                                <input type="radio" name="" id="">
+                                <label for="">{{searchQuery}}</label>
+                            </div>
+                            <p class="store-address">{{store.address}}</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div *ngIf="stores.length === 0 && searchQuery" class="not-found">
+                    <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="inherit"
+                        stroke="inherit">
+                        <path
+                            d="m3.146 3.854 25 25 .708-.707-25-25-.708.707ZM27.5 7.7v16.547l1 1V6.7H9.953l1 1H27.5ZM3.5 6.753V25.3h18.547l-1-1H4.5V7.753l-1-1Z">
+                        </path>
+                        <path
+                            d="m14.953 11.7-1-1H24v1h-9.047ZM19.753 16.5l-1-1H24v1h-4.247ZM12.8 20.3h4.247l1 1H12.8v-1ZM24 20.747l-.447-.447H24v.447ZM7.8 16.8a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM7.8 21.6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z">
+                        </path>
+                    </svg>
+                    <p>No results were found near '{{ searchQuery }}'.</p>
+                    <p class="not-found-message">Check that the search criteria are correct and include the name of the
+                        town or city.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="save-btn">Save</button>
+        </div>
+    </div>
+</div>
