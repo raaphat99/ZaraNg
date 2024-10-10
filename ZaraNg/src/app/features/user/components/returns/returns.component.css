@@ -1,0 +1,125 @@
+.FullContainer {
+  column-gap: 20px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-rows: auto;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(2, auto);
+  margin: 150px 178px;
+  padding: 20px 0px 0px;
+  max-width: 1180px;
+  box-sizing: border-box;
+}
+.subContainer {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.TextContainer {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  width: 100%;
+}
+.Text {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-stretch: 100%;
+  font-weight: 300;
+  font-family: inherit;
+  color: black;
+}
+
+.Btn {
+  display: flex;
+  gap: 12px;
+  grid-area: span 2 / 2 / -1;
+  place-self: end;
+  box-sizing: border-box;
+}
+
+.BtnReturn {
+  white-space: nowrap;
+  box-sizing: border-box;
+  border: 0.8px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 16px;
+  padding: 0px 12px;
+  background: rgb(255, 255, 255) none repeat scroll 0% 0% / auto padding-box
+    border-box;
+  display: block;
+  font-stretch: 100%;
+  font-weight: 300;
+  height: 40px;
+  letter-spacing: 0.8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+.BtnConText {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 11px;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 38.4px;
+  justify-content: center;
+  width: 100%;
+}
+
+.textBtn {
+  box-sizing: border-box;
+  border: 0px none rgb(0, 0, 0);
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: Neue-Helvetica, Helvetica, Arial, "sans-serif";
+  font-optical-sizing: auto;
+  font-size-adjust: none;
+  font-kerning: auto;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-size: 11px;
+  margin: 0px;
+  padding: 0px;
+  vertical-align: baseline;
+}
+.BodyCont {
+  padding-left: 178px;
+  width: calc((calc((1180px - (20px * 11)) / 12) * 12) + (20px * 11));
+  --grid-block-column-width: calc((1180px - (20px * 11)) / 12);
+  display: inline-block;
+}
+.TextBody {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 11px;
+  margin: 16px 0px 0px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+@media (max-width: 768px) {
+   
+    .FullContainer{
+        margin-left: 80px;
+    }
+  }

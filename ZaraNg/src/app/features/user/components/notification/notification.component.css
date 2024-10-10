@@ -1,7 +1,7 @@
 .find-size-modal {
   position: fixed;
   top: 0;
-  right: -600px;
+  right: -700px;
   width: 600px;
   height: 100vh;
   border-left: 0.8px solid black;
@@ -41,22 +41,27 @@ button {
 }
 
 .notifications-header h1 {
-  font-size: 20px;
-  color: #000;
-  line-height: 16px;
   letter-spacing: 0.4px;
   font-family: inherit;
+  font-size: 14px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+    color: black;
 }
 
 .notifications-header .subheader {
-  font-size: 14px;
-  color: #000;
-  line-height: 16px;
   letter-spacing: 0.4px;
   font-family: inherit;
-  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+    color: black;
 }
 
 hr {
@@ -106,20 +111,27 @@ hr {
 }
 
 .notification-content h2 {
-  font-size: 14px;
-  color: #000;
-  text-transform: uppercase;
-  font-family: inherit;
-  line-height: 16px;
   letter-spacing: 0.4px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+    color: black;
 }
 
 .notification-content p {
-  font-size: 14px;
-  font-family: inherit;
-  color: #000;
-  line-height: 16px;
   letter-spacing: 0.4px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+    color: black;
 }
 
 .notification-date {
@@ -155,9 +167,15 @@ hr {
 
 .empty-notifications {
   text-align: left;
-  color: #000;
+  letter-spacing: 0.4px;
   font-family: inherit;
+  font-size: 11px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+    color: black;
   margin: 100px 0;
 }
 .styleSvgNotif {
@@ -165,24 +183,33 @@ hr {
   fill: rgb(0, 0, 0);
 }
 .Tesxt1 {
-  line-height: 16px;
+  letter-spacing: 0.4px;
   font-family: inherit;
   font-size: 11px;
-  color: #000;
-  letter-spacing: 0.4px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+    color: black;
 }
 
 .Text2 {
-  color: #000;
-  line-height: 18px;
   font-family: inherit;
   font-size: 11px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+    color: black; 
 }
 
 @media (max-width: 768px) {
     .find-size-modal {
         width: 100%;
         height: 100vh;
+        right: -800px;
     }
   .notification-card {
     flex-direction: column;
