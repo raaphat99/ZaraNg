@@ -1,24 +1,22 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent } from "../../../../shared/components/button/button.component";
+import { FormsModule } from '@angular/forms';
 @Component({
-  selector: 'app-register',
+  selector: 'app-change-email',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonComponent],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  imports: [CommonModule, FormsModule],
+  templateUrl: './change-email.component.html',
+  styleUrl: './change-email.component.css'
 })
-export class RegisterComponent {
-  user: RegisterForm = {
-    email: '',
-    password: '',
-    name: '',
-    surname: '',
-  }
+export class ChangeEmailComponent {
 
+  currentEmail: string = 'm_sh8004@yahoo.com';
+  user:changeEmailForm  = { newEmail: '', password: '' };
+ 
+  showPassword: boolean = false;
   focusedFields: { [key: string]: boolean } = {};
+
+  
   touchedFields: { [key: string]: boolean } = {};
 
   onFocus(field: string) {
@@ -47,12 +45,7 @@ export class RegisterComponent {
       case 'email':
         return 'Enter your email address';
       case 'password':
-        return `Password should be at least 8 characters long with at least one uppercase letter, 
-        one lowercase letter and one special character`; 
-        case 'name':
-        return 'Enter your first name';
-        case 'surname':
-        return 'Enter your surnames as they appear in your identity ';
+        return 'Enter your password'; 
       default:
         return 'Enter ' + field;
     }
@@ -88,15 +81,17 @@ export class RegisterComponent {
     }
     return '';
   }
-
   onSubmit() {
-    
+    if (this.user.newEmail && this.user.password) {
+      console.log('Login form submitted', { email: this.user.newEmail, password: this.user.password });
+    }
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
-interface RegisterForm{
-  email: string;
+interface changeEmailForm {
+  newEmail: string;
   password: string;
-  name: string;
-  surname: string;
   [key: string]: string;
 }

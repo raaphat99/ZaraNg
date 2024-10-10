@@ -1,24 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent } from "../../../../shared/components/button/button.component";
+import { FormsModule } from '@angular/forms';
 @Component({
-  selector: 'app-register',
+  selector: 'app-change-password',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonComponent],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  imports: [CommonModule,FormsModule],
+  templateUrl: './change-password.component.html',
+  styleUrl: './change-password.component.css'
 })
-export class RegisterComponent {
-  user: RegisterForm = {
-    email: '',
-    password: '',
-    name: '',
-    surname: '',
-  }
+export class ChangePasswordComponent {
 
+  user:changeEmailForm  = { newEmail: '', password: '' };
+ 
+  showPassword: boolean = false;
   focusedFields: { [key: string]: boolean } = {};
+
+  
   touchedFields: { [key: string]: boolean } = {};
 
   onFocus(field: string) {
@@ -32,9 +29,9 @@ export class RegisterComponent {
 
   getErrorMessage(field: string): string {
     switch (field) {
-      case 'email':
+      case 'currentpassword':
         return 'Field is required';
-      case 'password':
+      case 'newpassword':
         return 'field is required';
     
       default:
@@ -44,15 +41,10 @@ export class RegisterComponent {
 
   getInstructionMessage(field: string): string {
     switch (field) {
-      case 'email':
-        return 'Enter your email address';
-      case 'password':
-        return `Password should be at least 8 characters long with at least one uppercase letter, 
-        one lowercase letter and one special character`; 
-        case 'name':
-        return 'Enter your first name';
-        case 'surname':
-        return 'Enter your surnames as they appear in your identity ';
+      case 'currentpassword':
+        return 'Enter your current password';
+      case 'newpassword':
+        return 'Password should be at least 8 characters long with at least one uppercase letter,one lowercase letter and one special character '; 
       default:
         return 'Enter ' + field;
     }
@@ -88,15 +80,19 @@ export class RegisterComponent {
     }
     return '';
   }
-
   onSubmit() {
-    
+    if (this.user.newEmail && this.user.password) {
+      console.log('Login form submitted', { email: this.user.newEmail, password: this.user.password });
+    }
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
-interface RegisterForm{
-  email: string;
+interface changeEmailForm {
+  newEmail: string;
   password: string;
-  name: string;
-  surname: string;
   [key: string]: string;
 }
+
+

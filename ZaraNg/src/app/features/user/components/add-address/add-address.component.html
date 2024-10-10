@@ -1,0 +1,171 @@
+<div id="container">
+  <div class="address-form">
+    <p>NEW ADDRESS</p>
+    <form method="get" (ngSubmit)="onSubmit()">
+      <div class="section-1">
+        <div class="form-inputs">
+          <div class="input-unit" [ngClass]="{'form-instruction': getMessageType('name') === 'instruction', 'form-warning': getMessageType('name') === 'warning'}">
+            <input class="form-input" type="text" name="name" [(ngModel)]="address.name" 
+                   placeholder=" " required
+                   (focus)="onFocus('name')" (blur)="onBlur('name')">
+            <label for="name" [class.float]="address.name || focusedFields['name']">NAME</label>
+          </div>
+          <div class="form-message" 
+               *ngIf="getMessageType('name')"
+               [ngClass]="{'form-instruction': getMessageType('name') === 'instruction', 'form-warning': getMessageType('name') === 'warning'}">
+            <svg class="form-message__icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"></path>
+            </svg>
+            <span>{{ getMessage('name') }}</span>
+          </div>
+        </div>
+        <div class="form-inputs">
+          <div class="input-unit" [ngClass]="{'form-instruction': getMessageType('  .form-warning .form-input{
+            border-color: #ff0000;
+            
+          }
+          .form-warning span{
+            color: #ff0000;
+          }') === 'instruction', 'form-warning': getMessageType('surname') === 'warning'}">
+            <input class="form-input" type="text" name="surname" [(ngModel)]="address.surname" 
+                   placeholder=" " required
+                   (focus)="onFocus('surname')" (blur)="onBlur('surname')">
+            <label for="surname" [class.float]="address.surname || focusedFields['surname']">SURNAME</label>
+          </div>
+          <div class="form-message" 
+               *ngIf="getMessageType('surname')"
+               [ngClass]="{'form-instruction': getMessageType('surname') === 'instruction', 'form-warning': getMessageType('surname') === 'warning'}">
+            <svg class="form-message__icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"></path>
+            </svg>
+            <span>{{ getMessage('surname') }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="section-2">
+        <div class="form-inputs">
+          <div class="input-unit" [ngClass]="{'form-instruction': getMessageType('street') === 'instruction', 'form-warning': getMessageType('street') === 'warning'}">
+            <input class="form-input" type="text" name="street" [(ngModel)]="address.street" 
+                   placeholder=" " required
+                   (focus)="onFocus('street')" (blur)="onBlur('street')">
+            <label for="street" [class.float]="address.street || focusedFields['street']">ADDRESS</label>
+          </div>
+          <div class="form-message" 
+               *ngIf="getMessageType('street')"
+               [ngClass]="{'form-instruction': getMessageType('street') === 'instruction', 'form-warning': getMessageType('street') === 'warning'}">
+            <svg class="form-message__icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"></path>
+            </svg>
+            <span>{{ getMessage('street') }}</span>
+          </div>
+        </div>
+        <div class="form-inputs">
+          <div class="input-unit" [ngClass]="{'form-instruction': getMessageType('moreInfo') === 'instruction', 'form-warning': getMessageType('moreInfo') === 'warning'}">
+            <input class="form-input optional" type="text" name="moreInfo" [(ngModel)]="address.moreInfo" 
+                   placeholder="OPTIONAL" 
+                   (focus)="onFocus('moreInfo')" (blur)="onBlur('moreInfo')">
+            <label for="moreInfo" [class.float]="address.moreInfo || focusedFields['moreInfo']">MORE INFO</label>
+          </div>
+          <div class="form-message" 
+               *ngIf="getMessageType('moreInfo')"
+               [ngClass]="{'form-instruction': getMessageType('moreInfo') === 'instruction', 'form-warning': getMessageType('moreInfo') === 'warning'}">
+            <svg class="form-message__icon optional" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"></path>
+            </svg>
+            <span class="optional">{{ getMessage('moreInfo') }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="section-3">
+        <div class="form-inputs">
+          <div class="input-unit" [ngClass]="{'form-instruction': getMessageType('governorate') === 'instruction', 'form-warning': getMessageType('governorate') === 'warning'}">
+            <select class="menu form-input" name="governorate" [(ngModel)]="address.governorate" 
+                    (ngModelChange)="onGovernorateChange()"
+                    placeholder=" " required
+                    (focus)="onFocus('governorate')" (blur)="onBlur('governorate')">
+              <option value="">Select a governorate</option>
+              <option *ngFor="let item of governorates" [value]="item.governorate_name_en">
+                {{item.governorate_name_en}}
+              </option>
+            </select>
+            <label for="governorate" [class.float]="address.governorate || focusedFields['governorate']">GOVERNORATE</label>
+          </div>
+          <div class="form-message" 
+               *ngIf="getMessageType('governorate')"
+               [ngClass]="{'form-instruction': getMessageType('governorate') === 'instruction', 'form-warning': getMessageType('governorate') === 'warning'}">
+            <svg class="form-message__icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"></path>
+            </svg>
+            <span>{{ getMessage('governorate') }}</span>
+          </div>
+        </div>
+        <div class="form-inputs">
+          <div class="input-unit" [ngClass]="{'form-instruction': getMessageType('city') === 'instruction', 'form-warning': getMessageType('city') === 'warning'}">
+            <select class="menu form-input" name="city" [(ngModel)]="address.city" 
+                    placeholder=" " required
+                    (focus)="onFocus('city')" (blur)="onBlur('city')"
+                    [disabled]="!address.governorate">
+              <option value="">Select a city</option>
+              <option *ngFor="let item of filteredCities" [value]="item.city_name_en">
+                {{item.city_name_en}}
+              </option>
+            </select>
+            <label for="city" [class.float]="address.city || focusedFields['city']">CITY</label>
+          </div>
+          <div class="form-message" 
+               *ngIf="getMessageType('city')"
+               [ngClass]="{'form-instruction': getMessageType('city') === 'instruction', 'form-warning': getMessageType('city') === 'warning'}">
+            <svg class="form-message__icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"></path>
+            </svg>
+            <span>{{ getMessage('city') }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-inputs" style="display: flex; justify-content: flex-start; flex-direction: row;">
+        <div style="width: 20%;">
+          <div class="input-unit phonePrefix" [ngClass]="{'form-instruction': getMessageType('phonePrefix') === 'instruction', 'form-warning': getMessageType('phonePrefix') === 'warning'}">
+            <input maxlength="3" class="form-input" type="text" name="phonePrefix" [(ngModel)]="address.phonePrefix" 
+                   placeholder=" " required
+                   (focus)="onFocus('phonePrefix')" (blur)="onBlur('phonePrefix')">
+            <label for="phonePrefix" [class.float]="address.phonePrefix || focusedFields['phonePrefix']">PREFIX</label>
+          </div>
+          <div class="form-message" 
+               *ngIf="getMessageType('phonePrefix')"
+               [ngClass]="{'form-instruction': getMessageType('phonePrefix') === 'instruction', 'form-warning': getMessageType('phonePrefix') === 'warning'}">
+            <svg class="form-message__icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"></path>
+            </svg>
+            <span>{{ getMessage('phonePrefix') }}</span>
+          </div>
+        </div>
+        <div style="width: 65%;">
+          <div class="input-unit phoneNumber" [ngClass]="{'form-instruction': getMessageType('phoneNumber') === 'instruction', 'form-warning': getMessageType('phoneNumber') === 'warning'}">
+            <input class="form-input" type="tel" name="phoneNumber" [(ngModel)]="address.phoneNumber" 
+                   placeholder=" " required
+                   (focus)="onFocus('phoneNumber')" (blur)="onBlur('phoneNumber')">
+            <label for="phoneNumber" [class.float]="address.phoneNumber || focusedFields['phoneNumber']">PHONE NUMBER</label>
+          </div>
+          <div class="form-message" 
+               *ngIf="getMessageType('phoneNumber')"
+               [ngClass]="{'form-instruction': getMessageType('phoneNumber') === 'instruction', 'form-warning': getMessageType('phoneNumber') === 'warning'}">
+            <svg class="form-message__icon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"></path>
+            </svg>
+            <span>{{ getMessage('phoneNumber') }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-submit">
+        <input type="submit" class="btn-address" value="SAVE">
+
+
+
