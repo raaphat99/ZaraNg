@@ -5,6 +5,10 @@ import { HomeComponent } from './features/home/components/home/home.component';
 
 export const routes: Routes = [
 
+    {path: 'home', component: HomeComponent},
+
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+
     {
         path: 'user',
         loadChildren: () => import('./features/user/user.module').then(m => m.UserModule)
@@ -40,10 +44,6 @@ export const routes: Routes = [
         path: 'help',
         loadChildren: () => import('./features/help/help.module').then(m => m.HelpModule) 
     },
-
-    {path: 'home', component: HomeComponent},
-
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
 
     { path: '**', component: NotFoundComponent }
 ];
