@@ -82,8 +82,6 @@
       tabindex="0"
       ><span>HELP</span></a
     >
-    <!--Put in href link to Search page -->
-
     <!--Put in href link to Cart page -->
     <a
     [routerLink]="['/shop/cart']"
@@ -100,17 +98,17 @@
       >)
     </a>
   </div>
-  <ul class="style-10">
-    <li class="style-11" role="search" aria-label="Product search">
-        <a [routerLink]="['/search']" class="style-12" data-qa-id="home-view-action-search-link" tabindex="0">
-            <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit" class="style-13">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 3.4a7 7 0 1 0 4.53 12.337l3.616 3.617.708-.708-3.61-3.61A7 7 0 0 0 10.5 3.4zm-6 7a6 6 0 1 1 12 0 6 6 0 0 1-12 0z" class="style-14"></path>
+  <ul class="ResponsiveList">
+    <li role="search" aria-label="Product search">
+        <a [routerLink]="['/search']"  data-qa-id="home-view-action-search-link" tabindex="0">
+            <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit" class="SearchIconSVG">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5 3.4a7 7 0 1 0 4.53 12.337l3.616 3.617.708-.708-3.61-3.61A7 7 0 0 0 10.5 3.4zm-6 7a6 6 0 1 1 12 0 6 6 0 0 1-12 0z"></path>
             </svg>
         </a>
     </li>
-    <li class="style-15">
-        <a class="style-16" aria-label="Basket empty" data-qa-id="layout-header-go-to-cart" [routerLink]="['/shop/cart']" tabindex="0">
-            <span class="style-17">Shopping bag</span> (<span role="status" aria-live="polite" data-qa-id="layout-header-go-to-cart-items-count" class="style-18">0</span>)
+    <li>
+        <a class="CartLink" aria-label="Basket empty" data-qa-id="layout-header-go-to-cart" [routerLink]="['/shop/cart']" tabindex="0">
+            <span class="CartText">Shopping bag</span> (<span role="status" aria-live="polite" data-qa-id="layout-header-go-to-cart-items-count" class="style-18">0</span>)
         </a>
     </li>
 </ul>
