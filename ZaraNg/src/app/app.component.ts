@@ -9,6 +9,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { HomeComponent } from './features/home/components/home/home.component';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
     FooterComponent,
     CartComponent,
     WishlistComponent,
+    HomeComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
