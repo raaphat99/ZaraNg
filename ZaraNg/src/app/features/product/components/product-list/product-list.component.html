@@ -1,7 +1,8 @@
+<app-header></app-header>
 <div class="product-listing">
-    <product-filter></product-filter>
     <div class="product-grid">
       <product-card *ngFor="let product of products" [product]="product"></product-card>
     </div>
 </div>
+<app-footer></app-footer>
 

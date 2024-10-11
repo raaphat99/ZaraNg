@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 interface PaymentMethod {
   name: string;
   icon: string;
@@ -12,7 +14,7 @@ interface PaymentMethod {
 @Component({
   selector: 'app-payment-method',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule, HeaderComponent, FooterComponent],
   templateUrl: './payment-method.component.html',
   styleUrl: './payment-method.component.css'
 })

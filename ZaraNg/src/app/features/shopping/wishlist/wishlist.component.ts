@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent, FooterComponent],
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.css'
 })

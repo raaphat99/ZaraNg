@@ -10,10 +10,11 @@
     opacity: 0;
     pointer-events: none; /* Prevents interaction when hidden */
     transition: visibility 0s, opacity 0.5s ease;
+    z-index: 1000;
 }
 
 .modal {
-    position: relative;
+    position: fixed;
     background-color: white;
     width: 500px;
     height: 100%;
@@ -23,6 +24,7 @@
     padding: 20px 0;
     box-sizing: border-box;
     overflow-y: scroll;
+    z-index: 1000;
 }
 
 ::-webkit-scrollbar {

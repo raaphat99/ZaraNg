@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule, HeaderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -53,7 +54,7 @@ scrollToTop() {
         behavior: 'smooth' 
     });
  }
-   stopAutoScroll() {
+  stopAutoScroll() {
     clearInterval(this.scrollInterval);
   }
   ngOnDestroy() {

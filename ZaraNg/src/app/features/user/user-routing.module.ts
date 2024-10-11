@@ -5,13 +5,24 @@ import { PaymentMethodComponent } from './components/payment-method/payment-meth
 import { PurchasesComponent } from './components/purchases/purchases.component';
 import { PurchaseDetialsComponent } from './components/purchase-detials/purchase-detials.component';
 import { ReturnsComponent } from './components/returns/returns.component';
+import { UserAddressesComponent } from './components/user-addresses/user-addresses.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ChangeEmailComponent } from './components/change-email/change-email.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AddAddressComponent } from './components/add-address/add-address.component';
 
 const routes: Routes = [
   { path: '', component: UserMainComponent },
   { path: 'wallet', component: PaymentMethodComponent },   
   { path: 'purchases', component: PurchasesComponent },   
   { path: 'purchases/:id', component: PurchaseDetialsComponent },
-  { path: 'Returns', component: ReturnsComponent }
+  { path: 'returns', component: ReturnsComponent },
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'profile/:id/addresses', component: UserAddressesComponent },
+  { path: 'profile/:id/add-address', component: AddAddressComponent },
+  { path: 'profile/:id/change-email', component: ChangeEmailComponent },
+  { path: 'profile/:id/change-password', component: ChangePasswordComponent },
+
 
 
 ];

@@ -12,7 +12,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
   styleUrl: './zara-store-modal.component.css',
 })
 export class ZaraStoreModalComponent {
-  isZaraStoreModalOpen: boolean = true;
+  isZaraStoreModalOpen: boolean = false;
   stores: Store[] = [];
   searchForm = new FormGroup({
     searchQuery: new FormControl('')

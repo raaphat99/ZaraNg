@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import localeEg from '@angular/common/locales/ar-EG';
 import { CommonModule, registerLocaleData } from '@angular/common';
+import { HeaderComponent } from "../../../../shared/components/header/header.component";
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 registerLocaleData(localeEg);
 
 @Component({
   selector: 'app-purchase-detials',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './purchase-detials.component.html',
   styleUrl: './purchase-detials.component.css'
 })

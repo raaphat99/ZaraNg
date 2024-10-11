@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class ApiService {
 
-constructor(private url: string, public httpClient: HttpClient) {}
+constructor(public url: string, public httpClient: HttpClient) {}
 
     getAll() {
         return this.httpClient.get<any>(this.url);

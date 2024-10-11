@@ -1,3 +1,7 @@
+.wrapper {
+  margin-bottom: 3em;
+}
+
 .FullContainer {
   column-gap: 20px;
   display: grid;
@@ -118,7 +122,6 @@
   margin-top: 16px;
 }
 @media (max-width: 768px) {
-   
     .FullContainer{
         margin-left: 80px;
     }

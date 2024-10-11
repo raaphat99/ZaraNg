@@ -12,6 +12,7 @@ import { ProductService } from './services/product.service';
 import { HeaderComponent } from "../../shared/components/header/header.component";
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { SizeModalComponent } from './components/size-modal/size-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { SizeModalComponent } from './components/size-modal/size-modal.component
     FormsModule,
     ProductRoutingModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
 ],
   providers: [
     ProductService, 

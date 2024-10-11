@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from "../../../../shared/components/button/button.component";
+import { Router, RouterLink } from '@angular/router';
+import { HeaderComponent } from "../../../../shared/components/header/header.component";
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonComponent],
+  imports: [CommonModule, FormsModule, ButtonComponent, RouterLink, HeaderComponent, FooterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -18,6 +20,7 @@ export class LoginComponent {
 
   
   touchedFields: { [key: string]: boolean } = {};
+
 
   onFocus(field: string) {
     this.focusedFields[field] = true;

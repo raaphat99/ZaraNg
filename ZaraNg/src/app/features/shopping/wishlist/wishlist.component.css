@@ -9,6 +9,10 @@
     box-sizing: border-box;
 }
 
+.container {
+    margin-bottom: 7em;
+}
+
 nav {
     display: grid;
     grid-template-columns: 5fr 5fr;
@@ -168,6 +172,7 @@ grid-template-columns: 1fr 1fr;
 .Addbtn button {
     background-color: white; 
     border: .8px solid black; 
+    border-bottom: none;
     color: black; 
     font-size: 11px; 
     padding: 10px 20px; 

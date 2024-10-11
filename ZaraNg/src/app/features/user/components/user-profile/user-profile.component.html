@@ -1,10 +1,12 @@
+<app-header></app-header>
+
 <div id="container">
   <div id="main">
     <div class="header">
       <p>{{ userName }}</p>
     </div>
     <div class="options">
-      <a href="" class="clickable-div">
+      <a [routerLink]="['/user/profile/:id/addresses']"  class="clickable-div">
         <div class="option">
           <p>ADDRESSES</p>
           <svg
@@ -25,7 +27,7 @@
         </div>
       </a>
 
-      <a href="" class="clickable-div">
+      <a [routerLink]="['/user/profile/:id/change-email']" class="clickable-div">
         <div class="option">
           <div>
             <p>EMAIL</p>
@@ -50,7 +52,7 @@
         </div>
       </a>
 
-      <a href="" class="clickable-div">
+      <a [routerLink]="['/user/profile/:id/change-password']" class="clickable-div">
         <div class="option">
           <div>
             <p>PASSWORD</p>
@@ -96,3 +98,5 @@
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>

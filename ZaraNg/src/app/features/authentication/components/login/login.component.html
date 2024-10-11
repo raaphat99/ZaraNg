@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div id="container">
   <div class="login">
     <p>LOG IN TO YOUR ACCOUNT</p>
@@ -146,6 +148,8 @@
   </div>
   <div class="register">
     <p>NEED AN ACCOUNT?</p>
-    <app-button myClass="btn-register" text="REGISTER"></app-button>
+    <app-button myClass="btn-register" text="REGISTER" [routerLink]="['/auth/register']" ></app-button>
   </div>
 </div>
+
+<app-footer></app-footer>

@@ -9,6 +9,10 @@
     box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 nav {
     display: grid;
     grid-template-columns: 5fr 5fr;

@@ -71,6 +71,8 @@
   
   .scrollable-container {
     height: 100vh;
+    margin-top: 130px;
+    
   }
   
   .background-div {

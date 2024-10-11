@@ -6,13 +6,16 @@
 .ffdiv {
     margin-top: 190px;
     text-align: center;
-    font-size: 20px;
+    font-size: 17px;
+    font-weight: normal;
+    color: rgb(34, 34, 34);
 }
 
 .fdiv {
     display: flex;
     overflow: hidden;
     width: 670px;
+    margin: auto;
     white-space: nowrap; /* Keep buttons in a single line */
 }
 
@@ -20,25 +23,32 @@
     font-size: 11px;
     font-size: small;
     background-color: transparent;
-    color: black;
-    border: 0.8px solid black;
+    color: rgb(34, 34, 34);
+    border: 0.8px solid gray;
     cursor: pointer;
     padding: 10px;
     width: fit-content; /* Adjust width to fit content */
     margin-right: 15px; /* Small margin between buttons */
     animation: moveButtons 80s linear infinite; /* Adjust speed based on content width */
 }
+
+.fdiv button:hover {
+    color: gray;
+}
+
 .sdiv{
-    margin-top: 100px;
-    margin-left: 550px;
+    margin: 2em auto;
     width: 400px;
+    font-size: 20px;
 }
 .sdiv input {
+    font-size: 18px;
+    font-weight: normal;
     text-align: center;
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 0.8px solid black;
+    border-bottom: 0.8px solid gray;
     width: 400px;
     transition: border-bottom 0.3s ease; /* Transition effect for the border */
 }

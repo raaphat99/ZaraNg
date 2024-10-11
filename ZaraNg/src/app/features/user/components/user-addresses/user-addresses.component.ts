@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HostListener } from '@angular/core';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-user-addresses',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent, FooterComponent, RouterLink],
   templateUrl: './user-addresses.component.html',
   styleUrl: './user-addresses.component.css'
 })

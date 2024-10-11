@@ -7,7 +7,7 @@
 }
 
 p{
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin-bottom: 60px;
     font-weight: lighter;
     color: rgb(53, 49, 49);
@@ -20,44 +20,38 @@ svg{
     display: inline-block;
 }
 #container {
-    margin-top:40px;
+    margin-top:130px;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     width: 100%
 }
 .login {
-
     display: flex;
     height: 600px;
     flex:1;
     flex-direction: column;
-    margin:auto;
-    margin-left: 210px;
+    padding: 2em 4em;
 }
 .register {
     display: flex;
     height: 600px;
     flex:1;
     flex-direction: column;
-    margin:auto;
-   margin-left: 50px;
+    padding: 2em 4em;
 }
+
 .register p{
     margin-bottom: 20px;
-
 }
 span{
     
       color: rgb(51, 50, 50);
-      font-size: .7rem;
+      font-size: 0.7rem;
 }
 a{
     color:gray;
     width: 60%;
-    font-size: .8rem;
+    font-size: 0.8rem;
     text-decoration: none;
     margin-top: 25px;
 }
@@ -65,9 +59,7 @@ a:hover{
     text-decoration: none;
 }
 .form-input:focus{
-    
   border-bottom: 1px solid rgb(51, 50, 50);
-    
   outline: none;
 }
 .form-inputs{
@@ -78,7 +70,7 @@ a:hover{
 
 .input-unit {
     position: relative;
-    width: 60%;
+    width: 85%;
     margin-bottom: 5px;
 }
 
@@ -164,11 +156,11 @@ a:hover{
     cursor: pointer;
     font-size: .9rem;
     margin-top: 30px;
-   }
+}
+
 .password-toggle {
     position: absolute;
     right: 0;
-    
     margin-right: 30px;
     top:50%;
     transform: translateY(-50%);
@@ -179,44 +171,57 @@ a:hover{
     display: flex;
     align-items: center;
     justify-content: center;
-    
   }
+  
 .input-unit {
   flex: 1;
-  padding-right: 40px; 
+  padding-right: 30px; 
   }
+
   .password-toggle svg {
     width: 15px;
     height: 15px;
   }
+
   @media screen and (max-width: 1024px) {
     p{
-      font-size: 1.2rem;
+      font-size: 0.8rem;
     }
   }
+
   @media screen and (max-width: 768px) {
+
     #container{
       margin-top: 200px;
+      flex-direction: column;
+      transition: all 2s ease;
+    }
+
+    .register,
+    .login {
+        transition: all 2s ease;
+    }
+
+    .input-unit {
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #container{
         flex-direction: column;
         transition: all 2s ease;
     }
     .register,
     .login {
-        margin-left: 150px;
+        width: 100%;
+        margin: auto;
+        padding: 2em;
         transition: all 2s ease;
+        
     }
-    @media screen and (max-width: 480px) {
-        #container{
-            flex-direction: column;
-            transition: all 2s ease;
-        }
-        .register,
-        .login {
-            width: 100%;
-            margin-left: 50px;
-            transition: all 2s ease;
-            
-        }
+
+    .input-unit {
+      width: 100%;
     }
-   
-  }
+}

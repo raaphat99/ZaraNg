@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from "../../../../shared/components/header/header.component";
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.css'
 })

@@ -2,6 +2,8 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import { Component } from '@angular/core';
 import localeEg from '@angular/common/locales/ar-EG';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 
 
 interface Order {
@@ -20,7 +22,7 @@ registerLocaleData(localeEg);
 @Component({
   selector: 'app-purchases',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './purchases.component.html',
   styleUrl: './purchases.component.css'
 })

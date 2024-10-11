@@ -3,28 +3,31 @@
     font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
-#container{
-    margin-top: 150px;
-     display: flex;
+#container {
+    margin: 150px 0;
+    display: flex;
 }
-#main{
+
+#main {
     display: flex;
     flex-direction: column;
     justify-content: left;
-   
+
     height: 600px;
     width: 42%;
-    
+
     margin-left: 160px;
     margin-top: 50px;
-    padding: 10px;  
+    padding: 10px;
 }
-.options{
+
+.options {
     border: 1px solid gray;
     padding-left: 20px;
-    
+
 }
-.option{
+
+.option {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -32,71 +35,94 @@
     width: 100%;
     justify-content: space-between;
     margin: 15px 0px 15px 0px;
-    
+
 }
-.options,.header p{
+
+.options,
+.header p {
     color: rgb(78, 76, 76);
 }
-svg{
+
+svg {
     width: 20px;
     height: 20px;
-   margin-right: 20px;
+    margin-right: 20px;
 }
-.header{
+
+.header {
     margin-bottom: 20px;
 }
+
 a.clickable-div {
-    display: block; /* Makes the anchor tag behave like a block element */
-    text-decoration: none; /* Removes underline from the link */
-    color: inherit; /* Inherits text color from the parent, useful for styling */
+    display: block;
+    /* Makes the anchor tag behave like a block element */
+    text-decoration: none;
+    /* Removes underline from the link */
+    color: inherit;
+    /* Inherits text color from the parent, useful for styling */
 }
-p{
-    font-size: .94rem;
+
+p {
+    font-size: 0.8rem;
 }
+
 .user-data {
     font-size: .7rem;
 }
 
-.extras{
+.extras {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
 }
-.extra-option{
-    margin: 20px 0px 15px 0px; 
+
+.extra-option {
+    margin: 20px 0px 15px 0px;
 }
-.extras p,span,a{
+
+.extras p,
+span,
+a {
     font-size: .76rem;
     color: rgb(158, 156, 156);
 }
-.policy{
+
+.policy {
     width: 65%;
 }
+
 @media screen and (max-width: 768px) {
- 
-    #main{
-        
+
+    #main {
+
         width: 100%;
-        margin-left:0 ;
+        margin-left: 0;
         transition: all 2s ease;
     }
-    .options,.extras,.policy {
+
+    .options,
+    .extras,
+    .policy {
         width: 100%;
         transition: all 2s ease;
     }
-    .options{
+
+    .options {
         border: none;
         padding: 0;
 
     }
-    .option{
-        
+
+    .option {
+
         padding: 0;
     }
-    .clickable-div, .header{
-       
-        border-bottom: .5px  solid gray;
-        
+
+    .clickable-div,
+    .header {
+
+        border-bottom: .5px solid gray;
+
     }
- 
+
 }

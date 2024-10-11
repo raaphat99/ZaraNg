@@ -13,7 +13,7 @@
 
     <div class="wrapper">
         <div class="product-details">
-            <p id="product-name">{{product.name}}</p>
+            <p id="product-name" [routerLink]="['/products/:id']"  >{{product.name}}</p>
             <p id="product-price">{{product.price}} EGP</p>
         </div>
         <button (click)="toggleBookmark()" class="bookmark-btn">

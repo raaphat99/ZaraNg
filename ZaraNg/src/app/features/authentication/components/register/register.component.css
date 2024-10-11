@@ -5,55 +5,47 @@
     letter-spacing: 0.8px;
 }
 
-p{
-    font-size: 1.5rem;
+p {
+    font-size: 1rem;
     margin-bottom: 60px;
     font-weight: lighter;
     color: rgb(53, 49, 49);
 }
-svg{
+
+svg {
     width: 20px;
     height: 15px;
     margin-right: 5px;
     margin-top: 5px;
     display: inline-block;
 }
+
 #container {
-    margin-top: 0;
-    margin-bottom: 100px;
+    margin: 130px 0;
     display: flex;
-    flex-direction: row;    
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     width: 100%
 }
+
 .register {
-
     display: flex;
-    height: 600px;
-    
-    width: 50%;
     flex-direction: column;
-    margin:auto;
-    margin-left: 180px;
+    width: 40%;
+    padding-left: 4em;
 }
 
 
-span{
-    
+span {
     color: rgb(51, 50, 50);
-    font-size: .8rem;
-    width: 60% ;
+    font-size: .7rem;
+    width: 60%;
 }
 
-.form-input:focus{
-    
+.form-input:focus {
     border-bottom: 1px solid rgb(51, 50, 50);
-    
     outline: none;
 }
-.form-inputs{
+
+.form-inputs {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
@@ -67,7 +59,7 @@ span{
 
 .form-input {
     height: 30px;
-    width: 60%;
+    width: 100%;
     border: none;
     border-bottom: 1px solid gray;
     margin-bottom: 5px;
@@ -76,24 +68,26 @@ span{
     font-size: .9rem;
     background-color: transparent;
 }
+
 .form-input::placeholder {
-    color: transparent; 
+    color: transparent;
 }
 
 .input-unit label {
-    
-        position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        color: black;
-        font-size: .8rem;
-        transition: all 0.3s ease;
-        pointer-events: none; 
-    
+
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    color: black;
+    font-size: .8rem;
+    transition: all 0.3s ease;
+    pointer-events: none;
+
 }
-.form-input:focus + label,
-.form-input:not(:placeholder-shown) + label {
+
+.form-input:focus+label,
+.form-input:not(:placeholder-shown)+label {
     top: 0;
     font-size: .7rem;
     color: rgb(51, 50, 50);
@@ -107,175 +101,205 @@ span{
     align-items: center;
     margin-top: 5px;
     font-size: 0.8rem;
-  }
-  
-  .form-message__icon {
+}
+
+.form-message__icon {
     margin-right: 5px;
     width: 15px;
     height: 15px;
-  }
-  
-  .form-instruction {
+}
+
+.form-instruction {
     color: black;
-  }
-  
-  .form-instruction .form-message__icon {
+}
+
+.form-instruction .form-message__icon {
     fill: black;
-  }
-  
-  .form-warning {
+}
+
+.form-warning {
     color: #ff0000;
-  }
-  .form-warning .form-input{
+}
+
+.form-warning .form-input {
     border-color: #ff0000;
-    
-  }
-  .form-warning span{
+
+}
+
+.form-warning span {
     color: #ff0000;
-  }
-  .form-warning .form-message__icon {
+}
+
+.form-warning .form-message__icon {
     fill: #ff0000;
-  }
-.checkbox{
+}
+
+.checkbox {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
+
 .custom-checkbox {
     display: inline-block;
     width: 15px;
     height: 15px;
     background-color: white;
     border: 1px solid black;
-    border-radius: 0; /* Sharp angles */
+    border-radius: 0;
+    /* Sharp angles */
     margin-right: 10px;
     vertical-align: middle;
-    position: relative;  /* For positioning the checkmark */
+    position: relative;
+    /* For positioning the checkmark */
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Checkbox checked styles */
-.checkbox:checked + .custom-checkbox {
-    background-color: black;  /* Black background when checked */
-    border-color: black;      /* Keep the border black */
+.checkbox:checked+.custom-checkbox {
+    background-color: black;
+    /* Black background when checked */
+    border-color: black;
+    /* Keep the border black */
 }
 
 /* The checkmark when checked */
-.checkbox:checked + .custom-checkbox::after {
-    content: '';  /* Empty content to render a checkmark */
+.checkbox:checked+.custom-checkbox::after {
+    content: '';
+    /* Empty content to render a checkmark */
     position: absolute;
     left: 3px;
     top: 1px;
     width: 4px;
     height: 8px;
-    border: solid white;   /* White checkmark */
+    border: solid white;
+    /* White checkmark */
     border-width: 0 2px 2px 0;
-    transform: rotate(45deg);  /* Rotate to create the checkmark shape */
+    transform: rotate(45deg);
+    /* Rotate to create the checkmark shape */
 }
-.checkbox-unit{
+
+.checkbox-unit {
     display: flex;
     flex-direction: row;
     position: relative;
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 3em;
+    font-size: 6px;
 }
-.checkbox-unit label{
-   margin-left: 30px;
 
+.checkbox-unit label {
+    margin-left: 30px;
     color: rgb(32, 31, 31);
-    font-size: .8rem;
+    font-size: .7rem;
 
 }
+
 .checkbox-label a {
-    pointer-events: auto; /* Make the link clickable */
-    
+    pointer-events: auto;
+    /* Make the link clickable */
+
     text-decoration: underline;
 }
 
 .checkbox-label {
-    pointer-events: none; /* Disable the pointer events for the label itself */
+    pointer-events: none;
+    /* Disable the pointer events for the label itself */
     width: 60%;
 }
-a:visited{
+
+a:visited {
     color: rgb(32, 31, 31);
 }
+
 .checkbox-label a {
-    pointer-events: auto; /* Re-enable pointer events for the link inside the label */
+    pointer-events: auto;
+    /* Re-enable pointer events for the link inside the label */
 }
 
-  @media screen and (max-width: 768px) {
-    #container{
-        margin-top: 20px;
+@media screen and (max-width: 991px) {
+    #container {
+        margin-top: 150px;
         flex-direction: column;
         transition: all 2s ease;
+        width: 65%;
     }
-    
+
     .register {
-        margin-left: 100px;
         transition: all 2s ease;
         width: 100%;
     }
-    .checkbox-unit,.form-inputs{
+
+    .checkbox-unit,
+    .form-inputs {
         margin-bottom: 30px;
         width: 100%;
     }
-    .input-unit label{
+
+    .input-unit label {
         font-size: .6rem;
         width: 100%;
     }
-    .checkbox-label{
-        
+
+    .checkbox-label {
+
         font-size: .5rem;
     }
-    .form-input:focus + label,
-.form-input:not(:placeholder-shown) + label {
-    top: 0;
-    font-size: .5rem;
-    color: black;
-    transform: translateY(-100%);
-}
-.form-input-error {
-    
-    font-size: 0.6rem;
-   
-    
-}
+
+    .form-input:focus+label,
+    .form-input:not(:placeholder-shown)+label {
+        top: 0;
+        font-size: .5rem;
+        color: black;
+        transform: translateY(-100%);
+    }
+
+    .form-input-error {
+
+        font-size: 0.6rem;
+
+
+    }
 
 }
-    @media screen and (max-width: 480px) {
-        #container{
-            flex-direction: column;
-            transition: all 2s ease;
-        }
-        
-        .register {
-            width: 100%;
-            margin-left: 50px;
-            transition: all 2s ease;
-        }
-        .checkbox-unit{
-            margin-bottom: 30px;
-        }
-        .input-unit label{
-            font-size: .5rem;
-        }
-        .checkbox-label{
-            
-            font-size: .4rem;
-        }
-        .form-input:focus + label,
-.form-input:not(:placeholder-shown) + label {
-    top: 0;
-    font-size: .4rem;
-    color: black;
-    transform: translateY(-100%);
-}
-.form-input-error {
-    
-    font-size: 0.4rem;
-   
-    
-}
+
+@media screen and (max-width: 480px) {
+    #container {
+        margin-top: 170px;
+        flex-direction: column;
+        transition: all 2s ease;
     }
-  
+
+    .register {
+        width: 100%;
+        transition: all 2s ease;
+    }
+
+    .checkbox-unit {
+        margin-bottom: 30px;
+    }
+
+    .input-unit label {
+        font-size: .5rem;
+    }
+
+    .checkbox-label {
+
+        font-size: .4rem;
+    }
+
+    .form-input:focus+label,
+    .form-input:not(:placeholder-shown)+label {
+        top: 0;
+        font-size: .4rem;
+        color: black;
+        transform: translateY(-100%);
+    }
+
+    .form-input-error {
+
+        font-size: 0.4rem;
+
+
+    }
+}

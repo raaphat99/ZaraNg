@@ -1,41 +1,36 @@
-<div class="FullContainer">
-  <div class="subContainer">
-    <div class="TextContainer">
-      <h1 class="Text">Returns</h1>
+<app-header></app-header>
+
+<div class="wrapper">
+  <div class="FullContainer">
+    <div class="subContainer">
+      <div class="TextContainer">
+        <h1 class="Text">Returns</h1>
+      </div>
+    </div>
+
+    <div class="Btn">
+      <button class="BtnReturn" role="button" data-qa-id="create-return" fdprocessedid="gt98x9">
+        <div class="BtnConText"><span class="textBtn">PROCESS RETURN</span></div>
+      </button>
+      <button class="BtnReturn" role="button" data-qa-id="create-exchange">
+        <div class="BtnConText"><span class="textBtn">PROCESS EXCHANGE</span></div>
+      </button>
     </div>
   </div>
-  <div class="Btn">
-    <button
-      class="BtnReturn"
-      role="button"
-      data-qa-id="create-return"
-      fdprocessedid="gt98x9"
-    >
-      <div class="BtnConText"><span class="textBtn">PROCESS RETURN</span></div>
-    </button>
-    <button class="BtnReturn" role="button" data-qa-id="create-exchange">
-      <div class="BtnConText"><span class="textBtn">PROCESS EXCHANGE</span></div>
-    </button>
-  </div>
-</div>
-<div class="BodyCont">
+
+  <div class="BodyCont">
     <div aria-hidden="true">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        fill="inherit"
-        stroke="inherit"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M8.667 5.5h-.5v21h15.8v-21h-15.3zm.5 20v-19h13.8v19h-13.8zm2.433-16h-.5v1h6.2v-1h-5.7zm-.5 8h9.8v1h-9.8v-1zm.5 4h-.5v1h9.8v-1h-9.3z"
-        ></path>
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="inherit"
+        stroke="inherit">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M8.667 5.5h-.5v21h15.8v-21h-15.3zm.5 20v-19h13.8v19h-13.8zm2.433-16h-.5v1h6.2v-1h-5.7zm-.5 8h9.8v1h-9.8v-1zm.5 4h-.5v1h9.8v-1h-9.3z">
+        </path>
       </svg>
     </div>
     <div class="TextBody">
       <span>There are no active returns at this time.</span>
     </div>
+  </div>
 </div>
+
+<app-footer></app-footer>

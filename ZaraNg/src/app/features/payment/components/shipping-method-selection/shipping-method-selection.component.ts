@@ -1,11 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { ZaraStoreModalComponent } from "../zara-store-modal/zara-store-modal.component";
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-shipping-method-selection',
   standalone: true,
-  imports: [AddressModalComponent, ZaraStoreModalComponent],
+  imports: [AddressModalComponent, ZaraStoreModalComponent, HeaderComponent, FooterComponent],
   templateUrl: './shipping-method-selection.component.html',
   styleUrl: './shipping-method-selection.component.css',
 })

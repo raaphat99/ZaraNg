@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from "../../../../shared/components/button/button.component";
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonComponent, HeaderComponent, FooterComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
