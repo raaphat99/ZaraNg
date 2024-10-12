@@ -36,11 +36,25 @@
     'border': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '0.8px solid black' : 'none',
     'height': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '1px' : 'initial'
     }"></div>
-
-<div class="text-start" id="div2" *ngIf="menuVisible2" >
+    
+<div class="text-start" id="div2" *ngIf="menuVisible2">
   <ng-container *ngFor="let item of selectitem">
-    <p class="frop">{{item.name}}</p>
+    <p 
+      class="frop clickable" 
+      (click)="checkAndCallSubcat(item.name)"
+      [ngClass]="{'active': item.name === selectedCategory2}"
+    >
+      {{item.name}} 
+    </p>
+    <ul *ngIf="item.name === selectedCategory2 && subcat?.length">
+      <li *ngFor="let i of subcat">
+        {{i.name}}
+      </li>
+    </ul>
   </ng-container>
 </div>
+
+
+
 
 </div>
