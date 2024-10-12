@@ -50,8 +50,41 @@
     padding-left: 10px;
     z-index: 5000;
     cursor: pointer;
+    max-height: 350px;
+     overflow-y: auto;
+     scrollbar-width: thin; 
+     scrollbar-color: black;
+     font-weight: 300;
+     font-stretch: 100%;
+     line-height: 16px;
+     font-family: inherit;
+     font-size: 8px;
+     letter-spacing: 0.8px;
+     text-transform: uppercase;
   }
-  
+ 
+/* تخصيص عرض شريط التمرير */
+#div2::-webkit-scrollbar {
+  width: 2px; /* قم بزيادة العرض */
+}
+
+/* تخصيص مسار شريط التمرير */
+#div2::-webkit-scrollbar-track {
+  background: #000; /* لون المسار الأسود */
+  border-radius: 10px;
+}
+
+/* تخصيص مؤشر التمرير */
+#div2::-webkit-scrollbar-thumb {
+  background: #000; /* لون مؤشر التمرير الأسود */
+  border-radius: 10px;
+}
+
+/* تخصيص لون المؤشر عند التمرير عليه */
+#div2::-webkit-scrollbar-thumb:hover {
+  background: #333; /* تغيير اللون عند التمرير عليه */
+}
+
   .zara-logo {
     width: 100%;
     max-width: 300px;

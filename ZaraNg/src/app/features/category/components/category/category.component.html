@@ -1,9 +1,9 @@
 <div class="div1" 
 [ngStyle]="{
-    'background-color': (selectedCategoryId === 1 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4) && menuVisible2 ? 'white' : 'transparent',
-    'width': selectedCategoryId === 1 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '380px' : 'initial',
-    'height': selectedCategoryId === 1 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '600px' : 'initial',
-    'border':( selectedCategoryId === 1 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4)&& menuVisible2? '0.8px solid black' : 'none',
+    'background-color': (selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4) && menuVisible2 ? 'white' : 'transparent',
+    'width': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '380px' : 'initial',
+    'height': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '600px' : 'initial',
+    'border':( selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4)&& menuVisible2? '0.8px solid black' : 'none',
  }"
 >
   <svg class="zara-logo" 
@@ -17,12 +17,12 @@
   
   <ul class="ulstyle" *ngIf="menuVisible3">
     <ng-container *ngFor="let item of mainCategories">
-      <ng-container *ngIf="item.parentid === 0">
+      <ng-container *ngIf="item.parentCategoryId === null">
         <li >
           <a 
              (click)="clicked(item.id)"
              [ngStyle]="{'font-weight': item.clicked ? 'bold' : 'initial'}">
-            {{item.Name}}
+            {{item.name}} 
           </a>
         </li>
       </ng-container>
@@ -33,15 +33,14 @@
   <div style="border: 0.8 solid black; height: 1px;" 
   *ngIf="menuVisible2" 
   [ngStyle]="{
-    'border': selectedCategoryId === 1 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '0.8px solid black' : 'none',
-    'height': selectedCategoryId === 1 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '1px' : 'initial'
+    'border': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '0.8px solid black' : 'none',
+    'height': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '1px' : 'initial'
     }"></div>
 
+<div class="text-start" id="div2" *ngIf="menuVisible2" >
+  <ng-container *ngFor="let item of selectitem">
+    <p class="frop">{{item.name}}</p>
+  </ng-container>
+</div>
 
-  <div class="text-start" id="div2"   *ngIf="menuVisible2"   >
-    <p *ngIf="shouldDisplayNew()" class="secp" >/// NEW</p>
-    <ng-container *ngFor="let item of selectitem">
-      <p clas="frop" >{{item.Name}}</p>
-    </ng-container>
-  </div>
 </div>
