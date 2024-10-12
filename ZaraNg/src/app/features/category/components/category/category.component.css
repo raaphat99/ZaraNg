@@ -62,7 +62,25 @@
      letter-spacing: 0.8px;
      text-transform: uppercase;
   }
- 
+  #div2 ul {
+    list-style-type: none; /* إزالة النقاط من القائمة */
+    padding-left: 0; /* إزالة الفراغات على اليسار */
+    margin-top: 5px; /* إضافة فراغ بين الكلمة والقائمة */
+  }
+  
+  #div2 li {
+    padding: 5px 0; /* مسافة بين العناصر */
+  }
+  
+  #div2 .clickable {
+    cursor: pointer;
+  }
+
+  
+  #div2 ul li {
+    border: none; /* إزالة أي حدود إن وجدت */
+  }
+  
 /* تخصيص عرض شريط التمرير */
 #div2::-webkit-scrollbar {
   width: 2px; /* قم بزيادة العرض */

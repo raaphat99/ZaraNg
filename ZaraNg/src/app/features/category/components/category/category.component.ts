@@ -16,6 +16,7 @@ export class CategoryComponent {
   selectedCategoryId: number | null = null;
   menuVisible2: boolean = false;
   menuVisible3: boolean = true;
+   subcat:Category[]=[]
 
 
   index: number = 1;
@@ -95,10 +96,47 @@ this.categoryService.getSub().subscribe({
     }
     //console.log("selectedCategoryId"+this.selectedCategoryId);
   }
+  selectedCategory2: string | null = null; // لتخزين الفئة المختارة
 
-  
- 
+  checkAndCallSubcat(name:string){
+    this.selectedCategory2 = name;  // تخزين الفئة المختارة
+    this.categoryService.url='';
+    console.log("his.categoryService.url"+this.categoryService.url)
+    console.log(name);
+    if(name==="WOMAN"){
+      this.categoryService.url = 'http://localhost:5250/api/Category/9/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
+    }
+     if(name==="MAN"){
+      this.categoryService.url = 'http://localhost:5250/api/Category/61/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
+    }
+     if(name==="KIDS")
+      {
+      this.categoryService.url = 'http://localhost:5250/api/Category/10/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
+    }
+    if(name==="Girls")
+      {
+      this.categoryService.url = 'http://localhost:5250/api/Category/6/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
+    }  if(name==="Boys")
+      {
+      this.categoryService.url = 'http://localhost:5250/api/Category/11/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
+    }
+
+    this.categoryService.getSub().subscribe({
+      
+      next: a => {
+        console.log(this.categoryService.url);
+        this.subcat = a;
+        console.log(this.subcat); // البيانات التي تم استرجاعها
+    
+      },
+      error: err => {
+        console.error('Error fetching categories:', err);
+      }
+    });  
+    this.subcat=[];    
+  }
 }
+ 
 
 class Category {
   constructor(public id: number, public name: string,public sizeTypeId:number,public parentCategoryName:string , public parentCategoryId: number, public clicked: boolean ,public description:string) {}
