@@ -1,0 +1,163 @@
+.card {
+    border: 1px solid black;
+    margin-left: -1px;
+    margin-bottom: -1px;
+    height: 380px;
+    position: relative;
+}
+
+.product-image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    width: 100%;
+    display: block;
+    height: 300px;
+    object-fit: cover;
+}
+
+.product-details {
+    color: black;
+}
+
+.product-details p {
+    font-size: 10px;
+}
+
+#product-name:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 10px;
+    margin-bottom: 1em;
+}
+
+.bookmark-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.bookmark-btn i {
+    font-size: 1rem;
+}
+
+/* Basic styling for the product card */
+.product-card {
+    position: relative;
+    width: 250px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+/* Plus button styling */
+.plus-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    outline: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    color: black;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    opacity: 70%;
+    font-size: 10px;
+}
+  
+.plus-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Popup container styling */
+.size-popup {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid black;
+    border-right: none;
+    border-left: none;
+    animation: slideUp 0.3s ease forwards;
+    margin-bottom: -2px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: -1px;
+}
+
+/* Grid for size options */
+.size-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid black;
+}
+
+.size-grid li {
+    list-style: none;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    margin: 0;
+    font-size: 12px;
+}
+
+ul li:nth-child(1) {
+    border-bottom: 1px solid black;
+}
+
+ul li:nth-child(2) {
+    border: 1px solid black;
+    border-top: none;
+}
+
+ul li:nth-child(3) {
+    border-bottom: 1px solid black;
+}
+
+ul li:nth-child(5) {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.size-grid li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Animation for the popup */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

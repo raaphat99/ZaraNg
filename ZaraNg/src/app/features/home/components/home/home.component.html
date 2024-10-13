@@ -1,0 +1,51 @@
+<app-header></app-header>
+<div class="scrollable-container" id="section1">
+  <!-- القسم الأول -->
+  <div class="background-div"
+       id="section1"
+       [ngStyle]="{
+         'background-image': 'url(' + getBackgroundImage(1) + ')',
+       }"
+       >
+       <app-category (categorySelected)="clicknext2($event)"></app-category>
+       <span role="presentation">
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit"
+           class="svgs"  
+           *ngIf="index < 4" 
+           (click)="clickedNext()">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"></path>
+      </svg>
+    </span>
+    <svg class="svgs2" 
+         (click)="clickedPrev()" 
+         *ngIf="index > 1" 
+         width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" 
+         fill="inherit" stroke="inherit" style="transform: scale(-1, 1);">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.336 12L8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12z"></path>
+    </svg>
+  </div>
+
+  <!-- القسم الثاني -->
+  <div class="background-div"
+       id="section2"
+       [ngStyle]="{
+         'background-image': 'url(' + getBackgroundImage(2) + ')',
+       }">
+  </div>
+
+  <!-- القسم الثالث -->
+  <div class="background-div"
+       id="section3"
+       [ngStyle]="{
+         'background-image': 'url(' + getBackgroundImage(3) + ')',
+       }">
+  </div>
+
+  <!-- القسم الرابع -->
+  <div class="background-div"
+       id="section4"
+       [ngStyle]="{
+         'background-image': 'url(' + getBackgroundImage(4) + ')',
+       }">
+  </div>
+</div>

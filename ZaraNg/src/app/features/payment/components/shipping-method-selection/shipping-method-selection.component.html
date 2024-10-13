@@ -1,0 +1,68 @@
+<app-header></app-header>
+
+<div class="grid-container">
+    <div class="column-1">
+        <section class="container">
+            <h2>Where do you want to receive your order?</h2>
+            <div class="receive-location">
+                <div class="row-1">
+                    <div id="home">
+                        <img src="https://static.zara.net/static/images/deliverymethods/24-box-active.svg" style="width: 25px; height: 25px;"
+                            alt="">
+                        <p>Home</p>
+                    </div>
+
+                    <div id="store">
+                        <a (click)="zaraStoreModal.toggleModal($event)">
+                            <img src="https://static.zara.net/static/images/deliverymethods/Icon-Shop.svg" style="width: 25px; height: 25px;"
+                                alt="">
+                            <p>Zara Store</p>
+                        </a>
+                        <zara-store-modal #zaraStoreModal></zara-store-modal>
+                    </div>
+
+                    <div id="drop-point">
+                        <a>
+                            <img src="https://static.zara.net/static/images/deliverymethods/Icon-Drop.svg"
+                                style="width: 25px; height: 25px;" alt="">
+                            <p>Drop Point</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div id="user-address">
+                        <p>Mansoura</p>
+                        <a (click)="addressModal.openModal($event)">Edit</a>
+                        <address-modal #addressModal></address-modal>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <p id="title">Items</p>
+                <div #imageGallery class="image-gallery">
+                    <div class="image-container">
+                        <img src="../../../../../assets/images/order-sample/01887470250-p.png" alt="Image 1" />
+                        <img src="../../../../../assets/images/order-sample/05584441800-p.jpg" alt="Image 2" />
+                        <img src="../../../../../assets/images/order-sample/09012110064-p.png" alt="Image 3" />
+                        <img src="../../../../../assets/images/order-sample/12150410800-e1.png" alt="Image 4" />
+                        <img src="../../../../../assets/images/order-sample/12290320400-e1.jpg" alt="Image 5" />
+                    </div>
+                </div>
+                <div class="shipping-details">
+                    <div class="shipping-details-body">
+                        <div class="radio-group">
+                            <input type="radio" name="est-delivery-date" id="est-delivery-date">
+                            <label for="est-delivery-date">Saturday 12, October - Sunday 13, October</label>
+                        </div>
+                        <span>Free</span>
+                    </div>
+                    <p>Free shipping over 3,999 EGP applies only for full price items</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="column-2"></div>
+</div>
+
+<app-footer></app-footer>

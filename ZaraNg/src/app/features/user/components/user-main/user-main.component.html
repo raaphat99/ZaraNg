@@ -1,0 +1,235 @@
+<app-header></app-header>
+<div class="PostionContainer">
+    <ul class="ListContainer">
+      <li class="ItemLI">
+          <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'purchases']">
+          <div class="ContainerText">
+            <span class="Text">Purchases</span>
+          </div>
+        <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="Arrowstyle"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+               
+              ></path></svg>
+        </a>
+      </li>
+      <li class="ItemLI">
+          <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'returns']">
+
+          <div class="ContainerText">
+            <span class="Text">Returns</span>
+          </div>
+
+          <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="Arrowstyle"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+             
+              ></path></svg>
+        </a>
+      </li>
+      <li class="ItemLI">
+          <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/shop', 'wishlist']">
+          <div class="FavouritesStyle">
+            <div class="ContainerText">
+            <span class="Text">Favourites</span>
+            </div>
+            <svg
+              class="StyleWishlishtIcon"
+              preserveAspectRatio="xMidYMid slice"
+              width="24"
+              heigth="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
+              
+              ></path>
+            </svg>
+            
+          </div>
+       <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="Arrowstyle"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+              ></path></svg>
+        </a>
+      </li>
+      <li class="ItemLI">
+                  <a class="LinkStyle" data-qa-id="my-account-notifications"
+                  style="cursor: pointer;" (click)="Notifications.openModal($event)">
+
+          <div class="ContainerText"><span class="Text">Notifications</span>
+          </div>
+
+       <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="Arrowstyle"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+
+              ></path></svg>
+        </a>
+      </li>
+      <li class="ItemLI">
+        <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'wallet']">
+          <div class="ContainerText">
+            <span class="Text">Payment methods</span>
+          </div>
+
+       <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="Arrowstyle"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+             
+              ></path></svg>
+        </a>
+      </li>
+      <li class="ItemLI">
+        <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'profile']">
+          <div class="ContainerText">
+            <span class="Text">Profile</span>
+          </div>
+         <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              stroke="inherit"
+              class="Arrowstyle"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+              ></path></svg>
+        </a>
+      </li>
+    </ul>
+</div>
+
+<ul class="styleListResponsive">
+  <li class="ItemLI">
+    <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'purchases']">
+      <div class="ContainerText">
+        <span class="Text">Purchases</span>
+      </div>
+    </a>
+  </li>
+  <li class="ItemLI">
+    <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'returns']">
+      <div class="ContainerText">
+        <span class="Text">Returns</span>
+      </div>
+    </a>
+  </li>
+  <li class="ItemLI">
+    <a
+      class="LinkStyle"
+      data-qa-id="my-account-wishlist"
+      [routerLink]="['/shop', 'wishlist']"
+    >
+      <div class="FavouritesStyle">
+        <div class="ContainerText">
+          <span class="Text">Favourites</span
+          ><svg
+            class="StyleWishlishtIconRespon"
+            preserveAspectRatio="xMidYMid slice"
+            width="24"
+            heigth="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="inherit"
+            stroke="inherit"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li class="ItemLI">
+ 
+    <a class="LinkStyle" data-qa-id="my-account-notifications"
+    style="cursor: pointer;" (click)="Notifications.openModal($event)">
+
+      <div class="ContainerText">
+        <span class="Text">Notifications</span>
+      </div>
+    </a>
+  </li>
+  <li class="ItemLI">
+      <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'wallet']">
+
+      <div class="ContainerText">
+        <span class="Text">Payment methods</span>
+      </div>
+    </a>
+  </li>
+  <li class="ItemLI">
+    <a class="LinkStyle" data-qa-id="my-account-profile" type="button">
+      <div class="ContainerText">
+        <span class="Text">Profile</span>
+      </div>
+    </a>
+  </li>
+</ul>
+<app-notification #Notifications></app-notification>
+<app-footer></app-footer>

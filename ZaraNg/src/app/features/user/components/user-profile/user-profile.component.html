@@ -1,0 +1,102 @@
+<app-header></app-header>
+
+<div id="container">
+  <div id="main">
+    <div class="header">
+      <p>{{ userName }}</p>
+    </div>
+    <div class="options">
+      <a [routerLink]="['/user/profile/:id/addresses']"  class="clickable-div">
+        <div class="option">
+          <p>ADDRESSES</p>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="inherit"
+            stroke="inherit"
+            class="zds-selection-cell__selection-icon--default"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+            ></path>
+          </svg>
+        </div>
+      </a>
+
+      <a [routerLink]="['/user/profile/:id/change-email']" class="clickable-div">
+        <div class="option">
+          <div>
+            <p>EMAIL</p>
+            <p class="user-data">{{ userEmail }}</p>
+          </div>
+
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="inherit"
+            stroke="inherit"
+            class="zds-selection-cell__selection-icon--default"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+            ></path>
+          </svg>
+        </div>
+      </a>
+
+      <a [routerLink]="['/user/profile/:id/change-password']" class="clickable-div">
+        <div class="option">
+          <div>
+            <p>PASSWORD</p>
+            <p class="user-data">********</p>
+          </div>
+
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="inherit"
+            stroke="inherit"
+            class="zds-selection-cell__selection-icon--default"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M15.336 12 8.624 4.33l.752-.66L16.665 12l-7.289 8.33-.752-.66L15.336 12Z"
+            ></path>
+          </svg>
+        </div>
+      </a>
+    </div>
+    <div class="extras">
+      <div class="extra-option">
+        <a href="">sign out</a>
+      </div>
+      <div class="extra-option">
+        <a href="">Delete your account</a>
+      </div>
+      <div class="extra-option policy">
+        <span
+          >At ZARA we take your privacy very seriously and are committed to the
+          protection of your personal data. Learn more about how we care for and
+          use your data in our
+          <a
+            href="https://static.zara.net/static/pdfs/EG/privacy-policy/privacy-policy-en_EG-20240117.pdf"
+            >Privacy Policy.</a
+          ></span
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

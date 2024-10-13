@@ -1,11 +1,15 @@
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs';
 
 export class ApiService {
 
-  constructor(private url: string, private httpClient: HttpClient) {}
+constructor(public url: string, public httpClient: HttpClient) {}
 
     getAll() {
         return this.httpClient.get<any>(this.url);
+        // .pipe(
+        //     map(response => response.$values)  // Extract the actual product array
+        // );
     }
 
     getByID(id: any) {

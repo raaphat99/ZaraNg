@@ -1,0 +1,132 @@
+<app-header></app-header>
+<div class="container">
+    <nav>
+        <div class="nav-icons">
+            <button id="shoppingBagBtn" class="nav-icon" [routerLink]="['/shop/cart']" (click)="toggleShoppingBag()">
+                <div [ngClass]="{ 'bold': isShoppingBagActive }">
+                    SHOPPING BAG ({{ cartItemsCount }})
+                </div>
+            </button>
+            <button id="favoritesBtn" class="nav-icon" [routerLink]="['/shop/wishlist']">
+                <!-- FAVOURITES  -->
+                <div class="fav">
+                    <div [ngClass]="{ 'bold': isWishlistActive }">
+                        FAVOURITES
+                    </div>
+                    <svg id="favIconheader" preserveAspectRatio="xMidYMid slice" width="24" heigth="24" height="24"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z"></path>
+                    </svg>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="content1">
+            <!-- Show 'Your Basket is Empty' message when cart is empty -->
+            <div *ngIf="isCartEmpty()" id="shoppingBagMessage" class="message">
+                <svg id="shoppingBagIcon" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    fill="inherit" stroke="inherit">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M9.708 5a2.5 2.5 0 0 1 4.584 0H9.708zM8.645 5a3.502 3.502 0 0 1 6.71 0H19v15H5V5h3.645zM6 6v13h12V6H6z">
+                    </path>
+                </svg>
+                <p>YOUR BASKET IS EMPTY</p>
+                <p>The items you add will be shown here</p>
+            </div>
+
+            <div *ngIf="!isCartEmpty()" id="shoppingBagContent">
+                <div class="product-container">
+                    <div class="product-card" *ngFor="let product of cartItems; let i = index">
+                        <div class="product-image">
+                            <!-- Replace with actual product image -->
+                            <img [src]="product.img" alt="Product Image"
+                                style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <div class="product-details">
+                            <div class="nameX">
+                                <div class="product-name">{{product.name}}</div>
+                                <div class="svgbtns">
+                                    <svg class="wishlist-icon" (click)="addToWishlist(product)" width="24" heigth="24"
+                                        height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                        fill="inherit" stroke="inherit">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12 15.238L17 20V4H7v16l5-4.762zm-4 2.429l4-3.81 4 3.81V5H8v12.667z">
+                                        </path>
+                                    </svg>
+                                    <svg class="remove-icon" (click)="removeFromCart(product)" width="24" height="24"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit"
+                                        stroke="inherit" style="box-sizing:border-box;fill:rgb(0, 0, 0);">
+                                        <path
+                                            d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"
+                                            style="box-sizing:border-box;"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="product-price">{{product.price}} EGP</div>
+                            <div class="product-info">{{product.size}} | {{product.color}} </div>
+                            <div class="quantity-selector">
+                                <button class="quantity-btn" (click)="decreaseQuantity(product)"><svg width="24"
+                                        height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                        fill="inherit" stroke="inherit" aria-hidden="true"
+                                        class="zds-quantity-selector__icon">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19 12.5H5v-1h14v1Z"></path>
+                                    </svg></button>
+                                <span class="quantity">{{product.quantity}}</span>
+                                <button class="quantity-btn" (click)="increaseQuantity(product)"><svg width="24"
+                                        height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                        fill="inherit" stroke="inherit" aria-hidden="true"
+                                        class="zds-quantity-selector__icon">
+                                        <path d="M12.5 11.5V5h-1v6.5H5v1h6.5V19h1v-6.5H19v-1h-6.5Z"></path>
+                                    </svg></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="deletedProduct" class="deletion-message">
+                    <svg style="background-color: black;" width="24" height="24" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg" fill="white">
+                        <path d="M11.421 15.129l5.153-5.797-.748-.664-4.447 5.004-2.626-2.625-.707.707 3.375 3.375z">
+                        </path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M20.4 12a8.4 8.4 0 1 1-16.8 0 8.4 8.4 0 0 1 16.8 0zm-1 0a7.4 7.4 0 1 1-14.8 0 7.4 7.4 0 0 1 14.8 0z">
+                        </path>
+                    </svg>
+                    <span id="deletionMessage">1 product was deleted</span>
+                    <button (click)="undoDelete()">UNDO</button>
+                </div>
+                <div *ngIf="addedToWishlist" class="addedToW-message">
+                    <span id="addedToWMessage">SAVED</span>
+                    <button (click)="seeList()">SEE LIST</button>
+                </div>
+            </div>
+            <div id="favoritesMessage" class="message" style="display: none;" onclick="onFavorite()">
+                <p>You don't have any favorites yet.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Checkout Footer -->
+    <div *ngIf="!isCartEmpty()" class="checkout-footer">
+        <div class="terms-acceptance">
+            <label for="termsAccepted" style="color: #666;">
+                <span class="asterisk">*</span> By continuing, I declare that I have read and accept the <a
+                    href="https://static.zara.net/static/pdfs/EG/terms-and-conditions/terms-and-conditions-en_EG-20221110.pdf"
+                    class="terms-link" target="_blank" rel="noopener noreferrer">Purchase Conditions</a> and understand
+                Zara's <a href="https://static.zara.net/static/pdfs/EG/privacy-policy/privacy-policy-en_EG-20240117.pdf"
+                    class="terms-link" target="_blank" rel="noopener noreferrer">Privacy and Cookie Policy</a>.
+            </label>
+        </div>
+        <div class="total-section">
+            <div class="total-row">
+                <span class="total-label">TOTAL</span>
+                <span class="total-amount">{{totalAmount}} {{currencyCode}}</span>
+            </div>
+            <span class="vat-info">* INCLUDING VAT</span>
+        </div>
+        <button class="continue-button">
+            CONTINUE
+            <span class="arrow">→</span>
+        </button>
+    </div>

@@ -1,0 +1,75 @@
+<app-header></app-header>
+
+<div
+  *ngIf="isModalVisible"
+  [ngClass]="{ overlay: isModalVisible, 'fade-out': !isModalVisible }"
+></div>
+<div id="container">
+  <div id="header">
+    <p>ADRESSES</p>
+    <a class="clickable-div top-button" [routerLink]="['/user/profile/:id/add-address']" routerLinkActive="router-link-active" >
+      <div class="button">ADD ADDRESS</div>
+    </a>
+  </div>
+  <div id="main">
+    <div *ngFor="let address of addresses; let i = index" class="address">
+      <div class="address-details">
+        <p id="user-name">{{ address.userName }}</p>
+        <p>{{ address.street }}</p>
+        <p>{{ address.area }}</p>
+        <p>{{ address.state }}</p>
+        <p>{{ address.city }}</p>
+        <p>{{ address.phone }}</p>
+        <p *ngIf="address.selected" class="invoicing">INVOICING</p>
+      </div>
+
+      <div class="options-menue">
+        <div class="icon">
+          <svg
+            class="icon"
+            (click)="toggleOptionsMenu($event, i); toggleModal($event, i)"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="inherit"
+            stroke="inherit"
+          >
+            <path
+              d="M11.2 16A1.6 1.6 0 1 1 8 16a1.6 1.6 0 0 1 3.2 0ZM17.6 16a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0ZM24 16a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0Z"
+            ></path>
+          </svg>
+        </div>
+
+        <div *ngIf="optionsMenu[i]" class="option-{{ i }} options">
+          <a class="clickable-div" href="">
+            <div class="button">EDIT</div>
+          </a>
+          <a *ngIf="!address.selected" class="clickable-div" href="">
+            <div class="button">DELETE</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="" class="bottom-button">
+    <div class="button">ADD ADDRESS</div>
+  </a>
+</div>
+<div
+  *ngIf="isModalVisible"
+  [ngClass]="{ modal: true, 'fade-out': !isModalVisible }"
+>
+  <!-- Modal content -->
+  <div>
+    <a class="modal-button" href="">
+      <div class="button bottom-menu-button">EDIT</div>
+    </a>
+    <a *ngIf="!modalHasDelete" class="modal-button" href="">
+      <div class="button ottom-menu-button">DELETE</div>
+    </a>
+  </div>
+</div>
+
+<app-footer></app-footer>

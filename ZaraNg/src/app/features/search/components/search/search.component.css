@@ -1,0 +1,96 @@
+* {
+    line-height: 16px;
+    font-family: 'Neue-Helvetica', Helvetica;
+}
+
+.ffdiv {
+    margin-top: 190px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: normal;
+    color: rgb(34, 34, 34);
+}
+
+.fdiv {
+    display: flex;
+    overflow: hidden;
+    width: 670px;
+    margin: auto;
+    white-space: nowrap; /* Keep buttons in a single line */
+}
+
+.fdiv button {
+    font-size: 11px;
+    font-size: small;
+    background-color: transparent;
+    color: rgb(34, 34, 34);
+    border: 0.8px solid gray;
+    cursor: pointer;
+    padding: 10px;
+    width: fit-content; /* Adjust width to fit content */
+    margin-right: 15px; /* Small margin between buttons */
+    animation: moveButtons 80s linear infinite; /* Adjust speed based on content width */
+}
+
+.fdiv button:hover {
+    color: gray;
+}
+
+.sdiv{
+    margin: 2em auto;
+    width: 400px;
+    font-size: 20px;
+}
+.sdiv input {
+    font-size: 18px;
+    font-weight: normal;
+    text-align: center;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.8px solid gray;
+    width: 400px;
+    transition: border-bottom 0.3s ease; /* Transition effect for the border */
+}
+
+.sdiv input:focus {
+    border-bottom: none; /* Remove border on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Optional: Hide placeholder when input is focused */
+.sdiv input:focus::placeholder {
+    opacity: 0; /* Hide placeholder text */
+}
+
+
+
+@keyframes moveButtons {
+    0% {
+        transform: translateX(100%);
+        filter: blur(0); /* No blur at the start */
+        opacity: 1; /* Fully visible */
+    }
+    80% {
+        filter: blur(0); /* No blur until near the end */
+        opacity: 1; /* Keep fully visible until near the end */
+    }
+    90% {
+        filter: blur(2px); /* Start to blur */
+        opacity: 0.8; /* Optional: make it slightly transparent */
+    }
+    100% {
+        transform: translateX(-1200px); /* Adjust this value based on the total width of the buttons */
+        filter: blur(5px); /* Fully blurred at the end */
+        opacity: 0; /* Fully transparent at the end */
+    }
+}
+
+
+
+
+
+
+
+
+

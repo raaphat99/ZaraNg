@@ -1,0 +1,195 @@
+.payment-methods {
+  margin-left: 150px;
+  padding: 20px;
+  transition: all 0.8s ease-in-out;
+}
+.fullTextCon {
+  padding: 20px 0px 0px;
+}
+.TextPay {
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-top: 150px;
+  margin-left: 0px;
+  font-family: inherit;
+}
+.FullContainer {
+  padding: 10px 0px 0px;
+  display: flex;
+  position: relative;
+}
+.SubContainer {
+  width: calc((calc((1180px - (20px * 11)) / 12) * 6) + (20px * 5));
+}
+
+.ContainerEmptyPayment {
+  margin: 80px 0px 60px;
+  text-align: left;
+}
+.styleSVG {
+  box-sizing: border-box;
+  fill: rgb(0, 0, 0);
+}
+.ContainerText {
+  box-sizing: border-box;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+.TextStyle {
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 11px;
+  color: black;
+}
+.payment-method-list {
+  display: flex;
+  width: 500px;
+  flex-direction: column;
+  transition: all 0.8s ease-in-out;
+}
+.payment-method-card {
+  display: flex;
+  border: 0.8px solid black;
+  padding: 15px;
+  margin-bottom: 15px;
+  align-items: center;
+  transition: all 0.8s ease-in-out;
+}
+.payment-icon {
+  width: 50px;
+  height: auto;
+  padding-right: 15px;
+}
+.payment-details {
+  flex-grow: 1;
+}
+.card-holder,
+.last-4-digits,
+.expiration-date {
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.delete-button {
+  color: black;
+  background-color: white;
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 150px;
+}
+.delete-button:hover,
+#yesBTN:hover,
+#NObtn:hover {
+  background-color: black;
+  color: white;
+}
+.confirmation-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 0.8px solid black;
+  padding: 20px;
+}
+.confirmation-message p {
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+#yesBTN,
+#NObtn {
+  margin-right: 50px;
+  color: black;
+  background-color: white;
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 150px;
+}
+#NObtn {
+  margin-left: 100px;
+}
+@media (max-width: 1200px) and (min-width: 768px) {
+  .payment-method-card {
+    flex-direction: column;
+    align-items: flex-start; 
+  }
+
+  .payment-icon {
+    margin-bottom: 10px; 
+  }
+
+  .payment-methods {
+    margin-left: 38px; 
+  }
+
+  .payment-method-list {
+    width: 400px;
+  }
+
+  .confirmation-message button {
+    margin-bottom: 10px;
+  }
+  #NObtn {
+    margin-left: 15px;
+  }
+  #yesBTN{
+    margin-right: 0px;
+  }
+}
+@media (max-width: 900px) {
+  #NObtn {
+    margin-left: 0px;
+  }
+  #yesBTN{
+    margin-right: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .payment-method-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .payment-icon {
+    margin-bottom: 10px;
+  }
+
+  .payment-methods {
+    margin-left: 40px;
+  }
+
+  .payment-method-list {
+    width: 400px;
+  }
+
+  .confirmation-message {
+    width: 250px;
+    text-align: center;
+  }
+
+  .confirmation-message button {
+    margin-bottom: 10px;
+  }
+  #NObtn {
+    margin-left: 40px;
+  }
+  #yesBTN{
+    margin-right: 10px;
+  }
+}
