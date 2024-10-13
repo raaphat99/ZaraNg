@@ -23,7 +23,7 @@ import { HomeComponent } from './features/home/components/home/home.component';
     CartComponent,
     WishlistComponent,
     HomeComponent
-  ],
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
