@@ -81,12 +81,15 @@ p {
 }
 
 .extras p,
-span,
-a {
+span {
     font-size: .76rem;
     color: rgb(158, 156, 156);
 }
-
+.extra-option a{
+    font-size: .76rem;
+    color: rgb(158, 156, 156);
+    text-decoration: underline;
+}
 .policy {
     width: 65%;
 }

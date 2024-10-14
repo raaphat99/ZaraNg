@@ -3,7 +3,7 @@
 <div id="container">
   <div class="login">
     <p>LOG IN TO YOUR ACCOUNT</p>
-    <form (ngSubmit)="onSubmit()">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
       <div class="form-inputs">
         <div
           class="input-unit"
@@ -19,6 +19,7 @@
             [(ngModel)]="user.email"
             placeholder=" "
             required
+            #emailInput="ngModel"
             (focus)="onFocus('email')"
             (blur)="onBlur('email')"
           />
@@ -69,6 +70,7 @@
             [(ngModel)]="user.password"
             placeholder=" "
             required
+            #passwordInput="ngModel"
             (focus)="onFocus('password')"
             (blur)="onBlur('password')"
           />
@@ -142,7 +144,7 @@
         </div>
       </div>
 
-      <app-button type="submit" myClass="btn-login" text="LOG IN"></app-button>
+      <input type="submit" class="btn-login" value="LOG IN"  [disabled]="loginForm.invalid">
     </form>
     <a href="">Have you forgotten your password?</a>
   </div>
@@ -152,4 +154,10 @@
   </div>
 </div>
 
+<ng-template #modalTemplate>
+  <div class="modal">
+    <mat-progress-spinner   mode="indeterminate" diameter="40"></mat-progress-spinner>
+    <p>{{ modalMessage }}</p>
+  </div>
+</ng-template>
 <app-footer></app-footer>
