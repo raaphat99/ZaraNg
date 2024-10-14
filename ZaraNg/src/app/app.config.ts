@@ -20,6 +20,6 @@ export const appConfig: ApplicationConfig = {
         progressBar: true,
       }),
       HttpClientModule // استخدم importProvidersFrom لإضافة HttpClientModule بشكل صحيح
-    ), provideAnimationsAsync(), provideAnimationsAsync()
+    ), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync()
   ],
 };
