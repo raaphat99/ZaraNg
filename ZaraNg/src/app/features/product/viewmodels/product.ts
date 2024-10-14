@@ -3,6 +3,7 @@ export interface Product {
     description: string,
     price: number,
     stockQuantity: number,
-    imageUrl?: string,
+    mainImageUrl?: string,
     created?: Date
+    updated?: Date
 }

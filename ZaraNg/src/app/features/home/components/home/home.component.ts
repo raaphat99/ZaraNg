@@ -43,15 +43,6 @@ getBackgroundImage(divIndex: number): string {
 }
 
 
-  // دالة جلب الصور لكل div بناءً على الفهرس الخاص به
-getBackgroundImage2(divIndex: number): string {
-  // حساب الفهرس الصحيح للصورة بناءً على الفهرس المحلي (divIndex)
-  // divIndex يبدأ من 1، لذا نطرح 1 لتتناسب مع الفهارس في المصفوفة
-  const imageIndex = (divIndex - 1 + this.index - 1) % this.images.length; 
-  return this.images[imageIndex]; 
-}
-
-
   ngOnInit() {
     this.startAutoScroll(); // بدء التمرير التلقائي عند تحميل المكون
   }
@@ -95,7 +86,8 @@ getBackgroundImage2(divIndex: number): string {
 clicknext2(id:number=0)
 {
   if(id!=0){
-    this.index=(id-1);
+    //console.log("id"+id)
+    this.index=(id-2);
     this.index = (this.index < this.images.length) ? this.index + 1 : 1; // الانتقال للصورة التالية أو العودة للأولى
   }
 }
