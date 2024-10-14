@@ -6,7 +6,6 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
 import { ProductCardComponent } from './components/product-card/product-card.component';
-import { ProductFilterComponent } from './components/product-filter/product-filter.component';
 import { provideHttpClient } from '@angular/common/http';
 import { ProductService } from './services/product.service';
 import { HeaderComponent } from "../../shared/components/header/header.component";
@@ -20,7 +19,6 @@ import { ToastrService } from 'ngx-toastr';
     ProductListComponent,
     ProductDetailsComponent,
     ProductCardComponent,
-    ProductFilterComponent,
     SizeModalComponent
   ],
   imports: [

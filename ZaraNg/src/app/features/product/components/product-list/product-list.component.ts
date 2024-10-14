@@ -18,10 +18,10 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.productService.generateProducts(500)
-      .subscribe(products => this.products = products);
-    // this.productService.getAll().subscribe(products => {
-    //   this.products = products;
-    // });
+    // this.productService.generateProducts(500)
+    //   .subscribe(products => this.products = products);
+    this.productService.getAll().subscribe(products => {
+      this.products = products;
+    });
   }
 }

@@ -102,6 +102,7 @@ img {
     border-right: none;
     border-left: none;
     animation: slideUp 0.3s ease forwards;
+    margin-bottom: -2px;
 }
 
 ul {
