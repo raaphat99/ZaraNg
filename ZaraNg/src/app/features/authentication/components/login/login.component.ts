@@ -5,21 +5,34 @@ import { ButtonComponent } from "../../../../shared/components/button/button.com
 import { Router, RouterLink } from '@angular/router';
 import { HeaderComponent } from "../../../../shared/components/header/header.component";
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
+import { AuthService } from '../../../../core/services/auth.service';
+import { ViewChild, TemplateRef } from '@angular/core';
+import { MatDialog  } from '@angular/material/dialog';
+import{MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonComponent, RouterLink, HeaderComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, ButtonComponent, RouterLink, HeaderComponent, FooterComponent,MatProgressSpinnerModule ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
+  @ViewChild('modalTemplate') modalTemplate!: TemplateRef<any>;
+ constructor(
+private authService: AuthService,
+private dialog: MatDialog,
+private router: Router
+) {}
+
   user: LoginForm = { email: '', password: '' };
  
   showPassword: boolean = false;
   focusedFields: { [key: string]: boolean } = {};
-
-  
   touchedFields: { [key: string]: boolean } = {};
+  modalMessage: string = 'Loading...';
+
 
 
   onFocus(field: string) {
@@ -84,15 +97,46 @@ export class LoginComponent {
     }
     return '';
   }
-  onSubmit() {
-    if (this.user.email && this.user.password) {
-      console.log('Login form submitted', { email: this.user.email, password: this.user.password });
-    }
-  }
+  
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
+ 
+  onSubmit() {
+    // Open the modal when login is initiated
+    const dialogRef = this.dialog.open(this.modalTemplate, { disableClose: true });
+  
+    // Call the login API
+    this.authService.login(
+       this.user.email,
+       this.user.password
+    ).subscribe({
+      next: (response) => {
+        // Close the modal after 2 seconds for a valid response
+        
+          if (response.token) {
+            this.modalMessage = "Login success!";
+            setTimeout(() => {
+              dialogRef.close(); // Close modal on success
+              this.router.navigate(['/home']);
+             
+            }, 4000);
+            this.modalMessage = 'Loading...';
+          }  
+      },
+      error: (error) => {
+        // Handle API errors (e.g., 401 Unauthorized, 500 Server Error)
+        setTimeout(() => {this.modalMessage = "The credentials you entered don't match any of Zara accounts, try again.";}, 500);
+
+        setTimeout(() => dialogRef.close(), 3000); // Close modal after 3s on error
+        this.modalMessage = 'Loading...';
+      }
+
+    });
+  }
+  
 }
+
 interface LoginForm {
   email: string;
   password: string;
