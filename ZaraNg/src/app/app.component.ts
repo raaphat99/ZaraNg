@@ -10,6 +10,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './features/home/components/home/home.component';
+import { LoginComponent } from "./features/authentication/components/login/login.component";
+import { RegisterComponent } from "./features/authentication/components/register/register.component";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +24,9 @@ import { HomeComponent } from './features/home/components/home/home.component';
     FooterComponent,
     CartComponent,
     WishlistComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
