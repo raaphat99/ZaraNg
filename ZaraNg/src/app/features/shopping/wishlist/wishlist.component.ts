@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, HeaderComponent, FooterComponent, RouterLink],
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.css'
 })
@@ -103,10 +104,7 @@ addedToCart: Product | null = null;
 addedToWishlist: Product | null = null;
 deletedProduct: Product | null = null;
 currencyCode: string = 'EGP';
-onContinue() {
-  // Handle continue button click
-  console.log('Continue clicked');
-}
+
 
 increaseQuantity(item: Product) {
   item.quantity++;

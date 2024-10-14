@@ -120,7 +120,6 @@ export class CartComponent {
 
   increaseQuantity(item: Product) {
     item.quantity++;
-    this.cartItems.length++;
   }
 
   decreaseQuantity(item: Product) {
@@ -139,7 +138,7 @@ export class CartComponent {
     }
   }
   get cartItemsCount(): number {
-    return this.cartItems.length;
+    return this.cartItems.reduce((count, item) => count + item.quantity, 0);
   }
   // Method to check if the cart is empty
   isCartEmpty(): boolean {

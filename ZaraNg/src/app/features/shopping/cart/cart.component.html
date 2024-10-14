@@ -99,11 +99,8 @@
                 </div>
                 <div *ngIf="addedToWishlist" class="addedToW-message">
                     <span id="addedToWMessage">SAVED</span>
-                    <button (click)="seeList()">SEE LIST</button>
+                    <button [routerLink]="['/shop/wishlist']">SEE LIST</button>
                 </div>
-            </div>
-            <div id="favoritesMessage" class="message" style="display: none;" onclick="onFavorite()">
-                <p>You don't have any favorites yet.</p>
             </div>
         </div>
     </div>
