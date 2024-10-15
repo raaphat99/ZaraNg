@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable, of, tap,catchError,throwError } from "rxjs";
-import { HttpClient,HttpErrorResponse } from "@angular/common/http";
+import { HttpClient,HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { errorContext } from "rxjs/internal/util/errorContext";
 
 @Injectable({
   providedIn: "root",
@@ -53,6 +54,23 @@ private apiUrl ='http://localhost:5250/api/Authenticate'
     }
     return throwError(() => new Error(errorMessage));
   }
+  changeEmail(Password: string,NewEmail: string): Observable<any> {
+    const token = localStorage.getItem('token'); // Retrieve token from localStorage
+    console.log(token);
+const body = { Password, NewEmail };
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`, // Add Bearer token to header
+      'Content-Type': 'application/json'  // Ensure JSON content type
+    });
+    return this.httpClient?.put<any>(this.apiUrl,body,{ headers, observe: 'response' }).pipe((tap((response)=>{
+      console.log(response);
+    }),
+    catchError((error) => {
+    
+      return throwError(() => error); // Ensure observable stream handles error properly
+    })
+  ));
+}
   get currentUser() {
     let token;
 

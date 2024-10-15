@@ -205,7 +205,24 @@ a:visited {
     color: rgb(32, 31, 31);
 }
 
-
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    width: 350px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    color: black;
+    
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
 @media screen and (max-width: 768px) {
     #container {
         margin-top: 40px;
