@@ -170,14 +170,14 @@
   letter-spacing: 0.8px;
   text-transform: uppercase;
 }
-.order-action-btn:hover{
-    background-color: black;
-    color: white;
+.order-action-btn:hover {
+  background-color: black;
+  color: white;
 }
 
 @media (max-width: 1200px) {
   .order-item {
-    flex: 1 1 calc(50% - 20px); 
+    flex: 1 1 calc(50% - 20px);
     max-width: calc(50% - 20px);
   }
 }

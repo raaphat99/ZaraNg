@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; // تأكد من استيراد HttpClientModule
 
 export const appConfig: ApplicationConfig = {
@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
         timeOut: 3000,
         progressBar: true,
       }),
-      HttpClientModule // استخدم importProvidersFrom لإضافة HttpClientModule بشكل صحيح
-    ), provideAnimationsAsync(), provideAnimationsAsync()
+      HttpClientModule 
+    ), provideHttpClient(), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync()
   ],
 };
