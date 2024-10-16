@@ -58,9 +58,18 @@
      font-stretch: 100%;
      line-height: 16px;
      font-family: inherit;
-     font-size: 8px;
+     font-size: 5px;
      letter-spacing: 0.8px;
      text-transform: uppercase;
+  }
+  .fs{
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
   }
   #div2 ul {
     list-style-type: none; /* إزالة النقاط من القائمة */
@@ -75,7 +84,6 @@
   #div2 .clickable {
     cursor: pointer;
   }
-
   
   #div2 ul li {
     border: none; /* إزالة أي حدود إن وجدت */
