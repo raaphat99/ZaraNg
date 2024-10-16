@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, Output,ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -16,9 +17,8 @@ export class CategoryComponent {
   selectedCategoryId: number | null = null;
   menuVisible2: boolean = false;
   menuVisible3: boolean = true;
-   subcat:Category[]=[]
-
-
+   subcat:Category[]=[];
+   subproduct:Category[]=[]
   index: number = 1;
 
   @HostListener('document:click', ['$event'])
@@ -30,114 +30,114 @@ export class CategoryComponent {
       this.menuVisible3=true
     }
   }
-
   @Output() categorySelected = new EventEmitter<number>();
-
-
-
-  constructor(public categoryService:CategoryService ,private eRef: ElementRef) {
+  constructor(public categoryService:CategoryService ,private eRef: ElementRef,private router: Router) {
    //categoryService.url="http://localhost:5250/api/Category/main-categories";
    categoryService.getAll().subscribe({
     next: a => {
-      console.log(a); // البيانات التي تم استرجاعها من الخدمة
-      this.mainCategories = a; // تعيين البيانات إلى mainCategories
-      
-      // طباعة mainCategories بعد تعيينها
+      console.log(a); 
+      this.mainCategories = a; 
       console.log(this.mainCategories);
     },
     error: err => {
-      console.error('Error fetching categories:', err); // التعامل مع الأخطاء إن وجدت
+      console.error('Error fetching categories:', err); 
     }
    })
-    // this.mainCategories = [
-    //   { id: 1, Name: 'WOMAN', parentid: 0, clicked: false },
-    //   { id: 2, Name: 'MEN', parentid: 0, clicked: false },
-    //   { id: 3, Name: 'KIDS', parentid: 0, clicked: false },
-    //   { id: 4, Name: 'BEAUTY', parentid: 0, clicked: false },
-    //   { id: 5, Name: 'Dress', parentid: 1, clicked: false },
-    //   { id: 6, Name: 'Shoes', parentid: 1, clicked: false },
-    //   { id: 10, Name: 'Shoes', parentid: 2, clicked: false },
-    //   { id: 11, Name: 'Brush', parentid: 4, clicked: false },
-    //   { id: 7, Name: 'Pants', parentid: 2, clicked: false },
-    //   { id: 8, Name: 'Jeans', parentid: 2, clicked: false },
-    //   { id: 9, Name: 'Child Dress', parentid: 3, clicked: false },
-    // ];
   }
-
   clicked(id: number) {
     this.mainCategories.forEach(category => category.clicked = false);
     let selectedCategory = this.mainCategories.find(category => category.id === id);
-    
     if (selectedCategory) {
       selectedCategory.clicked = true;
       this.selectedCategoryId = selectedCategory.id;
       this.index = selectedCategory.id;
       this.selectitem = this.mainCategories.filter(category => category.parentCategoryId === id);
       this.menuVisible2=true;
-  // تغيير الـ URL قبل استدعاء الطلب
-  console.log(this.selectedCategoryId);
-  this.categoryService.url = 'http://localhost:5250/api/Category/'+this.selectedCategoryId+'/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
 
-// استدعاء الـ getByID مع الـ id المطلوب
-this.categoryService.getSub().subscribe({
-  next: a => {
-    this.selectitem = a;
-    console.log(this.selectitem); // البيانات التي تم استرجاعها
+       console.log(this.selectedCategoryId);
+       this.categoryService.url = 'http://localhost:5250/api/Category/'+this.selectedCategoryId+'/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
 
-    this.selectedCategoryId = id; // تعيين الـ id مباشرة
-    this.index = this.mainCategories.findIndex(cat => cat.id === id); // إيجاد الـ index بناءً على الـ id
-  },
-  error: err => {
-    console.error('Error fetching categories:', err);
-  }
-});
+      this.categoryService.getSub().subscribe({
+      next: a => {
+      this.selectitem = a;
+      console.log(this.selectitem); 
+      this.selectedCategoryId = id; 
+      this.index = this.mainCategories.findIndex(cat => cat.id === id); 
+    },
+      error: err => {
+      console.error('Error fetching categories:', err);
+   }
+      });
       console.log(this.selectedCategoryId);
-      this.categorySelected.emit(this.selectedCategoryId);  // استخدام اسم الفئة المحددة
-    }
-    //console.log("selectedCategoryId"+this.selectedCategoryId);
-  }
-  selectedCategory2: string | null = null; // لتخزين الفئة المختارة
+      this.categorySelected.emit(this.selectedCategoryId);  
+   }
+}
+  selectedCategory2: string | null = null; 
 
-  checkAndCallSubcat(name:string){
-    this.selectedCategory2 = name;  // تخزين الفئة المختارة
-    this.categoryService.url='';
-    console.log("his.categoryService.url"+this.categoryService.url)
-    console.log(name);
-    if(name==="WOMAN"){
-      this.categoryService.url = 'http://localhost:5250/api/Category/9/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
+  checkAndCallSubcat(name: string, ID: number) {
+    this.selectedCategory2 = name;
+    this.subcat = [];
+    this.subproduct = [];
+    this.categoryService.url = '';
+
+    console.log("Selected Category: " + name);
+    console.log("ID: " + ID);
+
+    if (name === "WOMAN" || name === "MAN" || name === "KIDS" || name === "Girls" || name === "Boys") {
+        this.categoryService.url = 'http://localhost:5250/api/Category/' + ID + '/subcategories';
+    } else {
+        this.categoryService.url = 'http://localhost:5250/api/products/category/' + ID;
     }
-     if(name==="MAN"){
-      this.categoryService.url = 'http://localhost:5250/api/Category/61/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
+    if (this.categoryService.url !== '') {
+        this.categoryService.getSub().subscribe({
+            next: data => {
+                if (name === "WOMAN" || name === "MAN" || name === "KIDS" || name === "Girls" || name === "Boys") {
+                    this.subcat = data;
+                    console.log("Subcategories: ", this.subcat);
+                } else {
+                    this.subproduct = data; 
+                    console.log("Products: ", this.subproduct);
+                }
+                if (this.subproduct.length > 0) {
+                  this.router.navigate(['/productfilter'], { queryParams: { products: JSON.stringify(this.subproduct) } });
+                } else {
+                  console.log("No products found for this subcategory.");
+                }
+            },
+            error: err => {
+                console.error('Error fetching data:', err);
+            }
+        });
+    } else {
+        console.log("Invalid URL or missing category.");
     }
-     if(name==="KIDS")
-      {
-      this.categoryService.url = 'http://localhost:5250/api/Category/10/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
-    }
-    if(name==="Girls")
-      {
-      this.categoryService.url = 'http://localhost:5250/api/Category/6/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
-    }  if(name==="Boys")
-      {
-      this.categoryService.url = 'http://localhost:5250/api/Category/11/subcategories'; // استبدلي الـ URL هنا بالـ URL الجديد
-    }
+  }
+  navigateToSubcatProducts(subcatId: number) {
+    const productUrl = 'http://localhost:5250/api/products/category/' + subcatId;
+
+    this.categoryService.url = productUrl;
 
     this.categoryService.getSub().subscribe({
-      
-      next: a => {
-        console.log(this.categoryService.url);
-        this.subcat = a;
-        console.log(this.subcat); // البيانات التي تم استرجاعها
-    
+      next: data => {
+        this.subproduct = data; 
+        console.log("Products for Subcategory ID " + subcatId + ": ", this.subproduct);
+        
+        if (this.subproduct.length > 0) {
+          console.log("Navigating with products: ", this.subproduct); // تأكد من عرض المنتجات هنا
+          this.router.navigate(['/productfilter'], { queryParams: { products: JSON.stringify(this.subproduct) } });
+        }
+        else {
+          console.log("No products found for this subcategory.");
+        } 
+
       },
       error: err => {
-        console.error('Error fetching categories:', err);
+        console.error('Error fetching products for subcategory:', err);
       }
-    });  
-    this.subcat=[];    
+    });
   }
 }
- 
 
 class Category {
-  constructor(public id: number, public name: string,public sizeTypeId:number,public parentCategoryName:string , public parentCategoryId: number, public clicked: boolean ,public description:string) {}
+  constructor(public id: number, public name: string,public FilterName:string[],public sizeTypeId:number,public parentCategoryName:string , public parentCategoryId: number, public clicked: boolean ,public description:string) {}
 }

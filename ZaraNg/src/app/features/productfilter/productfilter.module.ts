@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { SearchRoutingModule } from './search-routing.module';
+import { ProductfilterRoutingModule } from './productfilter-routing.module'; 
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
-    SearchRoutingModule,
+    FormsModule,
+    ProductfilterRoutingModule ,
     HttpClientModule
   ]
 })
-export class SearchModule { }
+export class ProductfilterModule { }

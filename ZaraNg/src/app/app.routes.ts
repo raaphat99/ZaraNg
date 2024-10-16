@@ -2,6 +2,10 @@ import { provideHttpClient } from '@angular/common/http';
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { HomeComponent } from './features/home/components/home/home.component';
+import { ProductFilterComponent } from './features/product/components/product-filter/product-filter.component';
+import { filter } from 'rxjs';
+import { ProductfilterComponent } from './features/productfilter/components/productfilter/productfilter.component';
+import { FiltersearchComponent } from './features/search/components/filtersearch/filtersearch.component';
 
 export const routes: Routes = [
 
@@ -44,6 +48,16 @@ export const routes: Routes = [
         path: 'help',
         loadChildren: () => import('./features/help/help.module').then(m => m.HelpModule) 
     },
+    
+    {
+        path:'productfilter',
+        component:ProductfilterComponent
+    },
 
+    {
+        path:'filtersearch',
+        component:FiltersearchComponent
+    },
+    
     { path: '**', component: NotFoundComponent }
 ];
