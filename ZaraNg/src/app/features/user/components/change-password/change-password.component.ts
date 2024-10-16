@@ -1,37 +1,42 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators, AbstractControl, ValidationErrors,ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 
 import { HeaderComponent } from "../../../../shared/components/header/header.component";
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
+import { ViewChild, TemplateRef } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent, ReactiveFormsModule,MatProgressSpinnerModule],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.css'
 })
 export class ChangePasswordComponent {
+  @ViewChild('modalTemplate') modalTemplate!: TemplateRef<any>;
 
-  user:changePasswordForm  = { currentPassword: '', newPassword: '' };
+  user: changePasswordForm = { currentPassword: '', newPassword: '' };
   changPasswordForm!: FormGroup
   showCurrentPassword: boolean = false;
-showNewPassword: boolean = false;
+  showNewPassword: boolean = false;
   focusedFields: { [key: string]: boolean } = {};
 
-  
+  modalMessage: string = 'Loading...';
   touchedFields: { [key: string]: boolean } = {};
 
   constructor(
-    private authService: AuthService,
     private fb: FormBuilder,
-    private router : Router
-  ){}
+    private router: Router,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) { }
   ngOnInit() {
     this.changPasswordForm = this.fb.group({
-      currentpassword: ['', [Validators.required,  ]],
+      currentpassword: ['', [Validators.required,]],
       newpassword: ['', [Validators.required, Validators.minLength(8), this.passwordStrengthValidator]],
     });
   }
@@ -40,11 +45,11 @@ showNewPassword: boolean = false;
     const hasUpperCase = /[A-Z]/.test(password);
     const hasLowerCase = /[a-z]/.test(password);
     const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
-    
+
     if (hasUpperCase && hasLowerCase && hasSpecialChar) {
       return null;
     }
-    
+
     return { weakPassword: true };
   }
 
@@ -66,7 +71,7 @@ showNewPassword: boolean = false;
     if (control?.hasError('required')) {
       return 'Field is required';
     }
-  
+
     if (field === 'newpassword') {
       if (control?.hasError('minlength')) {
         return 'Password should be at least 8 characters long';
@@ -120,17 +125,51 @@ showNewPassword: boolean = false;
     }
     return '';
   }
+
+
+  toggleCurrentPasswordVisibility() {
+    this.showCurrentPassword = !this.showCurrentPassword;
+  }
+
+  toggleNewPasswordVisibility() {
+    this.showNewPassword = !this.showNewPassword;
+  }
   onSubmit() {
-  
+    if (this.changPasswordForm.valid) {
+      const { currentpassword, newpassword } = this.changPasswordForm.value;
+      const dialogRef = this.dialog.open(this.modalTemplate, {
+        disableClose: true,
+      });
+      console.log(currentpassword, newpassword);
+     
+      this.authService.changePassword(currentpassword, newpassword).subscribe({
+        next: (response) => {
+          // Close the modal after 2 seconds for a valid response
+          console.log(response);
+          if (response.status === 200) {
+            this.modalMessage = 'Password changed successfully';
+            console.log('success');
+            setTimeout(() => {
+              dialogRef.close(); // Close modal on success
+              this.authService.logout();
+              this.router.navigate(['/login']);
+            }, 4000);
+            this.modalMessage = 'Loading...';
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          // Handle API errors (e.g., 401 Unauthorized, 500 Server Error)
+          setTimeout(() => {
+            this.modalMessage = 'Password incorrect';
+          }, 500);
+
+          setTimeout(() => dialogRef.close(), 3000); // Close modal after 3s on error
+          this.modalMessage = 'Loading...';
+        },
+      });
     }
-  
-    toggleCurrentPasswordVisibility() {
-      this.showCurrentPassword = !this.showCurrentPassword;
-    }
-    
-    toggleNewPasswordVisibility() {
-      this.showNewPassword = !this.showNewPassword;
-    }
+  }
 }
 interface changePasswordForm {
   currentPassword: string;

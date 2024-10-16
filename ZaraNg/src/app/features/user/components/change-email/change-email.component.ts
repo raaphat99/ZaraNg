@@ -1,46 +1,63 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { ViewChild, TemplateRef } from '@angular/core';
-import{MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatDialog  } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-change-email',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent,ReactiveFormsModule,MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    FooterComponent,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './change-email.component.html',
-  styleUrl: './change-email.component.css'
+  styleUrl: './change-email.component.css',
 })
 export class ChangeEmailComponent {
   @ViewChild('modalTemplate') modalTemplate!: TemplateRef<any>;
   changeEmailForm!: FormGroup;
   currentEmail: string = 'm_sh8004@yahoo.com';
-  user:changeEmailForm  = { email: '', password: '' };
- 
+  user: changeEmailForm = { email: '', password: '' };
+
   showPassword: boolean = false;
   focusedFields: { [key: string]: boolean } = {};
-  modalMessage:string = 'Loading...';
-  
+  modalMessage: string = 'Loading...';
+
   touchedFields: { [key: string]: boolean } = {};
 
   constructor(
     private fb: FormBuilder,
-    private router : Router,
+    private router: Router,
     private authService: AuthService,
     private dialog: MatDialog
+  ) {}
 
-  ){}
-  
   ngOnInit() {
     this.changeEmailForm = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(8)]
-      ],email: ['', [Validators.required, Validators.email, this.customEmailValidator]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      email: [
+        '',
+        [Validators.required, Validators.email, this.customEmailValidator],
+      ],
     });
   }
   customEmailValidator(control: AbstractControl): ValidationErrors | null {
@@ -50,7 +67,7 @@ export class ChangeEmailComponent {
   }
   onFocus(field: string) {
     this.focusedFields[field] = true;
-     }
+  }
 
   onBlur(field: string) {
     this.focusedFields[field] = false;
@@ -65,7 +82,10 @@ export class ChangeEmailComponent {
     if (control?.hasError('required')) {
       return 'Field is required';
     }
-    if (field === 'email' && (control?.hasError('email') || control?.hasError('invalidEmail'))) {
+    if (
+      field === 'email' &&
+      (control?.hasError('email') || control?.hasError('invalidEmail'))
+    ) {
       return 'Please enter a valid email address';
     }
     return 'Please enter ' + field;
@@ -87,12 +107,17 @@ export class ChangeEmailComponent {
 
   showErrorMessage(field: string): boolean {
     const control = this.changeEmailForm.get(field);
-    return control ? (control.invalid && (control.touched || control.dirty)) : false;
+    return control
+      ? control.invalid && (control.touched || control.dirty)
+      : false;
   }
 
   showInstructionMessage(field: string): boolean {
     const control = this.changeEmailForm.get(field);
-    return this.focusedFields[field] || (control ? (!control.value && control.touched) : false);
+    return (
+      this.focusedFields[field] ||
+      (control ? !control.value && control.touched : false)
+    );
   }
 
   getMessageType(field: string): 'instruction' | 'warning' | null {
@@ -115,36 +140,37 @@ export class ChangeEmailComponent {
   }
   onSubmit() {
     if (this.changeEmailForm.valid) {
-      const {  password, email } = this.changeEmailForm.value;
-    const dialogRef = this.dialog.open(this.modalTemplate, { disableClose: true });
-    console.log(password);
-  console.log(email);
-   this.authService.changeEmail(password, email).subscribe({
-      next: (response) => {
-        // Close the modal after 2 seconds for a valid response
-        console.log(response);
-          if (response.statuscode == 200) {
-            this.modalMessage = "Email updated successfully";
+      const { password, email } = this.changeEmailForm.value;
+      const dialogRef = this.dialog.open(this.modalTemplate, {
+        disableClose: true,
+      });
+      
+      this.authService.changeEmail(password, email).subscribe({
+        next: (response) => {
+          // Close the modal after 2 seconds for a valid response
+          if (response.status === 200) {
+            this.modalMessage = 'Email updated successfully';
+            console.log('success');
             setTimeout(() => {
               dialogRef.close(); // Close modal on success
-              this.router.navigate(['/user-profile']);
-             
+              this.router.navigate(['/login']);
             }, 4000);
             this.modalMessage = 'Loading...';
-          }  
-      },
-      error: (error) => {
-        console.log(  error);
-        // Handle API errors (e.g., 401 Unauthorized, 500 Server Error)
-        setTimeout(() => {this.modalMessage = "Email already in use";}, 500);
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          // Handle API errors (e.g., 401 Unauthorized, 500 Server Error)
+          setTimeout(() => {
+            this.modalMessage = 'Email already in use';
+          }, 500);
 
-        setTimeout(() => dialogRef.close(), 3000); // Close modal after 3s on error
-        this.modalMessage = 'Loading...';
-      }
-
-    });
+          setTimeout(() => dialogRef.close(), 3000); // Close modal after 3s on error
+          this.modalMessage = 'Loading...';
+        },
+      });
+    }
   }
-}
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }

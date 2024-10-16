@@ -57,12 +57,12 @@ private apiUrl ='http://localhost:5250/api/Authenticate'
   changeEmail(Password: string,NewEmail: string): Observable<any> {
     const token = localStorage.getItem('token'); // Retrieve token from localStorage
     console.log(token);
-const body = { Password, NewEmail };
-    const headers = new HttpHeaders({
+    const body = { Password, NewEmail };
+    const headers = {
       'Authorization': `Bearer ${token}`, // Add Bearer token to header
       'Content-Type': 'application/json'  // Ensure JSON content type
-    });
-    return this.httpClient?.put<any>(this.apiUrl,body,{ headers, observe: 'response' }).pipe((tap((response)=>{
+    };
+    return this.httpClient?.put<any>(this.apiUrl,body, {headers, observe: 'response'}).pipe((tap((response)=>{
       console.log(response);
     }),
     catchError((error) => {
@@ -70,6 +70,23 @@ const body = { Password, NewEmail };
       return throwError(() => error); // Ensure observable stream handles error properly
     })
   ));
+}
+changePassword(OldPassword: string,NewPassword: string): Observable<any> {
+  const token = localStorage.getItem('token'); // Retrieve token from localStorage
+  console.log(token);
+  const body = { OldPassword, NewPassword };
+  const headers = {
+    'Authorization': `Bearer ${token}`, // Add Bearer token to header
+    'Content-Type': 'application/json'  // Ensure JSON content type
+  };
+  return this.httpClient?.put<any>(`${this.apiUrl}/change-password`,body, {headers, observe: 'response'}).pipe((tap((response)=>{
+    console.log(response);
+  }),
+  catchError((error) => {
+  
+    return throwError(() => error); // Ensure observable stream handles error properly
+  })
+));
 }
   get currentUser() {
     let token;
