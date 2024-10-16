@@ -4,7 +4,6 @@ import { Router, RouterLink } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { WishlistService , WishListItemDTO } from './services/wishlist.service';
-import { AuthService } from '../../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -26,7 +25,6 @@ export class WishlistComponent implements OnInit {
   constructor(
     private router: Router,
     private wishlistService: WishlistService,
-    private authService: AuthService
   ) {}
 
   ngOnInit(): void {

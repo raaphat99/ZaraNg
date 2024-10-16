@@ -4,7 +4,6 @@ import { Router, RouterLink } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { CartService, CartItemDTO } from './services/cart.service';
-import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -24,7 +23,6 @@ export class CartComponent implements OnInit {
   constructor(
     private router: Router,
     private cartService: CartService,
-    private authService: AuthService
   ) {}
 
   ngOnInit(): void {

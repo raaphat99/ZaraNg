@@ -19,12 +19,7 @@ export const appConfig: ApplicationConfig = {
         timeOut: 3000,
         progressBar: true,
       }),
-<<<<<<< HEAD
-      HttpClientModule // استخدم importProvidersFrom لإضافة HttpClientModule بشكل صحيح
-    ), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync()
-=======
       HttpClientModule 
     ), provideHttpClient(), provideAnimationsAsync(), provideAnimationsAsync(), provideAnimationsAsync()
->>>>>>> 57e8467a280403119c58be0ebe7951c788a50d89
   ],
 };

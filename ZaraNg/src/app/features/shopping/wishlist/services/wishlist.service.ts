@@ -22,7 +22,9 @@ export class WishlistService {
   getAllItems(): Observable<WishListItemDTO[]> {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.get<WishListItemDTO[]>(`${this.apiUrl}`, { headers }).pipe(
+    return this.http.get<WishListItemDTO[]>(`${this.apiUrl}`, {
+      headers 
+    }).pipe(
       catchError(this.handleError)
     );
   }
@@ -31,7 +33,10 @@ export class WishlistService {
   addToWishlist(productId: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.post<any>(`${this.apiUrl}/${productId}`, {headers},{observe : 'response'}).pipe(
+    return this.http.post<any>(`${this.apiUrl}/${productId}`, {}, {
+      headers, 
+      observe: 'response'
+    }).pipe(
       tap((response) => {
         console.log(response);
         console.log('Item added to wishlist successfully');
@@ -44,7 +49,9 @@ export class WishlistService {
   moveToCart(wishlistItemId: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.post<any>(`${this.apiUrl}/move-to-cart/${wishlistItemId}`,{headers}).pipe(
+    return this.http.post<any>(`${this.apiUrl}/move-to-cart/${wishlistItemId}`, {}, {
+      headers
+    }).pipe(
       tap((response) => {
         console.log('Item moved to cart successfully');
         console.log(response);

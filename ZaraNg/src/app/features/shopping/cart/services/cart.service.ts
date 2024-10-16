@@ -26,7 +26,9 @@ export class CartService {
   getCartItems(): Observable<CartItemDTO[]> {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.get<CartItemDTO[]>(`${this.apiUrl}`, { headers }).pipe(
+    return this.http.get<CartItemDTO[]>(`${this.apiUrl}`, {
+      headers 
+    }).pipe(
       catchError(this.handleError)
     );
   }
@@ -35,7 +37,10 @@ export class CartService {
   addCartItem(productVariantId: number): Observable<any> {  
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.post<any>(`${this.apiUrl}/${productVariantId}`, {headers},{observe:'response'}).pipe(
+    return this.http.post<any>(`${this.apiUrl}/${productVariantId}`, {}, {
+      headers, // Pass the headers here
+      observe: 'response' // Keep the 'observe' option as specified
+    }).pipe(
       tap((response) => {   
         console.log(response);
         console.log('Item added to cart successfully');  
@@ -46,9 +51,13 @@ export class CartService {
 
   // Method to remove an item from the cart
   removeOrDecreaseCartItem(cartItemId: number): Observable<string> {
+    const token = localStorage.getItem('token');
+    const headers = { 'Authorization': `Bearer ${token}` };
     return this.http.delete(`${this.apiUrl}/${cartItemId}`, {
-      responseType: 'text'
-    }).pipe(
+      headers, // Pass the headers here
+      responseType: 'text' // Keep the response type as text if needed
+    }
+    ).pipe(
       catchError(this.handleError)
     );
   }
@@ -56,7 +65,7 @@ export class CartService {
   moveToWishlist(cartItemId: number): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.post<any>(`${this.apiUrl}/move-to-wishlist/${cartItemId}`, {headers}).pipe(
+    return this.http.post<any>(`${this.apiUrl}/move-to-wishlist/${cartItemId}`,{}, { headers }).pipe(
       tap((response) => {
         console.log('Item moved to wishlist successfully');
         console.log(response);

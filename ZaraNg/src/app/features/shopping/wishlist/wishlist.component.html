@@ -71,7 +71,7 @@
         </div>
         <div *ngFor="let product of wishlistItems; let i = index">
             <div *ngIf="addedToCart" class="addedToW-message">
-                <span id="addedToWMessage">Size {{product.id}} added to your shopping bag</span>
+                <span id="addedToWMessage">item added to your shopping bag</span>
                 <button [routerLink]="['/shop/cart']">VIEW</button>
             </div>
         </div>
