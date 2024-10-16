@@ -99,7 +99,7 @@ export class CategoryComponent {
                     console.log("Products: ", this.subproduct);
                 }
                 if (this.subproduct.length > 0) {
-                  this.router.navigate(['/productfilter'], { queryParams: { products: JSON.stringify(this.subproduct) } });
+                  this.router.navigate(['productfilter'], { queryParams: { products: JSON.stringify(this.subproduct) } });
                 } else {
                   console.log("No products found for this subcategory.");
                 }
@@ -124,7 +124,7 @@ export class CategoryComponent {
         
         if (this.subproduct.length > 0) {
           console.log("Navigating with products: ", this.subproduct); // تأكد من عرض المنتجات هنا
-          this.router.navigate(['/productfilter'], { queryParams: { products: JSON.stringify(this.subproduct) } });
+          this.router.navigate(['productfilter'], { queryParams: { products: JSON.stringify(this.subproduct) } });
         }
         else {
           console.log("No products found for this subcategory.");

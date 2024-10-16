@@ -24,7 +24,6 @@ import { ProductfilterComponent } from "./features/productfilter/components/prod
     CartComponent,
     WishlistComponent,
     HomeComponent,
-    ProductfilterComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

@@ -51,13 +51,16 @@ export const routes: Routes = [
     
     {
         path:'productfilter',
-        component:ProductfilterComponent
+        loadChildren: () => import('./features/productfilter/productfilter.module').then(m => m.ProductfilterModule) 
     },
 
+    {
+        path:'search',
+        loadChildren: () => import('./features/search/search.module').then(m => m.SearchModule) 
+    },
     {
         path:'filtersearch',
         component:FiltersearchComponent
     },
-    
     { path: '**', component: NotFoundComponent }
 ];
