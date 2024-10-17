@@ -129,56 +129,74 @@ export class FiltersearchComponent implements OnInit {
       console.warn(`No product IDs found for category: ${category}`);
     }
   }
-
   fetchProductsByKeyword(keyword: string): void {
     const words = keyword.split(' ');
     const matchingCategories: string[] = [];
     const matchingColors: string[] = [];
+    const selectedCategoryIds: number[] = []; // مصفوفة جديدة لتخزين المعرفات
 
-    if (this.searchQuery) {
-      const words = this.searchQuery.split(' ');
-
-      this.selectedColors = words.filter(word =>
-        this.colors.some(color => color.name.toUpperCase() === word.toUpperCase())
-      );
-
-      console.log('Selected Colors:', this.selectedColors);
-      console.log('Selected Category ID:', this.selectedCategoryId);
-    }
-
+    // البحث عن الفئات المتطابقة
     words.forEach(word => {
-      const categories = Object.keys(this.styleProductIdMap).filter(cat =>
-        cat.toUpperCase().includes(word)
-      );
-      matchingCategories.push(...categories);
+        const categories = Object.keys(this.styleProductIdMap).filter(cat =>
+            cat.toUpperCase().includes(word.toUpperCase())
+        );
+        matchingCategories.push(...categories);
     });
 
+    // تحديث selectedCategoryIds بناءً على matchingCategories
+    matchingCategories.forEach(category => {
+        if (this.styleProductIdMap[category]) {
+            selectedCategoryIds.push(...this.styleProductIdMap[category]);
+        }
+    });
+
+    // تحديث selectedCategoryId
+    this.selectedCategoryId = selectedCategoryIds;
+    this.selectedColors = words.filter(word =>
+      this.colors.some(color => color.name.toUpperCase() === word.toUpperCase())
+    );
+    console.log('Selected Colors:', this.selectedColors);
+
+    // البحث عن الألوان المتطابقة
     words.forEach(word => {
-      const colorMatch = this.colors.find(color =>
-        color.name.toUpperCase() === word
-      );
-      if (colorMatch) {
-        matchingColors.push(colorMatch.name);
-      }
+        const colorMatch = this.colors.find(color =>
+            color.name.toUpperCase() === word.toUpperCase()
+        );
+        if (colorMatch) {
+            matchingColors.push(colorMatch.name);
+        }
     });
 
     if (matchingCategories.length > 0) {
       matchingCategories.forEach(category => {
         this.fetchProductsByCategory(category);
       });
+    } else if (this.selectedColors.length > 0) {
+      let styleKey = this.selectedCategory || 'BLAZERS'; // Default style key
+      this.sendToColorSearchComponent(this.selectedColors, styleKey);
     } else {
-      console.warn(`No matching categories found for keywords: ${keyword}`);
+      console.warn(`No matching categories or colors found for keywords: ${keyword}`);
+    }
+        if (matchingCategories.length > 0) {
+        matchingCategories.forEach(category => {
+            this.fetchProductsByCategory(category);
+        });
+    } else if (matchingColors.length > 0) {
+        let styleKey = this.selectedCategory || 'BLAZERS'; // استخدم قيمة محددة إذا لم يكن هناك فئة محددة
+        this.sendToColorSearchComponent(matchingColors, styleKey);
+    } else {
+        console.warn(`No matching categories found for keywords: ${keyword}`);
     }
 
-    if (matchingColors.length > 0) {
-      // احصل على المفتاح المناسب من السياق أو حسب منطق عملك
-      let styleKey = this.selectedCategory; // أو استخدم قيمة أخرى تحدد الفئة
-      if(styleKey==null){
-        styleKey = 'BLAZERS';
-      } 
-      this.sendToColorSearchComponent(matchingColors, styleKey!);
-    }
-  }
+    // سجل معلومات التصحيح
+    console.log('Matching Categories:', matchingCategories);
+    console.log('Matching color:', matchingColors);
+
+    console.log('Selected Category IDs:', this.selectedCategoryId);
+}
+
+
+  
     selectedColors: string[] = [];
     selectedCategoryId: number[] = [];
     

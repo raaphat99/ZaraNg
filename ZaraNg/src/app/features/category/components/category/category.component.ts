@@ -3,6 +3,7 @@ import { Component, EventEmitter, HostListener, Output,ElementRef } from '@angul
 import { FormsModule } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { Router } from '@angular/router';
+import { HambergermenueService } from '../../services/hambergermenue.service';
 
 @Component({
   selector: 'app-category',
@@ -31,7 +32,10 @@ export class CategoryComponent {
     }
   }
   @Output() categorySelected = new EventEmitter<number>();
-  constructor(public categoryService:CategoryService ,private eRef: ElementRef,private router: Router) {
+
+
+
+  constructor(public categoryService:CategoryService ,private eRef: ElementRef,private router: Router,private menue:HambergermenueService) {
    //categoryService.url="http://localhost:5250/api/Category/main-categories";
    categoryService.getAll().subscribe({
     next: a => {

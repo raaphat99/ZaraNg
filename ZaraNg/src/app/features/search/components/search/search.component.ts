@@ -13,10 +13,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
-  searchQuery: string = ''; // خاصية لحفظ قيمة الإدخال
+  searchQuery: string = ''; 
 
   constructor(private router: Router) {} 
-
+  navigateToFilterSearch2(query: string): void {
+    this.router.navigate(['/filtersearch'], { queryParams: { query } }); // تمرير القيمة كمعامل
+  }
   navigateToFilterSearch(): void {
     this.router.navigate(['/filtersearch'], { queryParams: { query: this.searchQuery } }); // تمرير القيمة كمعامل
   }
