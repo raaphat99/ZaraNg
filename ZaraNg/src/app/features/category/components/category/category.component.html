@@ -37,20 +37,28 @@
     'height': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '1px' : 'initial'
     }"></div>
     
-<div class="text-start" id="div2" *ngIf="menuVisible2">
+<div  id="div2" *ngIf="menuVisible2">
   <ng-container *ngFor="let item of selectitem">
     <p 
       class="frop clickable" 
-      (click)="checkAndCallSubcat(item.name)"
+      (click)="checkAndCallSubcat(item.name,item.id)"
       [ngClass]="{'active': item.name === selectedCategory2}"
     >
       {{item.name}} 
     </p>
+
     <ul *ngIf="item.name === selectedCategory2 && subcat?.length">
       <li *ngFor="let i of subcat">
-        {{i.name}}
+        <a (click)="navigateToSubcatProducts(i.id)" class="fs">
+          {{ i.name }}
+        </a>
       </li>
     </ul>
+    
+    
+    
+    
+    
   </ng-container>
 </div>
 

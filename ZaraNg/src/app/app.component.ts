@@ -12,6 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './features/home/components/home/home.component';
 import { LoginComponent } from "./features/authentication/components/login/login.component";
 import { RegisterComponent } from "./features/authentication/components/register/register.component";
+import { ProductfilterComponent } from "./features/productfilter/components/productfilter/productfilter.component";
 
 @Component({
   selector: 'app-root',

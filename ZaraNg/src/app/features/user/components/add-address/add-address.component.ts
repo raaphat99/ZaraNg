@@ -16,6 +16,8 @@ import { City } from '../../viewmodels/city';
 import { Governorate } from '../../viewmodels/governorate';
 import { egyptGovernoratesList } from '../../static-data/egypt-governorates';
 import { egyptCities } from '../../static-data/egypt-cities';
+import { AuthService } from '../../../../core/services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-address',
   standalone: true,
@@ -31,6 +33,7 @@ import { egyptCities } from '../../static-data/egypt-cities';
   styleUrl: './add-address.component.css',
 })
 export class AddAddressComponent implements OnInit {
+  addAddressform!: FormGroup;
   governorates: Governorate[] = egyptGovernoratesList;
   cities: City[] = egyptCities;
 
@@ -46,19 +49,46 @@ export class AddAddressComponent implements OnInit {
     governorate: '',
     region: 'Egypt',
   };
-
+constructor(
+  private authService: AuthService,
+    private fb: FormBuilder,
+    private router : Router
+){}
   ngOnInit() {
-    this.filteredCities = this.cities;
-  }
+    this.addAddressform = this.fb.group({
+      name: ['', [Validators.required]],
+      surname: ['', [Validators.required]],
+      street: ['', Validators.required],
+      moreInfo: [''],
+      governorate: ['', Validators.required],
+      city: [{ value: '', disabled: true }, Validators.required],
+      phonePrefix: ['', Validators.required],
+      phoneNumber: ['', Validators.required],});
+      this.addAddressform.get('governorate')?.valueChanges.subscribe(() => {
+        this.onGovernorateChange();
+      });
+    }
+  
 
   onGovernorateChange() {
-    this.address.city = ''; // Reset city when governorate changes
-    this.filteredCities = this.cities.filter(
-      (city) =>
-        city.governorate_id === this.getGovernorateId(this.address.governorate)
-    );
-  }
+    const governorateControl = this.addAddressform.get('governorate');
+    const cityControl = this.addAddressform.get('city');
 
+    if (governorateControl && cityControl) {
+      const selectedGovernorate = governorateControl.value;
+      cityControl.setValue('');
+
+      if (selectedGovernorate) {
+        this.filteredCities = this.cities.filter(
+          (city) => city.governorate_id === this.getGovernorateId(selectedGovernorate)
+        );
+        cityControl.enable();
+      } else {
+        this.filteredCities = [];
+        cityControl.disable();
+      }
+    }
+  }
   getGovernorateId(governorateName: string): string {
     const governorate = this.governorates.find(
       (g) => g.governorate_name_en === governorateName
@@ -76,15 +106,22 @@ export class AddAddressComponent implements OnInit {
 
   onBlur(field: string) {
     this.focusedFields[field] = false;
+    const control = this.addAddressform.get(field);
+    if (control) {
+      control.markAsTouched();
+    }
   }
 
   getErrorMessage(field: string): string {
-    switch (field) {
-      case 'moreInfo':
-        return 'optional';
-      default:
-        return 'Required field ';
+    const control = this.addAddressform.get(field);
+    if (control?.hasError('required')) {
+      return 'Field is required';
     }
+    if (field === 'city' ) {
+      return 'Please select a governorate first';
+    }
+  
+    return 'Please enter ' + field;
   }
 
   getInstructionMessage(field: string): string {
@@ -115,18 +152,13 @@ export class AddAddressComponent implements OnInit {
   }
 
   showErrorMessage(field: string): boolean {
-    return (
-      this.touchedFields[field] &&
-      !this.focusedFields[field] &&
-      this.isFieldEmpty(field)
-    );
+    const control = this.addAddressform.get(field);
+    return control ? (control.invalid && (control.touched || control.dirty)) : false;
   }
 
   showInstructionMessage(field: string): boolean {
-    return (
-      this.focusedFields[field] ||
-      (!this.isFieldEmpty(field) && this.touchedFields[field])
-    );
+    const control = this.addAddressform.get(field);
+    return this.focusedFields[field] || (control ? (!control.value && control.touched) : false);
   }
 
   getMessageType(field: string): 'instruction' | 'warning' | null {
@@ -137,7 +169,6 @@ export class AddAddressComponent implements OnInit {
     }
     return null;
   }
-
   getMessage(field: string): string {
     const messageType = this.getMessageType(field);
     if (messageType === 'warning') {

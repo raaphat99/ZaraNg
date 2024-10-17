@@ -1,0 +1,20 @@
+<app-header></app-header>
+<div class="div1">
+    <input type="text" class="input1" 
+           [(ngModel)]="searchQuery" 
+           (ngModelChange)="searchQuery = $event.toUpperCase()"
+           (keydown.enter)="fetchProductsByKeyword(searchQuery)">
+    <div class="div2">
+        <ul class="ulstyle">
+            <li *ngFor="let item of category" 
+            (click)="selectCategory(item)"
+            >
+            <span [ngClass]="{'selected': selectedCategory === item}">{{ item }}</span>
+        </li>
+        
+        
+        </ul>
+    </div>
+</div>
+<app-colorsearch *ngIf="selectedCategoryId.length!=0" [colorAndCategory]="colorAndCategory"></app-colorsearch>
+

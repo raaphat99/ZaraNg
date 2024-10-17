@@ -248,7 +248,7 @@ svg {
 }
 
 #deletionMessage , #addedToWMessage{
-    margin-right: 85px;
+    margin-right: 70px;
     background-color: black;
     color: white;
     font-size: 11px;

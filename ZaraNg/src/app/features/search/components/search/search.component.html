@@ -20,7 +20,7 @@
     <button>Clothing for practising sport</button>   
 </div>
 <div class="sdiv">
-    <input type="text" placeholder="Search...">
+    <input type="text" placeholder="Search..." [(ngModel)]="searchQuery" (keydown.enter)="navigateToFilterSearch()">
 </div>
 
 <app-footer></app-footer>

@@ -1,18 +1,31 @@
 <div class="find-size-modal" [class.show]="isOpen">
   <div class="find-size-modal-content">
     <button class="close-btn" (click)="closeModal()">
-      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="inherit" stroke="inherit" style="box-sizing:border-box;fill:rgb(0, 0, 0);">
-        <path d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z" style="box-sizing:border-box;"></path>
-    </svg>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="inherit"
+        stroke="inherit"
+        style="box-sizing: border-box; fill: rgb(0, 0, 0)"
+      >
+        <path
+          d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"
+          style="box-sizing: border-box"
+        ></path>
+      </svg>
     </button>
+
     <header class="notifications-header">
-      <h1 >NOTIFICATIONS</h1>
+      <h1>NOTIFICATIONS</h1>
       <p class="subheader">
         Stay updated with your account and order activity.
       </p>
       <hr />
     </header>
-    <div class="notification-list" >
+
+    <div class="notification-list">
       <!-- Check if the notifications list is empty -->
       <div *ngIf="notifications.length === 0" class="empty-notifications">
         <div aria-hidden="true">
@@ -45,13 +58,12 @@
       <div
         class="notification-card"
         *ngFor="let notification of notifications"
-        [class.read]="notification.read"
+        [class.read]="notification.isRead"
       >
         <div class="notification-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
-            style="padding-right: 10px; margin-top: 10px"
             height="16"
             fill="none"
             viewBox="0 0 24 24"
@@ -63,19 +75,19 @@
           </svg>
         </div>
         <div class="notification-content">
-          <h2 >{{ notification.title }}</h2>
           <p>{{ notification.message }}</p>
-          <span class="notification-date">{{ notification.date | date }}</span>
+          <span class="notification-date">{{
+            notification.created | date
+          }}</span>
         </div>
         <button
           class="action-button"
-          *ngIf="!notification.read"
+          *ngIf="!notification.isRead"
           (click)="markAsRead(notification)"
         >
           Mark as Read
         </button>
       </div>
-      
     </div>
   </div>
 </div>

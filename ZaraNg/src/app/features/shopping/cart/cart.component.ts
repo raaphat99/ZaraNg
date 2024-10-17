@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { CartService, CartItemDTO } from './services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,63 +12,34 @@ import { FooterComponent } from '../../../shared/components/footer/footer.compon
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
   isShoppingBagActive: boolean = true;
   isWishlistActive: boolean = false;
-  cartItems: Product[] = [
-    {
-      name: 'OVERSIZE POPLIN SHIRT',
-      price: 25,
-      img: 'https://static.zara.net/assets/public/57ad/bb54/bcf642388537/94f46c40a431/07545203020-p/07545203020-p.jpg?ts=1724857479757&w=379&f=auto',
-      quantity: 1,
-      color: 'black',
-      size: 'L',
-    },
-    {
-      name: 'OVERSIZE POPLIN SHIRT',
-      price: 25,
-      img: 'https://static.zara.net/assets/public/530f/51b5/0cfe450d8c52/3bf03bd5aeac/08574409712-e1/08574409712-e1.jpg?ts=1724680456417&w=379&f=auto',
-      quantity: 1,
-      color: 'black',
-      size: 'L',
-    },
-    {
-      name: 'OVERSIZE POPLIN SHIRT',
-      price: 25,
-      img: 'https://static.zara.net/assets/public/55c4/3686/1c35462eb79d/82daf19fc90b/08574770401-p/08574770401-p.jpg?ts=1718278653952&w=379&f=auto',
-      quantity: 1,
-      color: 'black',
-      size: 'L',
-    },
-    {
-      name: 'OVERSIZE POPLIN SHIRT',
-      price: 25,
-      img: 'https://static.zara.net/assets/public/6687/984c/81364951a5ff/6fada239ed24/01887470800-p/01887470800-p.jpg?ts=1726754847093&w=379&f=auto',
-      quantity: 1,
-      color: 'black',
-      size: 'L',
-    },
-    {
-      name: 'OVERSIZE POPLIN SHIRT',
-      price: 25,
-      img: 'https://static.zara.net/assets/public/1cdb/cd4b/5fdc4a869711/7d56a280a8ee/05644833251-p/05644833251-p.jpg?ts=1724310353735&w=379&f=auto',
-      quantity: 1,
-      color: 'black',
-      size: 'L',
-    },
-    {
-      name: 'OVERSIZE POPLIN SHIRT',
-      price: 25,
-      img: 'https://static.zara.net/assets/public/1cdb/cd4b/5fdc4a869711/7d56a280a8ee/05644833251-p/05644833251-p.jpg?ts=1724310353735&w=379&f=auto',
-      quantity: 1,
-      color: 'black',
-      size: 'L',
-    },
-  ];
+  cartItems: CartItemDTO[] = [];
+  addedToWishlist: CartItemDTO | null = null;
+  deletedProduct: CartItemDTO | null = null;
+  currencyCode: string = 'EGP';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+  ) {}
 
-  // Getter for dynamically calculating the total amount
+  ngOnInit(): void {
+    this.loadCartItems();
+  }
+
+  loadCartItems() {
+    this.cartService.getCartItems().subscribe({
+      next: (data) => {
+        this.cartItems = data;
+      },
+      error: (error) => {
+        console.error('Error loading cart items:', error);
+      }
+    });
+  }
+
   get totalAmount(): number {
     return this.cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
@@ -75,88 +47,101 @@ export class CartComponent {
     );
   }
 
-  // Method to add an item to the cart
-  addToCart(item: {
-    price: number;
-    quantity: number;
-    name: string;
-    img: string;
-    color: string;
-    size: string;
-  }) {
-    this.cartItems.push(item);
-    // This will automatically update the cartItemsCount and totalAmount
+  addToCart(productVariantId: number) {
+    const userId = '02e8635d-3a28-49ca-a084-180c12e3b7c3'; // Consider getting this from AuthService
+    this.cartService.addCartItem(productVariantId).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.loadCartItems();
+      }
+    });
   }
 
-  // Method to remove an item from the cart
-  removeFromCart(item: Product) {
-    const index = this.cartItems.indexOf(item);
-    if (index > -1) {
-      this.cartItems.splice(index, 1);
-      this.deletedProduct = { ...item };
-      setTimeout(() => {
-        this.deletedProduct = null;
-      }, 5500);
-    }
+  removeFromCart(item: CartItemDTO) {
+    this.cartService.removeOrDecreaseCartItem(item.id).subscribe({
+      next: (response) => {
+        console.log(response); // Log the success message
+        const index = this.cartItems.findIndex(cartItem => cartItem.id === item.id);
+        if (index > -1) {
+          this.cartItems.splice(index, 1); // Remove the item from the cart array
+          this.deletedProduct = { ...item }; // Set the deleted product
+          setTimeout(() => {
+            this.deletedProduct = null;
+          }, 5500);
+        }
+      },
+      error: (error) => {
+        console.error('Error removing item from cart:', error);
+      }
+    });
   }
 
-  addToWishlist(item: Product) {
-    const index = this.cartItems.indexOf(item);
-    if (index > -1) {
-      this.cartItems.splice(index, 1);
-      this.addedToWishlist = { ...item };
-      setTimeout(() => {
-        this.addedToWishlist = null;
-      }, 5500);
-    }
+  addToWishlist(item: CartItemDTO) {
+    this.cartService.moveToWishlist(item.id).subscribe({
+      next: (response) => {
+        console.log(response);
+        const index = this.cartItems.findIndex(cartItem => cartItem.id === item.id);
+        if (index > -1) {
+          this.cartItems.splice(index, 1);
+          this.addedToWishlist = { ...item };
+          setTimeout(() => {
+            this.addedToWishlist = null;
+          }, 5500);
+        }
+      },
+      error: (error) => {
+        console.error('Error moving item to wishlist:', error);
+      }
+    });
   }
-  addedToWishlist: Product | null = null;
-  deletedProduct: Product | null = null;
-  currencyCode: string = 'EGP';
+
   onContinue() {
-    // Handle continue button click
     console.log('Continue clicked');
   }
 
-  increaseQuantity(item: Product) {
-    item.quantity++;
-    this.cartItems.length++;
+  increaseQuantity(item: CartItemDTO) {
+    this.addToCart(item.productVariantId); // This will add one more of the same item
   }
 
-  decreaseQuantity(item: Product) {
-    if (item.quantity > 1) {
-      item.quantity--;
-    } else {
-      // If quantity becomes 0, remove the item from the cart
-      const index = this.cartItems.indexOf(item);
-      if (index > -1) {
-        this.cartItems.splice(index, 1);
-        this.deletedProduct = { ...item };
-        setTimeout(() => {
-          this.deletedProduct = null;
-        }, 5500);
+  decreaseQuantity(item: CartItemDTO) {
+    this.cartService.removeOrDecreaseCartItem(item.id).subscribe({
+      next: (response) => {
+        console.log(response); // Log the success message
+        if (item.quantity > 1) {
+          item.quantity--; // Decrease quantity on the UI
+        } else {
+          const index = this.cartItems.findIndex(cartItem => cartItem.id === item.id);
+          if (index > -1) {
+            this.cartItems.splice(index, 1); // Remove the item if the quantity is 1
+            this.deletedProduct = { ...item }; // Set the deleted product
+            setTimeout(() => {
+              this.deletedProduct = null;
+            }, 5500);
+          }
+        }
+      },
+      error: (error) => {
+        console.error('Error decreasing item quantity:', error);
       }
-    }
+    });
   }
+
   get cartItemsCount(): number {
-    return this.cartItems.length;
+    return this.cartItems.reduce((count, item) => count + item.quantity, 0);
   }
-  // Method to check if the cart is empty
+
   isCartEmpty(): boolean {
     return this.cartItems.length === 0;
   }
+
   undoDelete() {
     if (this.deletedProduct) {
-      this.cartItems.push(this.deletedProduct);
+      this.addToCart(this.deletedProduct.productVariantId);
       this.deletedProduct = null;
     }
   }
-  // Method to show the list of items in the Wishlist
-  seeList() {}
 
-  
   toggleShoppingBag() {
-    console.log("Shit");
     this.isShoppingBagActive = !this.isShoppingBagActive;
   }
 
@@ -175,3 +160,4 @@ interface Product {
   color: string;
   size: string;
 }
+
