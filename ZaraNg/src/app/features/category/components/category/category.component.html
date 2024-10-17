@@ -1,11 +1,11 @@
 <div class="div1" 
-[ngStyle]="{
+  [ngStyle]="{
     'background-color': (selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4) && menuVisible2 ? 'white' : 'transparent',
     'width': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '380px' : 'initial',
     'height': selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4 ? '600px' : 'initial',
-    'border':( selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4)&& menuVisible2? '0.8px solid black' : 'none',
- }"
->
+    'border': (selectedCategoryId === 5 || selectedCategoryId === 2 || selectedCategoryId === 3 || selectedCategoryId === 4) && menuVisible2 ? '0.8px solid black' : 'none'
+  }">
+  
   <svg class="zara-logo" 
        [ngStyle]="{'visibility': menuVisible2 ? 'visible' : 'hidden'}" 
        width="290" 
