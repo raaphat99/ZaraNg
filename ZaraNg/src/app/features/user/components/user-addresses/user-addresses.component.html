@@ -14,13 +14,13 @@
   <div id="main">
     <div *ngFor="let address of addresses; let i = index" class="address">
       <div class="address-details">
-        <p id="user-name">{{ address.userName }}</p>
+        <p id="user-name">{{ address.name }}</p>
         <p>{{ address.street }}</p>
         <p>{{ address.area }}</p>
         <p>{{ address.state }}</p>
         <p>{{ address.city }}</p>
-        <p>{{ address.phone }}</p>
-        <p *ngIf="address.selected" class="invoicing">INVOICING</p>
+        <p>{{ address.phoneNumber }}</p>
+        <p *ngIf="address.active" class="invoicing">INVOICING</p>
       </div>
 
       <div class="options-menue">
@@ -42,18 +42,18 @@
         </div>
 
         <div *ngIf="optionsMenu[i]" class="option-{{ i }} options">
-          <a class="clickable-div" href="">
-            <div class="button">EDIT</div>
+          <a class="clickable-div" href=""[routerLink]="['/user/profile/:id/update-address',address.id]" routerLinkActive="router-link-active">
+            <div class="button" >EDIT</div>
           </a>
-          <a *ngIf="!address.selected" class="clickable-div" href="">
-            <div class="button">DELETE</div>
+          <a *ngIf="!address.active" class="clickable-div" href="">
+            <div class="button" (click)="deleteAddress(address.id)">DELETE</div>
           </a>
         </div>
       </div>
     </div>
   </div>
 
-  <a href="" class="bottom-button">
+  <a href="" class="bottom-button" [routerLink]="['/user/profile/:id/add-address']" routerLinkActive="router-link-active">
     <div class="button">ADD ADDRESS</div>
   </a>
 </div>

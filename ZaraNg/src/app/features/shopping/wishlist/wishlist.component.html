@@ -68,12 +68,10 @@
                 <span id="deletionMessage">The item has been removed from favourites.</span>
                 <button (click)="undoDelete()">UNDO</button>
             </div>
-        </div>
-        <div *ngFor="let product of wishlistItems; let i = index">
-            <div *ngIf="addedToCart" class="addedToW-message">
-                <span id="addedToWMessage">item added to your shopping bag</span>
-                <button [routerLink]="['/shop/cart']">VIEW</button>
-            </div>
+                <div *ngIf="addedToCart" class="addedToW-message">
+                    <span id="addedToWMessage">item added to your shopping bag</span>
+                    <button [routerLink]="['/shop/cart']">VIEW</button>
+                </div>
         </div>
     </div>
 
