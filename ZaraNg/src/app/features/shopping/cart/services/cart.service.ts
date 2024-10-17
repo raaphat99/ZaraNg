@@ -92,4 +92,12 @@ export class CartService {
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
+  getItemCount(): Observable<number> {
+    const token = localStorage.getItem('token');
+    const headers = { 'Authorization': `Bearer ${token}` };
+  
+    return this.http.get<number>(`${this.apiUrl}/count`, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
 }
