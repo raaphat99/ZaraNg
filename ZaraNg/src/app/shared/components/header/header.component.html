@@ -67,13 +67,14 @@
   <!-- User Actions: Login, Help, Cart -->
   <div class="user-actions">
     <!--Put in href link to Login page -->
-    <a
-      [routerLink]="['/auth/login']"
-      class="LinkContainer"
-      data-qa-id="header-logon-link"
-      tabindex="0"
-      ><span>LOG IN</span></a
-    >
+    <a *ngIf="!userName" [routerLink]="['/auth/login']" class="LinkContainer" data-qa-id="header-logon-link" tabindex="0">
+      <span>LOG IN</span>
+    </a>
+    
+    <a *ngIf="userName" [routerLink]="['/user']" class="LinkContainer" tabindex="0">
+      <span>{{ userName }}</span> 
+    </a>
+    
     <!--Put in href link to Help page -->
     <a
     [routerLink]="['/help']"
@@ -85,18 +86,21 @@
     <!--Put in href link to Cart page -->
     <a
     [routerLink]="['/shop/cart']"
-      class="Shopping"
-      aria-label="Basket empty"
-      data-qa-id="layout-header-go-to-cart"
-      tabindex="0"
+    class="Shopping"
+    aria-label="Basket empty"
+    data-qa-id="layout-header-go-to-cart"
+    tabindex="0"
+  >
+    <span>Shopping bag</span> (
+    <span
+      role="status"
+      aria-live="polite"
+      data-qa-id="layout-header-go-to-cart-items-count"
     >
-      <span>Shopping bag</span> (<span
-        role="status"
-        aria-live="polite"
-        data-qa-id="layout-header-go-to-cart-items-count"
-        >0</span
-      >)
-    </a>
+      {{ itemCount }}
+    </span>)
+  </a>
+  
   </div>
   <ul class="ResponsiveList">
     <li role="search" aria-label="Product search">
@@ -107,9 +111,24 @@
         </a>
     </li>
     <li>
-        <a class="CartLink" aria-label="Basket empty" data-qa-id="layout-header-go-to-cart" [routerLink]="['/shop/cart']" tabindex="0">
-            <span class="CartText">Shopping bag</span> (<span role="status" aria-live="polite" data-qa-id="layout-header-go-to-cart-items-count" class="style-18">0</span>)
-        </a>
+      <a class="CartLink" aria-label="Basket empty" data-qa-id="layout-header-go-to-cart" [routerLink]="['/shop/cart']" tabindex="0">
+        <a
+        [routerLink]="['/shop/cart']"
+        class="Shopping"
+        aria-label="Basket empty"
+        data-qa-id="layout-header-go-to-cart"
+        tabindex="0"
+      >
+        <span>Shopping bag</span> (
+        <span
+          role="status"
+          aria-live="polite"
+          data-qa-id="layout-header-go-to-cart-items-count"
+        >
+          {{ itemCount }}
+        </span>)
+      </a>
+      </a>
     </li>
 </ul>
 

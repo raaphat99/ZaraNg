@@ -16,7 +16,10 @@ export const routes: Routes = [
         path: 'user',
         loadChildren: () => import('./features/user/user.module').then(m => m.UserModule)
     },
-
+    {
+        path: 'admin',
+        loadChildren: () => import('./features/admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule)
+    },
     {
         path: 'auth',
         loadChildren: () => import('./features/authentication/authentication.module').then(m => m.AuthenticationModule)  // Lazy load the user module

@@ -1,0 +1,139 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 150px auto;
+    padding: 20px;
+  }
+  h1 {
+    font-weight: 500;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .content {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+  }
+  
+  .flex-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 20px;
+  }
+  .flex-row::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .card {
+    flex: 0 0 300px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0.8px solid #000;
+    background-color: white;
+    border-radius: 8px;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .icon {
+    font-size: 2rem;
+  }
+  
+  .dashboard-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  .dashboard-table th {
+    font-weight: 500;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    background-color:black;
+    color: white;
+  }
+  .dashboard-table td {
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: 10px;
+    text-align: left;
+    border: 0.8px solid #000;
+  }
+  
+  .action-button,
+  .delete-button {
+    text-decoration: none;
+    color: black;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    background-color: #fff;
+    border: 0.8px solid black;
+    padding: 4px 20px;
+    margin: 10px;
+    border-radius: 4px;
+  }
+  
+  .action-button:hover,
+  .delete-button:hover {
+    background-color: #000000;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .flex-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .card {
+      margin-top: 15px;
+      margin-bottom: 0px;
+      margin-left: 0px;
+    }
+  
+    .action-button,
+    .delete-button {
+      font-size: 12px;
+    }
+  }
+  
+  
+  
