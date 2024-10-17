@@ -14,6 +14,17 @@
 .header:hover {
   background-color: rgb(255, 255, 255, 0.9);
 }
+.div5{
+display: none;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  background-color: white(0, 0, 0, 0.5);
+  transition: left 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .menu-btn {
   box-sizing: border-box;
   background-color: transparent;
@@ -108,6 +119,202 @@
   text-decoration: none;
   color: black;
   font-family: inherit;
+}
+
+*{
+  font-weight: 300;
+font-stretch: 100%;
+line-height: 16px;
+font-family: inherit;
+font-size: 14px;
+letter-spacing: 0.8px;
+text-transform: uppercase;
+}
+.ulstyle{
+  list-style: none;
+   padding: 0; 
+   margin-left: 0px;
+    display: flex; 
+    justify-content: flex-start;
+    margin-top: 40px;
+    padding-left: 0px;
+    cursor: pointer;
+}
+.ulstyle1{
+
+   display: none;
+}
+.sticky-header {
+  position: fixed;
+  top: 0;
+  z-index: 2000;
+  margin-left: 120px;
+}
+.sticky-header {
+  background-color: transparent;
+}
+li{
+  margin-left: 20px;
+}
+.border-div {
+  border: solid black;
+  border-width: 0.5px;
+  transition: border 0.9s, width 0.9s;
+  height: 0px;
+  display: none;
+  z-index: 1000;
+  background-size: cover;
+  background-position: center
+}
+.white-background {
+  background-color: white;
+}
+#div2{
+  margin-left: 20px;
+  margin-top: 10px; 
+  background-color: white;
+  border: 0.8 solid black;
+  padding-left: 10px;
+  z-index: 5000;
+  cursor: pointer;
+  max-height: 350px;
+   overflow-y: auto;
+   scrollbar-width: thin; 
+   scrollbar-color: black;
+   font-weight: 300;
+   font-stretch: 100%;
+   line-height: 16px;
+   font-family: inherit;
+   font-size: 5px;
+   letter-spacing: 0.8px;
+   text-transform: uppercase;
+}
+
+.fs{
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+#div2 ul {
+  list-style-type: none; /* إزالة النقاط من القائمة */
+  padding-left: 0; /* إزالة الفراغات على اليسار */
+  margin-top: 5px; /* إضافة فراغ بين الكلمة والقائمة */
+}
+.div6{
+  z-index: 10000;
+  display: none;
+}
+.div6 ul{
+  list-style-type: none; /* إزالة النقاط من القائمة */
+  padding-left: 0; /* إزالة الفراغات على اليسار */
+  margin-top: 5px; /* إضافة فراغ بين الكلمة والقائمة */
+  display: none;
+}
+#div2 li {
+  padding: 5px 0; /* مسافة بين العناصر */
+}
+
+#div2 .clickable {
+  cursor: pointer;
+}
+
+#div2 ul li {
+  border: none; /* إزالة أي حدود إن وجدت */
+}
+
+/* تخصيص عرض شريط التمرير */
+#div2::-webkit-scrollbar {
+width: 2px; /* قم بزيادة العرض */
+}
+
+
+.div2 li {
+  padding: 5px 0; /* مسافة بين العناصر */
+}
+
+.div2 .clickable {
+  cursor: pointer;
+}
+
+.div2 ul li {
+  border: none; /* إزالة أي حدود إن وجدت */
+}
+
+/* تخصيص عرض شريط التمرير */
+.div2::-webkit-scrollbar {
+width: 2px; /* قم بزيادة العرض */
+}
+
+
+
+/* تخصيص مسار شريط التمرير */
+#div2::-webkit-scrollbar-track {
+background: #000; /* لون المسار الأسود */
+border-radius: 10px;
+}
+
+/* تخصيص مؤشر التمرير */
+#div2::-webkit-scrollbar-thumb {
+background: #000; /* لون مؤشر التمرير الأسود */
+border-radius: 10px;
+}
+
+/* تخصيص لون المؤشر عند التمرير عليه */
+.div2::-webkit-scrollbar-thumb:hover {
+background: #333; /* تغيير اللون عند التمرير عليه */
+}
+
+.div2::-webkit-scrollbar-track {
+  background: #000; /* لون المسار الأسود */
+  border-radius: 10px;
+  }
+  
+  /* تخصيص مؤشر التمرير */
+  .div2::-webkit-scrollbar-thumb {
+  background: #000; /* لون مؤشر التمرير الأسود */
+  border-radius: 10px;
+  }
+  
+  /* تخصيص لون المؤشر عند التمرير عليه */
+  .div2::-webkit-scrollbar-thumb:hover {
+  background: #333; /* تغيير اللون عند التمرير عليه */
+  }
+
+
+
+
+.zara-logo {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin-left: 30px;
+  padding-top: 20px;
+  padding-left: 10px; 
+  z-index: 3000;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+.div1{
+  margin-left: 150px;
+  z-index: 20000;
+  position: fixed;
+}
+.frop{
+  margin-bottom: 5px; 
+  font-weight: 250; 
+  color: black;
+}
+.secp{
+  margin-bottom: 30px;
+   margin-top: 30px;
+}
+a{
+  text-decoration: none; 
+  color: black;
 }
 
 /* Media queries for smooth resizing and moving logo to the left */
@@ -390,6 +597,48 @@
   .ResponsiveList {
     display: flex;
     right: 10px;
+  }
+  .div5{
+    display: block;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    margin-top: 170px;
+    z-index: 2000;
+  }
+  .div6{
+    margin-left: 20px;
+    margin-top: 10px; 
+    background-color: white;
+    border: 0.8 solid black;
+    padding-left: 10px;
+    z-index: 500000;
+    cursor: pointer;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 5px;
+    letter-spacing: 0.8px;
+    text-transform:uppercase;
+    display: block;
+  }
+  .div6 ul{
+    list-style-type: none; /* إزالة النقاط من القائمة */
+    padding-left: 0; /* إزالة الفراغات على اليسار */
+    margin-top: 5px; /* إضافة فراغ بين الكلمة والقائمة */
+  }
+  .ulstyle1{
+    list-style: none;
+    padding: 0; 
+    margin-left: 0px;
+     display: flex; 
+     justify-content: flex-start;
+     margin-top: 40px;
+     padding-left: 0px;
+     cursor: pointer;  }
+  .div1{
+    display: none;
   }
 }
 @media (max-width: 400px) {
