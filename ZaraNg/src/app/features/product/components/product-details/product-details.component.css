@@ -2,7 +2,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    margin: 130px 20px 3em; /* Top - Horizontal - Bottom*/
+    margin: 130px 20px 3em;
+    /* Top - Horizontal - Bottom*/
     font-size: 10px;
 }
 
@@ -232,14 +233,30 @@
     margin: 1em 0;
 }
 
-.grid-item {
+.size-item {
     padding: 1em;
     text-align: center;
+    font-size: 11px;
+    color: black;
     border: 1px solid black;
+    transition: background-color 0.4s ease;
 }
 
-.grid-item:hover {
-    background-color: lightgray;
+.size-item.active {
+    background-color: black;
+    color: white;
+    font-weight: 400;
+}
+
+
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.clickable {
+    cursor: pointer;
 }
 
 .btn {
@@ -256,10 +273,16 @@
     border-top: 1px solid black;
     padding: 1em;
     width: 100%;
+    transition: all 1s ease;
 }
 
 .add-to-cart-btn:hover {
     color: gray;
+}
+
+.change-style {
+    background-color: black !important;
+    color: white !important;
 }
 
 /* Modal container */

@@ -1,0 +1,13 @@
+<div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Warning</h2>
+        </div>
+        <div class="modal-body">
+            <p>You must select a size.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" (click)="closeModal()">Close</button>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" (click)="goToProductDetails(product.id)">
 
     <div class="product-image-container">
         <img src="{{product.mainImageUrl}}" style="width:100%">
@@ -13,7 +13,7 @@
 
     <div class="wrapper">
         <div class="product-details">
-            <p id="product-name" [routerLink]="['/products/:id']"  >{{product.name}}</p>
+            <p id="product-name" >{{product.name}}</p>
             <p id="product-price">{{product.price}} EGP</p>
         </div>
         <button (click)="toggleBookmark()" class="bookmark-btn">

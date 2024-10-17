@@ -159,7 +159,14 @@ export class CartComponent {
     console.log("Shit");
     this.isShoppingBagActive = !this.isShoppingBagActive;
   }
+
+  goToPayment() {
+    
+  }
 }
+
+
+
 interface Product {
   name: string;
   price: number;

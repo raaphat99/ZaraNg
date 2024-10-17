@@ -1,0 +1,4 @@
+<div class="notification" *ngIf="isVisible" [ngClass]="{ 'slide-in': isVisible, 'slide-out': !isVisible }">
+    <p>{{ message }}</p>
+    <a [routerLink]="['/shop/wishlist']" class="wishlist-link">See List</a>
+</div>

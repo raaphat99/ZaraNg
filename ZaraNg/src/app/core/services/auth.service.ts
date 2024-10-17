@@ -1,20 +1,30 @@
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable, of, tap,catchError,throwError } from "rxjs";
-import { HttpClient,HttpErrorResponse } from "@angular/common/http";
+import { HttpClient,HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-isAuthenticated?: boolean = false;
-redirectUrl: any;
-private apiUrl ='http://localhost:5250/api/Authenticate'
-  constructor(
-    private httpClient: HttpClient
-  ) {}
+  isAuthenticated?: boolean = false;
+  redirectUrl: any;
+  private apiUrl ='http://localhost:5250/api/Authenticate'
   private jwtHelper = new  JwtHelperService();
+  
+  constructor(private httpClient: HttpClient) {}
 
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  getAuthHeaders(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  }
 
   login( email: string, password: string ) : Observable<any> {
 

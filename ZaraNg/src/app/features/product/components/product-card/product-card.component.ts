@@ -1,19 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '../../viewmodels/product';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'product-card',
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css'
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit{
   @Input() product!: Product;
   isBookmarked: boolean = false;
   isPopupVisible = false;
   sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
-  constructor(private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService, private router: Router) {}
+
+  ngOnInit(): void {
+    
+  }
+
+  goToProductDetails(productId: number) {
+    this.router.navigate(['/products', productId]);
+  }
+
 
   toggleBookmark() {
     this.isBookmarked = !this.isBookmarked;
