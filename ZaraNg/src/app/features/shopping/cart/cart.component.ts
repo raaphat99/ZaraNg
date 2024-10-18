@@ -145,8 +145,15 @@ export class CartComponent implements OnInit {
     this.isShoppingBagActive = !this.isShoppingBagActive;
   }
 
-  goToPayment() {
-    
+  proceedToPayment() {
+    // Calculate total price by summing up the price of each cart item
+    const totalPrice = this.totalAmount;
+  
+    // Set cart items and total price in the service
+    this.cartService.setCartItems(this.cartItems, totalPrice);
+  
+    // Navigate to the shipping method selection
+    this.router.navigate(['/payment']);
   }
 }
 

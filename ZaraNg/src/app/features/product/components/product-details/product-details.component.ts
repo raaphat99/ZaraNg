@@ -1,14 +1,14 @@
 import { CustomValidators } from './../../../../shared/custom-validators/custom-validators';
-import { CartService } from './../../../shopping/services/cart.service';
+import { CartService } from '../../../shopping/cart/services/cart.service';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ProductVariant } from '../../viewmodels/product-variant';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../viewmodels/product';
 import { ProductImage } from '../../viewmodels/product-image';
-import { WishlistService } from '../../../shopping/services/wishlist.service';
 import { WishlistNotificationComponent } from '../../../../shared/components/wishlist-notification/wishlist-notification.component';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
+import { WishlistService } from '../../../shopping/wishlist/services/wishlist.service';
 
 @Component({
   selector: 'product-details',
@@ -61,7 +61,7 @@ export class ProductDetailsComponent implements OnInit {
       this.showModal = true; // Show modal if size is not selected
     } else {
       // Add the variant to the cart using the CartService
-      this.CartService.addToCart(this.variantId)
+      this.CartService.addCartItem(this.variantId)
         .subscribe({
           next: (response: any) => console.log("This item is successfully added to your cart."),
           error: (error: any) => console.log(error),
@@ -200,7 +200,7 @@ export class ProductDetailsComponent implements OnInit {
         }
       );
     } else {
-      this.wishlistService.addToWishlist(productId).subscribe(
+      this.wishlistService.addProductToWishlist(productId).subscribe(
         {
           next: () => {
             this.isBookmarked = true;

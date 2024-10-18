@@ -1,7 +1,7 @@
 .grid-container {
     display: grid;
     height: 100vh;
-    grid-template-columns: 33.33% 1fr; 
+    grid-template-columns: 33.33% 1fr;
     margin-top: 130px;
 }
 
@@ -33,6 +33,7 @@ p {
 .receive-location,
 .order-summary {
     border: 1px solid black;
+    width: 400px;
 }
 
 .receive-location {
@@ -55,11 +56,16 @@ p {
     flex: 1;
     min-height: 80px;
     font-size: 10px;
+    color: rgb(41, 41, 41);
 }
 
 #home,
 #store {
     border-right: 1px solid black;
+}
+
+#home {
+    font-weight: 500;
 }
 
 #store a,
@@ -122,7 +128,7 @@ p {
     flex-grow: 1;
     /* Allows images to shrink when necessary */
     flex-shrink: 1;
-    flex-basis: 122px;
+    width: 125px;
     /* Ensures images don’t grow beyond their container */
     max-width: 100%;
     height: auto;
@@ -177,6 +183,12 @@ p {
     align-items: center;
 }
 
+.radio-group label {
+    font-size: 11px;
+    padding: 1em 0;
+    font-weight: 450;
+}
+
 .radio-group input[type="radio"] {
     margin: 0px;
     margin-right: 0.5em;
@@ -193,18 +205,104 @@ p {
     font-size: 10px;
 }
 
+.checkout-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: white;
+    border-top: 0.8px solid black;
+    height: 78px;
+    transition: all 0.5s linear;
+    z-index: 10;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+.total-section {
+    text-align: right;
+    margin-right: 20px;
+    flex-direction: column;
+    margin-right: 40px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1;
+    color: #000;
+}
+
+.shipping-label {
+    margin-right: 25px;
+    line-height: 1;
+}
+
+.continue-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #e5e5e5;
+    border: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 78px;
+    width: 160px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.continue-button:hover {
+    background-color: #333;
+}
+
+.continue-button .arrow {
+    display: inline-block;
+    opacity: 0;
+    /* Initially hidden */
+    transform: translateX(-20px);
+    /* Start off the left side of the button */
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    background-color: #000;
+    color: #e5e5e5;
+}
+
+.continue-button:hover .arrow {
+    transform: translateX(0);
+    /* Move to the original position */
+    opacity: 1;
+    /* Fade in */
+}
+
+.continue-button .arrow {
+    animation: slideInOut 2s forwards;
+    animation-delay: 0.5s;
+    /* Delay for the arrow to start */
+}
+
 @media (max-width: 768px) {
     .grid-container {
-        grid-template-columns: 1fr; /* One column layout on small screens */
+        grid-template-columns: 1fr;
+        /* One column layout on small screens */
     }
 
     .column-1 {
-        grid-column: span 1; /* Span the full width */
+        grid-column: span 1;
+        /* Span the full width */
     }
 }
 
 @media (min-width: 769px) and (max-width: 1040px) {
     .grid-container {
-        grid-template-columns: 50% 1fr; /* First column takes 50% on medium screens */
+        grid-template-columns: 50% 1fr;
+        /* First column takes 50% on medium screens */
     }
 }

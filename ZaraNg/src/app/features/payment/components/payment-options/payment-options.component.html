@@ -1,0 +1,27 @@
+<app-header></app-header>
+
+<div class="container">
+    <h2>Choose a payment method</h2>
+    <div class="payment-options">
+        <div class="option selectable-item" (click)="selectOption($event, option.value)" *ngFor="let option of paymentOptions">
+            <img src={{option.iconSrc}} alt="Visa">
+            <span>{{option.name}}</span>
+        </div>
+    </div>
+</div>
+
+    <!-- Checkout Footer -->
+    <div class="checkout-footer">
+        <div class="total-section">
+            <div class="total-row">
+                <span class="total-label">TOTAL</span>
+                <span class="total-amount">{{totalAmount}} {{currencyCode}}</span>
+            </div>
+        </div>
+        <button class="continue-button" (click)="proceedToConfirmOrder()">
+            CONTINUE
+            <span class="arrow">→</span>
+        </button>
+    </div>
+
+<app-footer></app-footer>

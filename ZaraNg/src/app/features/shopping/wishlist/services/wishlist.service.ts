@@ -1,7 +1,9 @@
+import { AuthService } from './../../../../core/services/auth.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { ApiService } from '../../../../core/services/api.service';
 
 export interface WishListItemDTO {
   id: number;
@@ -13,17 +15,19 @@ export interface WishListItemDTO {
 @Injectable({
   providedIn: 'root'
 })
-export class WishlistService {
-  private apiUrl = 'http://localhost:5250/api/WishList';
+export class WishlistService extends ApiService {
 
-  constructor(private http: HttpClient) { }
+  private headers: any;
+
+  constructor(httpClient: HttpClient, private authService: AuthService) {
+    super("http://localhost:5250/api/WishList", httpClient)
+    this.headers = this.authService.getAuthHeaders();
+  }
 
   // Method to get all wishlist items for a user
   getAllItems(): Observable<WishListItemDTO[]> {
-    const token = localStorage.getItem('token');
-    const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.get<WishListItemDTO[]>(`${this.apiUrl}`, {
-      headers 
+    return this.httpClient.get<WishListItemDTO[]>(`${this.url}`, {
+      headers: this.headers 
     }).pipe(
       catchError(this.handleError)
     );
@@ -31,10 +35,8 @@ export class WishlistService {
 
   // Method to add a new item to the wishlist
   addToWishlist(productId: number): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.post<any>(`${this.apiUrl}/${productId}`, {}, {
-      headers, 
+    return this.httpClient.post<any>(`${this.url}/${productId}`, {}, {
+      headers: this.headers , 
       observe: 'response'
     }).pipe(
       tap((response) => {
@@ -47,10 +49,8 @@ export class WishlistService {
 
   // Method to move an item from wishlist to cart
   moveToCart(wishlistItemId: number): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.post<any>(`${this.apiUrl}/move-to-cart/${wishlistItemId}`, {}, {
-      headers
+    return this.httpClient.post<any>(`${this.url}/move-to-cart/${wishlistItemId}`, {}, {
+      headers: this.headers 
     }).pipe(
       tap((response) => {
         console.log('Item moved to cart successfully');
@@ -78,5 +78,20 @@ export class WishlistService {
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
+
+  addProductToWishlist(productId: number): Observable<any> {
+    const headers = this.authService.getAuthHeaders();
+    return this.httpClient.post(`${this.url}/addProduct/${productId}`, null, { headers });
+  }
+
+  removeFromWishlist(productId: number): Observable<any> {
+    return this.httpClient.post(`${this.url}/removeProduct/${productId}`, null, { headers: this.headers  });
+  }
+
+  isInWishlist(productId: number): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${this.url}/isInWishlist/${productId}`, { headers: this.headers  });
+  }
+
+
 
 }
