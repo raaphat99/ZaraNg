@@ -3,6 +3,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable, of, tap,catchError,throwError } from "rxjs";
 import { HttpClient,HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { errorContext } from "rxjs/internal/util/errorContext";
+import { UserDTO } from "../../features/admin-dashboard/viewmodels/userdata";
 
 @Injectable({
   providedIn: "root",
@@ -27,6 +28,12 @@ export class AuthService {
     });
   }
 
+  getCustomerData(): Observable<UserDTO[]> {
+    const token = this.getToken();
+    return this.httpClient.get<UserDTO[]>(`${this.apiUrl}`, {
+      headers: this.getAuthHeaders(),
+    });
+  }
   login( email: string, password: string ) : Observable<any> {
 
     return this.httpClient?.post<any>(`${this.apiUrl}/login `,{ email, password }).pipe(
@@ -51,7 +58,7 @@ export class AuthService {
 
     return this.httpClient?.post<any>(`${this.apiUrl}/register`,{ email, password, name, surname },{observe: 'response' }).pipe(
       tap((response)=>{
-        this.login(email, password);
+        
       })
     )
   }
@@ -100,8 +107,8 @@ changePassword(OldPassword: string,NewPassword: string): Observable<any> {
 }
 deleteAccount(): Observable<any> {
   const token = localStorage.getItem('token');
-  return this.httpClient?.delete<any>(this.apiUrl, { headers: { 'Authorization': `Bearer ${token}` } }).pipe(( tap((response)=>{
-    console.log(response);
+  return this.httpClient?.delete<any>(this.apiUrl, { headers: { 'Authorization': `Bearer ${token}` } ,observe: 'response'}).pipe(( tap((response)=>{
+    
     if (response) {
       localStorage.removeItem('token');
       this.isAuthenticated = false;

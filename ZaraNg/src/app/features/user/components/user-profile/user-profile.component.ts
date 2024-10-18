@@ -28,7 +28,14 @@ closeModal() {
 }
 
 deleteAccount() {
-   // Emit event to the parent
+   this.authService.deleteAccount().subscribe((response) => {
+     if (response.status === 200) {
+      console.log('Account deleted successfully.');
+       this.authService.logout();
+       this.router.navigate(['/home']);
+     }
+     
+   });
   this.closeModal();
 }
 logout(){

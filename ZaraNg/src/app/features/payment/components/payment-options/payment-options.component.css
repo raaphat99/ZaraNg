@@ -173,7 +173,31 @@ h2 {
     animation-delay: 0.5s;
     /* Delay for the arrow to start */
 }
-
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-container {
+    background-color: white;
+    padding: 2rem;
+    
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .order-confiremd{
+    width: 100px;
+    height: 100px;
+  }
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .payment-options {
