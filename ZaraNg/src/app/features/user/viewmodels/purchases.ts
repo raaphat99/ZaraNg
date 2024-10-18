@@ -9,5 +9,6 @@ export interface Order {
     }[];
     totalPrice: number; 
     status:string;
+    customerName :string,
 }
 

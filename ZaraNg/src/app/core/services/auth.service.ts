@@ -115,4 +115,13 @@ changePassword(OldPassword: string,NewPassword: string): Observable<any> {
     this.isAuthenticated = false;
     
   }
+  getUserName(): string | null {
+    const token = localStorage.getItem('token');
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return `${decodedToken.name} `;
+
+    }
+    return null;
+  }
 }
