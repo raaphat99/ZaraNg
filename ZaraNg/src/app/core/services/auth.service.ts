@@ -80,13 +80,23 @@ changePassword(OldPassword: string,NewPassword: string): Observable<any> {
     'Content-Type': 'application/json'  // Ensure JSON content type
   };
   return this.httpClient?.put<any>(`${this.apiUrl}/change-password`,body, {headers, observe: 'response'}).pipe((tap((response)=>{
-    console.log(response);
+    ;
   }),
   catchError((error) => {
   
     return throwError(() => error); // Ensure observable stream handles error properly
   })
 ));
+}
+deleteAccount(): Observable<any> {
+  const token = localStorage.getItem('token');
+  return this.httpClient?.delete<any>(this.apiUrl, { headers: { 'Authorization': `Bearer ${token}` } }).pipe(( tap((response)=>{
+    console.log(response);
+    if (response) {
+      localStorage.removeItem('token');
+      this.isAuthenticated = false;
+    }
+  })));
 }
   get currentUser() {
     let token;

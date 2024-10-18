@@ -82,7 +82,7 @@
         <a (click)="logout()">sign out</a>
       </div>
       <div class="extra-option">
-        <a href="">Delete your account</a>
+        <a (click)="openModal()">Delete your account</a>
       </div>
       <div class="extra-option policy">
         <span
@@ -95,6 +95,15 @@
           ></span
         >
       </div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-container">
+    <p>Are you sure you want to delete your account permanently?</p>
+    <div class="button-group">
+      <button class="modal-btn" (click)="deleteAccount()">Delete</button>
+      <button class="modal-btn" (click)="closeModal()">Cancel</button>
     </div>
   </div>
 </div>
