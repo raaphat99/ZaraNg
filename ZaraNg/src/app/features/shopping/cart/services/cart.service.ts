@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 export interface CartItemDTO {
@@ -19,6 +19,14 @@ export interface CartItemDTO {
 })
 export class CartService {
   private apiUrl = 'http://localhost:5250/api/Cart'; 
+  private headers: any;
+  private cartData = new BehaviorSubject<any>({
+    cartItems: [],
+    shippingMethod: null,
+    userAddressId: null,
+    paymentMethod: null,
+    totalPrice: 0
+  });
 
   constructor(private http: HttpClient) { }
 
@@ -91,5 +99,31 @@ export class CartService {
     }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
+  }
+
+  cartData$ = this.cartData.asObservable();
+
+  setCartItems(cartItems: any[], totalPrice: number) {
+    const currentData = this.cartData.getValue();
+    currentData.cartItems = cartItems;
+    currentData.totalPrice = totalPrice;
+    this.cartData.next(currentData);
+  }
+
+  setShippingDetails(shippingMethod: string, userAddressId: number) {
+    const currentData = this.cartData.getValue();
+    currentData.shippingMethod = shippingMethod;
+    currentData.userAddressId = userAddressId;
+    this.cartData.next(currentData);
+  }
+
+  setPaymentMethod(paymentMethod: string) {
+    const currentData = this.cartData.getValue();
+    currentData.paymentMethod = paymentMethod;
+    this.cartData.next(currentData);
+  }
+
+  getCartData() {
+    return this.cartData.getValue();
   }
 }
