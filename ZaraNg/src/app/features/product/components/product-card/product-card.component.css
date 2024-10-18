@@ -4,6 +4,7 @@
     margin-bottom: -1px;
     height: 380px;
     position: relative;
+    cursor: pointer;
 }
 
 .product-image-container {

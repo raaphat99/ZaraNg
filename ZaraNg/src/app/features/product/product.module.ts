@@ -12,6 +12,9 @@ import { HeaderComponent } from "../../shared/components/header/header.component
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { SizeModalComponent } from './components/size-modal/size-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { WishlistComponent } from '../shopping/wishlist/wishlist.component';
+import { WishlistNotificationComponent } from "../../shared/components/wishlist-notification/wishlist-notification.component";
+import { CustomModalComponent } from '../../shared/components/custom-modal/custom-modal.component';
 
 
 @NgModule({
@@ -19,7 +22,7 @@ import { ToastrService } from 'ngx-toastr';
     ProductListComponent,
     ProductDetailsComponent,
     ProductCardComponent,
-    SizeModalComponent
+    SizeModalComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +30,9 @@ import { ToastrService } from 'ngx-toastr';
     ProductRoutingModule,
     HeaderComponent,
     FooterComponent,
+    WishlistComponent,
+    WishlistNotificationComponent,
+    CustomModalComponent
 ],
   providers: [
     ProductService, 

@@ -1,0 +1,43 @@
+<div class="modal" *ngIf="isopen" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="price-range-container">
+      <div class="price-labels">
+        <span>{{ startPrice }} EGP</span>
+        <span>{{ endPrice }} EGP</span>
+      </div>
+      <div class="slider-container">
+        <input
+          type="range"
+          [min]="minPrice"
+          [max]="maxPrice"
+          [(ngModel)]="startPrice"
+          (input)="updatePrices()"
+          class="slider" />
+        
+        <input
+          type="range"
+          [min]="minPrice"
+          [max]="maxPrice"
+          [(ngModel)]="endPrice"
+          (input)="updatePrices()"
+          class="slider" />
+        
+        <div class="price-range-indicator">
+          <div class="range"
+               [style.left]="(startPrice - minPrice) / (maxPrice - minPrice) * 100 + '%'" >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button 
+      (click)="clearSelection(); $event.stopPropagation()" 
+      [ngClass]="{ 'disabled-button': startPrice === minPrice && endPrice === maxPrice }"
+      [disabled]="startPrice === minPrice && endPrice === maxPrice">
+      CLEAR
+    </button>
+    
+      <button (click)="viewResults(); $event.stopPropagation()">VIEW RESULTS</button>
+    </div>
+  </div>
+</div>

@@ -8,14 +8,24 @@ import { errorContext } from "rxjs/internal/util/errorContext";
   providedIn: "root",
 })
 export class AuthService {
-isAuthenticated?: boolean = false;
-redirectUrl: any;
-private apiUrl ='http://localhost:5250/api/Authenticate'
-  constructor(
-    private httpClient: HttpClient
-  ) {}
+  isAuthenticated?: boolean = false;
+  redirectUrl: any;
+  private apiUrl ='http://localhost:5250/api/Authenticate'
   private jwtHelper = new  JwtHelperService();
+  
+  constructor(private httpClient: HttpClient) {}
 
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  getAuthHeaders(): HttpHeaders {
+    const token = this.getToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  }
 
   login( email: string, password: string ) : Observable<any> {
 
@@ -114,5 +124,14 @@ deleteAccount(): Observable<any> {
     localStorage.removeItem("token");
     this.isAuthenticated = false;
     
+  }
+  getUserName(): string | null {
+    const token = localStorage.getItem('token');
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return `${decodedToken.name} `;
+
+    }
+    return null;
   }
 }

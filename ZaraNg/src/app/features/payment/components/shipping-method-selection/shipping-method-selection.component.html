@@ -6,13 +6,13 @@
             <h2>Where do you want to receive your order?</h2>
             <div class="receive-location">
                 <div class="row-1">
-                    <div id="home">
+                    <div class="label" id="home">
                         <img src="https://static.zara.net/static/images/deliverymethods/24-box-active.svg" style="width: 25px; height: 25px;"
                             alt="">
                         <p>Home</p>
                     </div>
 
-                    <div id="store">
+                    <div class="label" id="store">
                         <a (click)="zaraStoreModal.toggleModal($event)">
                             <img src="https://static.zara.net/static/images/deliverymethods/Icon-Shop.svg" style="width: 25px; height: 25px;"
                                 alt="">
@@ -21,7 +21,7 @@
                         <zara-store-modal #zaraStoreModal></zara-store-modal>
                     </div>
 
-                    <div id="drop-point">
+                    <div class="label" id="drop-point">
                         <a>
                             <img src="https://static.zara.net/static/images/deliverymethods/Icon-Drop.svg"
                                 style="width: 25px; height: 25px;" alt="">
@@ -42,18 +42,14 @@
                 <p id="title">Items</p>
                 <div #imageGallery class="image-gallery">
                     <div class="image-container">
-                        <img src="../../../../../assets/images/order-sample/01887470250-p.png" alt="Image 1" />
-                        <img src="../../../../../assets/images/order-sample/05584441800-p.jpg" alt="Image 2" />
-                        <img src="../../../../../assets/images/order-sample/09012110064-p.png" alt="Image 3" />
-                        <img src="../../../../../assets/images/order-sample/12150410800-e1.png" alt="Image 4" />
-                        <img src="../../../../../assets/images/order-sample/12290320400-e1.jpg" alt="Image 5" />
+                        <img *ngFor="let item of cartItems" [src]="item.imageUrl" alt="Product image" class="product-image"/>
                     </div>
                 </div>
                 <div class="shipping-details">
                     <div class="shipping-details-body">
                         <div class="radio-group">
                             <input type="radio" name="est-delivery-date" id="est-delivery-date">
-                            <label for="est-delivery-date">Saturday 12, October - Sunday 13, October</label>
+                            <label for="est-delivery-date">{{ threeDaysFromNow | date: 'EEEE d, MMMM' }} - {{ fourDaysFromNow | date: 'EEEE d, MMMM' }}</label>
                         </div>
                         <span>Free</span>
                     </div>
@@ -66,3 +62,17 @@
 </div>
 
 <app-footer></app-footer>
+
+<!-- Checkout Footer -->
+<div class="checkout-footer">
+    <div class="total-section">
+        <div class="total-row">
+            <span class="shipping-label">Shipping</span>
+            <span class="shipping-cost">Free</span>
+        </div>
+    </div>
+    <button class="continue-button" (click)="goToPaymentOptions()">
+        CONTINUE
+        <span class="arrow">→</span>
+    </button>
+</div>
