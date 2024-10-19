@@ -5,6 +5,8 @@ import { HeaderComponent } from '../../../shared/components/header/header.compon
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { WishlistService , WishListItemDTO } from './services/wishlist.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CartItemDTO, CartService } from '../cart/services/cart.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -20,16 +22,44 @@ export class WishlistComponent implements OnInit {
   deletedProduct: WishListItemDTO | null = null;
   currencyCode: string = 'EGP';
   userName: string | null = null;
+  cartItems: CartItemDTO[] = [];
 
 
   constructor(
     private router: Router,
     private wishlistService: WishlistService,
+    private cartService: CartService,
+    private authService : AuthService
   ) {}
 
   ngOnInit(): void {
     this.loadWishlistItems();
+    this.loadCartItems();
+    this.checkLoginStatus();
     // this.userName = this.authService.getUserName();
+  }
+
+  checkLoginStatus(): void {
+    this.userName = this.authService.getUserName();
+  }
+
+
+
+  //load cart items
+  loadCartItems() {
+    this.cartService.getCartItems().subscribe({
+      next: (data) => {
+        this.cartItems = data;
+      },
+      error: (error) => {
+        console.error('Error loading cart items:', error);
+      }
+    });
+  }
+
+  //cart count
+  get cartItemsCount(): number {
+    return this.cartItems.reduce((count, item) => count + item.quantity, 0);
   }
 
   // Load wishlist items

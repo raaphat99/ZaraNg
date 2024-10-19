@@ -17,25 +17,20 @@ import { Governorate } from '../../viewmodels/governorate';
 import { egyptGovernoratesList } from '../../static-data/egypt-governorates';
 import { egyptCities } from '../../static-data/egypt-cities';
 import { AuthService } from '../../../../core/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserAddressesService , UserAddressDTO } from '../../services/user-addresses.service';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 @Component({
-  selector: 'app-add-address',
+  selector: 'app-update-address',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ButtonComponent,
-    HeaderComponent,
-    FooterComponent,
-    
-  ],
-  templateUrl: './add-address.component.html',
-  styleUrl: './add-address.component.css',
+  imports: [ CommonModule, ButtonComponent, HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule],
+  templateUrl: './update-address.component.html',
+  styleUrl: './update-address.component.css'
 })
-export class AddAddressComponent implements OnInit {
+export class UpdateAddressComponent {
+  jwtHelper = new JwtHelperService();
   addAddressform!: FormGroup;
   governorates: Governorate[] = egyptGovernoratesList;
   cities: City[] = egyptCities;
@@ -65,13 +60,18 @@ constructor(
   private authService: AuthService,
     private fb: FormBuilder,
     private router : Router,
+    private route: ActivatedRoute,
     private userAddressesService:UserAddressesService
 ){  
 }
 isEditing = false;
 currentAddressId: number | null = null;
+addressId: number | undefined;
+userAddressId!: number;  // Using definite assignment assertion
+addressData: any;
 
   ngOnInit() {
+    
     this.addAddressform = this.fb.group({
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]],
@@ -84,8 +84,38 @@ currentAddressId: number | null = null;
       this.addAddressform.get('governorate')?.valueChanges.subscribe(() => {
         this.onGovernorateChange();
       });
+
+      this.userAddressId = Number(this.route.snapshot.paramMap.get('id'));
+
+      // Check if an address ID exists to determine if editing mode is on
+      if (this.userAddressId) {
+        this.isEditing = true;
+    
+        // Fetch the specific address data by ID
+        this.userAddressesService.GetUserAddresses().subscribe((addresses) => {
+          if (addresses && addresses.length > 0) {
+            const data = addresses.find(address => address.id === this.userAddressId);
+            if (data) {
+              this.currentAddressId = data.id ?? null;
+              this.addAddressform.patchValue({
+                name: data.name,
+                surname: data.name,
+                street: data.street,
+                moreInfo: data.area,
+                governorate: data.state,
+                city: data.city,
+                phonePrefix: data.phoneNumber.slice(0, 3), // Assuming phone prefix is first 3 digits
+                phoneNumber: data.phoneNumber.slice(3), // Remaining part of the phone number
+              });
+              // Populate filteredCities based on the selected governorate
+              this.filteredCities = this.cities.filter(
+                (city) => city.governorate_id === this.getGovernorateId(data.state)
+              );
+              this.addAddressform.get('city')?.enable(); // Enable the city field if governorate exists
+            }
+          }
+        });      }
     }
-  
 
   onGovernorateChange() {
     const governorateControl = this.addAddressform.get('governorate');
@@ -203,7 +233,7 @@ currentAddressId: number | null = null;
       
       this.adressParam = {
         phoneNumber: phonePrefix + phoneNumber,
-        name: this.authService.getUserName() ?? '',
+        name: this.authService.getUserName()?? '',
         country: 'Egypt',
         state: governorate,
         city: city,
@@ -243,3 +273,4 @@ currentAddressId: number | null = null;
 interface CustomJwtPayload extends JwtPayload {
   name: string; // Add any other custom claims if needed
 }
+
