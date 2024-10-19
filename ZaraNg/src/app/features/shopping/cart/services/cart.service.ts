@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
+
 export interface CartItemDTO {
   id: number;
   productVariantId: number;
@@ -13,6 +14,8 @@ export interface CartItemDTO {
   imageUrl: string;
   price: number;
 }
+
+
 
 @Injectable({
   providedIn: 'root'

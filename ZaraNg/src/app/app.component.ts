@@ -14,6 +14,8 @@ import { LoginComponent } from "./features/authentication/components/login/login
 import { RegisterComponent } from "./features/authentication/components/register/register.component";
 import { ProductfilterComponent } from "./features/productfilter/components/productfilter/productfilter.component";
 import { UpdateAddressComponent } from "./features/user/components/update-address/update-address.component";
+import { AdminMainComponent } from "./features/admin-dashboard/components/admin-main/admin-main.component";
+import { AdminCategoryComponent } from "./features/admin-dashboard/components/admin-category/admin-category.component";
 
 @Component({
   selector: 'app-root',
@@ -29,7 +31,9 @@ import { UpdateAddressComponent } from "./features/user/components/update-addres
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    UpdateAddressComponent
+    UpdateAddressComponent,
+    AdminMainComponent,
+    AdminCategoryComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

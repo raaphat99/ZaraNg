@@ -196,28 +196,14 @@ currentAddressId: number | null = null;
     return '';
   }
 
-  getUserName(){
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decoded = jwtDecode<CustomJwtPayload>(token); // Decode the token
-      if(decoded.name){
-        const userName = decoded.name;// Now safe because we check for null
-        return userName;
-      } else {
-        return '';
-      }
 
-    } 
-
-    return ''; 
-  }
   onSubmit() {
     if (this.addAddressform.valid) {
       const { name, surname, street, moreInfo, governorate, city, phonePrefix, phoneNumber } = this.addAddressform.value;
       
       this.adressParam = {
         phoneNumber: phonePrefix + phoneNumber,
-        name: this.getUserName(),
+        name: this.authService.getUserName() ?? '',
         country: 'Egypt',
         state: governorate,
         city: city,

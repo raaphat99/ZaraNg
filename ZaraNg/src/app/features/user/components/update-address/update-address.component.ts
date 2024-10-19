@@ -98,7 +98,8 @@ addressData: any;
             if (data) {
               this.currentAddressId = data.id ?? null;
               this.addAddressform.patchValue({
-                name: data.name?.slice(0, 1),
+                name: data.name,
+                surname: data.name,
                 street: data.street,
                 moreInfo: data.area,
                 governorate: data.state,
@@ -225,22 +226,14 @@ addressData: any;
     return '';
   }
 
-  getUserName(): string | null {
-    const token = localStorage.getItem('token');
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      const decodedToken = this.jwtHelper.decodeToken(token);
-      return `${decodedToken.name} `;
 
-    }
-    return null;
-  }
   onSubmit() {
     if (this.addAddressform.valid) {
       const { name, surname, street, moreInfo, governorate, city, phonePrefix, phoneNumber } = this.addAddressform.value;
       
       this.adressParam = {
         phoneNumber: phonePrefix + phoneNumber,
-        name: this.getUserName()?? '',
+        name: this.authService.getUserName()?? '',
         country: 'Egypt',
         state: governorate,
         city: city,
