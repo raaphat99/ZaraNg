@@ -43,16 +43,7 @@ export class AuthService {
       }),
       catchError(this.handleError)
     )
-    // let jwt: string =
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFobWVkIFJhYWZhdCIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9.jgs8rZAbPT2ywPwG-oEe8jGiHqZCzagOc11gGX6BiBg";
 
-    // if (credintials.email === "ahmed@gmail.com" && credintials.password === "1999") {
-    //   localStorage.setItem("token", jwt);
-    //   this.isAuthenticated = true;
-    //   return of(true);
-    // } 
-
-    // return of(false);
   }
   register(email: string, password: string, name: string, surname: string): Observable<any> {
 
@@ -62,6 +53,14 @@ export class AuthService {
       })
     )
   }
+registerAdmin(email: string, password: string, name: string, surname: string): Observable<any> {
+const header= this.getAuthHeaders();
+  return this.httpClient?.post<any>(`${this.apiUrl}/register-admin`,{ email, password, name, surname },{headers:header, observe: 'response' }).pipe(
+    tap((response)=>{
+      
+    })
+  )
+}
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (error.status === 401) {
