@@ -17,6 +17,7 @@ import { AdminMainComponent } from "./features/admin-dashboard/components/admin-
 import { AdminCustomersComponent } from "./features/admin-dashboard/components/admin-customers/admin-customers.component";
 import { UpdateAddressComponent } from "./features/user/components/update-address/update-address.component";
 import { AdminCategoryComponent } from "./features/admin-dashboard/components/admin-category/admin-category.component";
+import { AdminRegisterComponent } from "./features/admin-dashboard/components/admin-register/admin-register.component";
 
 @Component({
   selector: 'app-root',
@@ -36,7 +37,8 @@ import { AdminCategoryComponent } from "./features/admin-dashboard/components/ad
     AdminCustomersComponent,
     UpdateAddressComponent,
     AdminMainComponent,
-    AdminCategoryComponent
+    AdminCategoryComponent,
+    AdminRegisterComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

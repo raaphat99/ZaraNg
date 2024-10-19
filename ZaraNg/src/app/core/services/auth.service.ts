@@ -78,6 +78,14 @@ export class AuthService {
     }
     return false;
   }
+registerAdmin(email: string, password: string, name: string, surname: string): Observable<any> {
+const header= this.getAuthHeaders();
+  return this.httpClient?.post<any>(`${this.apiUrl}/register-admin`,{ email, password, name, surname },{headers:header, observe: 'response' }).pipe(
+    tap((response)=>{
+      
+    })
+  )
+}
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (error.status === 401) {

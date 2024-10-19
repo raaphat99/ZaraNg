@@ -53,9 +53,7 @@ export class CartService {
       observe: 'response' // Keep the 'observe' option as specified
     }).pipe(
       tap((response) => {   
-        console.log(response);
-        console.log('Item added to cart successfully');  
-
+      
     })
     ); 
   }
