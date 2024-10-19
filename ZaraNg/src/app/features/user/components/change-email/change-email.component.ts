@@ -35,7 +35,7 @@ import { HttpResponse } from '@angular/common/http';
 export class ChangeEmailComponent {
   @ViewChild('modalTemplate') modalTemplate!: TemplateRef<any>;
   changeEmailForm!: FormGroup;
-  currentEmail: string = 'm_sh8004@yahoo.com';
+  currentEmail: string | null = null;
   user: changeEmailForm = { email: '', password: '' };
 
   showPassword: boolean = false;
@@ -52,6 +52,7 @@ export class ChangeEmailComponent {
   ) {}
 
   ngOnInit() {
+    this.checkLoginStatus();
     this.changeEmailForm = this.fb.group({
       password: ['', [Validators.required, Validators.minLength(8)]],
       email: [
@@ -59,6 +60,9 @@ export class ChangeEmailComponent {
         [Validators.required, Validators.email, this.customEmailValidator],
       ],
     });
+  }
+  checkLoginStatus(): void {
+    this.currentEmail=this.authService.getEmailFromToken();
   }
   customEmailValidator(control: AbstractControl): ValidationErrors | null {
     const email = control.value;

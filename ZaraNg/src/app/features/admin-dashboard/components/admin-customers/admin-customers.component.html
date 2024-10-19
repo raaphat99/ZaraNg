@@ -20,7 +20,7 @@
             <td>{{ user.phoneNumber?? "N/A" }}</td>
             <td>{{ user.activeMesurment?? "N/A" }}</td>
             <td colspan="5">
-              <button (click)="toggleaddress(i)">Invoicing address</button>
+              <button  class="btnAdd" (click)="toggleaddress(i)">Invoicing address</button>
               <button (click)="toggleorder(i)">Orders</button>
               <button (click)="notifyAction(i)">Notify</button>
             </td>
@@ -35,22 +35,23 @@
 <div class="modal-address" [style.display]="showAddress[i] ? 'block' : 'none'" *ngFor="let user of userData; let i = index">
     <div class="modal-address-content">
         <span (click)="toggleaddress(i)" class="close-btn">&times;</span>
-        <h3>Invoicing Address</h3>
-        <p>{{ user.activeAddress?.street }}</p>
-        <p>{{ user.activeAddress?.city }}</p>
-        <p>{{ user.activeAddress?.state }}</p>
-        <p>{{ user.activeAddress?.country }}</p>
+        <h3 style="text-align: center;margin-bottom: 5px; font-weight: 500;" >Invoicing Address</h3>
+        <p>- {{ user.activeAddress?.country }}</p>
+        <p>- {{ user.activeAddress?.state }}</p>
+        <p>- {{ user.activeAddress?.city }}</p>
+        <p>- {{ user.activeAddress?.street }}</p>
     </div>
 </div>
 
 <div class="modal-orders" [style.display]="showOrder[i] ? 'block' : 'none'" *ngFor="let user of userData; let i = index">
     <div class="modal-orders-content">
         <span (click)="toggleorder(i)" class="close-btn">&times;</span>
-        <h3>Orders</h3>
+        <h3 style="text-align: center;margin-bottom: 5px; font-weight: 500;" >Orders</h3>
         <div class="order" *ngFor="let order of user.orders">
             <p>Tracking: {{ order.trackingNumber }}</p>
             <p>Date: {{ order.created }}</p>
-            <p>Total: {{ order.totalPrice }}</p>
+            <p>Total:{{ getOrderTotal(order.items || []) | number : "1.0-2" }} EGP
+            </p>
             <p>Status: {{ order.status }}</p>
             <div class="order-items">
                 <div class="order-item" *ngFor="let item of order.items">

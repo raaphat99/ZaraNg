@@ -1,0 +1,263 @@
+<app-header></app-header>
+
+<div id="container">
+  <div class="register">
+    <p>PERSONAL DETAILS</p>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-inputs">
+        <div
+          class="input-unit"
+          [ngClass]="{
+            'form-instruction': getMessageType('email') === 'instruction',
+            'form-warning': getMessageType('email') === 'warning'
+          }"
+        >
+          <input
+            class="form-input"
+            type="email"
+            
+            formControlName="email"
+            placeholder=" "
+            (focus)="onFocus('email')"
+            (blur)="onBlur('email')"
+          />
+          <label
+            for="email"
+            [class.float]="registerForm.get('email')?.value || focusedFields['email']"
+            >E-MAIL</label
+          >
+        </div>
+        <div
+          class="form-message"
+          *ngIf="getMessageType('email')"
+          [ngClass]="{
+            'form-instruction': getMessageType('email') === 'instruction',
+            'form-warning': getMessageType('email') === 'warning'
+          }"
+        >
+          <svg
+            class="form-message__icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+            ></path>
+          </svg>
+          <span>{{ getMessage("email") }}</span>
+        </div>
+      </div>
+
+      <div class="form-inputs">
+        <div
+          class="input-unit"
+          [ngClass]="{
+            'form-instruction': getMessageType('password') === 'instruction',
+            'form-warning': getMessageType('password') === 'warning'
+          }"
+        >
+          <input
+            class="form-input"
+            type="password"
+            placeholder=" "
+            formControlName="password"
+            (focus)="onFocus('password')"
+            (blur)="onBlur('password')"
+          />
+          <label
+            for="password"
+            [class.float]="registerForm.get('password')?.value || focusedFields['password']"
+            >PASSWORD</label
+          >
+        </div>
+        <div
+          class="form-message"
+          *ngIf="getMessageType('password')"
+          [ngClass]="{
+            'form-instruction': getMessageType('password') === 'instruction',
+            'form-warning': getMessageType('password') === 'warning'
+          }"
+        >
+          <svg
+            class="form-message__icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+            ></path>
+          </svg>
+          <span>{{ getMessage("password") }}</span>
+        </div>
+      </div>
+
+      <div class="form-inputs">
+        <div
+          class="input-unit"
+          [ngClass]="{
+            'form-instruction': getMessageType('name') === 'instruction',
+            'form-warning': getMessageType('name') === 'warning'
+          }"
+        >
+          <input
+            class="form-input"
+            type="text"
+            name="name"
+            placeholder=" "
+            formControlName="name"
+            (focus)="onFocus('name')"
+            (blur)="onBlur('name')"
+          />
+          <label for="name" [class.float]="registerForm.get('name')?.value || focusedFields['name']"
+            >NAME</label
+          >
+        </div>
+        <div
+          class="form-message"
+          *ngIf="getMessageType('name')"
+          [ngClass]="{
+            'form-instruction': getMessageType('name') === 'instruction',
+            'form-warning': getMessageType('name') === 'warning'
+          }"
+        >
+          <svg
+            class="form-message__icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+            ></path>
+          </svg>
+          <span>{{ getMessage("name") }}</span>
+        </div>
+      </div>
+
+      <div class="form-inputs">
+        <div
+          class="input-unit"
+          [ngClass]="{
+            'form-instruction': getMessageType('surname') === 'instruction',
+            'form-warning': getMessageType('surname') === 'warning'
+          }"
+        >
+          <input
+            class="form-input"
+            type="text"
+            name="surname"
+            placeholder=" "
+            formControlName="surname"
+            (focus)="onFocus('surname')"
+            (blur)="onBlur('surname')"
+          />
+          <label
+            for="surname"
+            [class.float]="registerForm.get('surname')?.value || focusedFields['surname']"
+            >SURNAME</label
+          >
+        </div>
+        <div
+          class="form-message"
+          *ngIf="getMessageType('surname')"
+          [ngClass]="{
+            'form-instruction': getMessageType('surname') === 'instruction',
+            'form-warning': getMessageType('surname') === 'warning'
+          }"
+        >
+          <svg
+            class="form-message__icon"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+            ></path>
+          </svg>
+          <span>{{ getMessage("surname") }}</span>
+        </div>
+      </div>
+
+      <div class="checkbox-unit">
+        <div class="input-unit checkbox-unit">
+          <label class="checkbox-label" for="commertials"
+            >I want to receive personalised commercial communications from
+            <strong>ZARA</strong> by email.</label
+          >
+
+          <input
+            class="form-input checkbox"
+            type="checkbox"
+            name="commertials"
+          />
+          <span class="custom-checkbox"></span>
+        </div>
+      </div>
+
+      <div class="checkbox-unit">
+        <div class="input-unit checkbox-unit">
+          <label class="checkbox-label" for="policy"
+            >I have read and understand the
+            <a
+              href="https://static.zara.net/static/pdfs/EG/privacy-policy/privacy-policy-en_EG-20240117.pdf"
+              target="_blank"
+              >Privacy and Cookies Policy</a
+            >
+          </label>
+          <input
+            required
+            class="form-input checkbox"
+            type="checkbox"
+            name="policy"
+          />
+          <span class="custom-checkbox"></span>
+        </div>
+      </div>
+      <div class="error-summary" *ngIf="errorSummary">
+        <svg
+        class="form-message__icon"
+        style="fill: red;"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M11.5 16.8v-1.2h1v1.2h-1zm0-9.6v7.2h1V7.2h-1z"></path>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
+        ></path>
+      </svg>
+        <span style="color: red;">{{summary}}</span>
+      </div>
+
+      <input
+        type="submit"
+        class="btn-register"
+        value="CREATE ACCOUNT"
+      />
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

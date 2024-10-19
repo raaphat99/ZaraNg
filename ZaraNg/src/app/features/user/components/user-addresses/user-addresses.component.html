@@ -6,7 +6,7 @@
 ></div>
 <div id="container">
   <div id="header">
-    <p>ADRESSES</p>
+    <p>ADDRESSES</p>
     <a class="clickable-div top-button" [routerLink]="['/user/profile/:id/add-address']" routerLinkActive="router-link-active" >
       <div class="button">ADD ADDRESS</div>
     </a>
@@ -14,7 +14,7 @@
   <div id="main">
     <div *ngFor="let address of addresses; let i = index" class="address">
       <div class="address-details">
-        <p id="user-name">{{ address.name }}</p>
+        <p id="user-name">{{ userName }}</p>
         <p>{{ address.street }}</p>
         <p>{{ address.area }}</p>
         <p>{{ address.state }}</p>
@@ -57,19 +57,22 @@
     <div class="button">ADD ADDRESS</div>
   </a>
 </div>
-<div
+<div *ngFor="let address of addresses; let i = index" class="address">
+  <div
   *ngIf="isModalVisible"
   [ngClass]="{ modal: true, 'fade-out': !isModalVisible }"
+  
 >
   <!-- Modal content -->
   <div>
-    <a class="modal-button" href="">
+    <a class="modal-button" href=""[routerLink]="['/user/profile/:id/update-address',address.id]">
       <div class="button bottom-menu-button">EDIT</div>
     </a>
     <a *ngIf="!modalHasDelete" class="modal-button" href="">
-      <div class="button ottom-menu-button">DELETE</div>
+      <div class="button ottom-menu-button" (click)="deleteAddress(address.id)">DELETE</div>
     </a>
   </div>
+</div>
 </div>
 
 <app-footer></app-footer>

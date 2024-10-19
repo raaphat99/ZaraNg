@@ -14,10 +14,10 @@ import { UpdateAddressComponent } from './components/update-address/update-addre
 
 const routes: Routes = [
   { path: '', component: UserMainComponent },
-  { path: 'wallet', component: PaymentMethodComponent },   
+ // { path: 'wallet', component: PaymentMethodComponent },   
   { path: 'purchases', component: PurchasesComponent },   
   { path: 'purchases/:id', component: PurchaseDetialsComponent },
-  { path: 'returns', component: ReturnsComponent },
+  //{ path: 'returns', component: ReturnsComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'profile/:id/addresses', component: UserAddressesComponent },
   { path: 'profile/:id/add-address', component: AddAddressComponent },

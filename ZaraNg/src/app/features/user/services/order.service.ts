@@ -19,7 +19,7 @@ export class OrderService extends ApiService {
     const token = localStorage.getItem('token');
     this.userId = token ? this.extractUserIdFromToken(token) : '';
     console.log('User ID:', this.userId);
-    this.url = `http://localhost:5250/api/Order`;
+    this.url = `http://localhost:5250/api/AdminOrder`;
   }
 
   private extractUserIdFromToken(token: string): string {

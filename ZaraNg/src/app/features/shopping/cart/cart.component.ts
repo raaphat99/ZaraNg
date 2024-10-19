@@ -19,7 +19,7 @@ export class CartComponent implements OnInit {
   addedToWishlist: CartItemDTO | null = null;
   deletedProduct: CartItemDTO | null = null;
   currencyCode: string = 'EGP';
-
+  isOutOfStock: boolean[]=[];
   constructor(
     private router: Router,
     private cartService: CartService,
@@ -33,6 +33,8 @@ export class CartComponent implements OnInit {
     this.cartService.getCartItems().subscribe({
       next: (data) => {
         this.cartItems = data;
+
+        this.isOutOfStock = Array(this.cartItems.length).fill(false);
       },
       error: (error) => {
         console.error('Error loading cart items:', error);
@@ -47,12 +49,19 @@ export class CartComponent implements OnInit {
     );
   }
 
-  addToCart(productVariantId: number) {
+  addToCart(productVariantId: number,index: number=200) {
     const userId = '02e8635d-3a28-49ca-a084-180c12e3b7c3'; // Consider getting this from AuthService
     this.cartService.addCartItem(productVariantId).subscribe({
       next: (response) => {
+         
         console.log(response);
         this.loadCartItems();
+      },
+      error: (error) => {
+        if(error.status === 404) {
+          this.isOutOfStock[index] = true;
+          console.log('Product out of stock');
+        }
       }
     });
   }
@@ -99,16 +108,18 @@ export class CartComponent implements OnInit {
     console.log('Continue clicked');
   }
 
-  increaseQuantity(item: CartItemDTO) {
-    this.addToCart(item.productVariantId); // This will add one more of the same item
+  increaseQuantity(item: CartItemDTO, index: number) {
+    this.addToCart(item.productVariantId, index); // This will add one more of the same item
   }
 
-  decreaseQuantity(item: CartItemDTO) {
+  decreaseQuantity(item: CartItemDTO,index: number) {
+
     this.cartService.removeOrDecreaseCartItem(item.id).subscribe({
       next: (response) => {
         console.log(response); // Log the success message
         if (item.quantity > 1) {
           item.quantity--; // Decrease quantity on the UI
+          this.isOutOfStock[index] = false;
         } else {
           const index = this.cartItems.findIndex(cartItem => cartItem.id === item.id);
           if (index > -1) {
