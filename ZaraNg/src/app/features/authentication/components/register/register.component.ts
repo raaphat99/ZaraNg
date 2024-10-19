@@ -136,13 +136,24 @@ export class RegisterComponent implements OnInit {
         next: (response) => {
           if (response) {
             console.log('Registration successful');
-            this.router.navigate(['/home']);
+            this.authService.login(email, password).subscribe({
+              next: (response) => {
+                if (response) {
+                  console.log('Login successful');
+                  this.router.navigate(['/home']);
+                }
+              },
+              error: (error) => {
+                console.error('Login failed', error);
+              }
+            });
+            
             // Handle successful registration (e.g., navigate to login page or show success message)
           }
         },
         error: (error) => {
           console.error('Registration failed', error);
-          this.summary = 'Email already in use';
+         console.log(email, password, name, surname);
           this.errorSummary = true;
 
           // Handle registration error (e.g., show error message to user)

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HostListener } from '@angular/core';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UserAddressDTO, UserAddressesService } from '../../services/user-addresses.service';
 @Component({
   selector: 'app-user-addresses',
   standalone: true,
@@ -17,35 +18,53 @@ export class UserAddressesComponent {
 
 
  
-   addresses:UserAddress[]=[
-    {
-      userName:'AMIR SHERIF',
-      street:'Mostashar',
-      area:'sinbllawien',
-      city:'El-Senbillawien',
-      state:'dakahlia',
-      phone:'0123456789',
-    selected:true},
-      {
-        userName:'Ahmed Raffat',
-        street:'Galaa',
-        area:'Mansoura',
-        city:'Mansurah',
-        state:'dakahlia',
-        phone:'0123456789',
-        selected:false},
-      
-    ]
-    optionsMenu: boolean[] = [];
+  addresses:UserAddressDTO[]=[]
+  optionsMenu: boolean[] = [];
 
-  constructor() {
+  constructor(private router: Router , private userAddressesService:UserAddressesService) {
     // Initialize the optionsMenu array with false for each address
-    for (let i = 0; i < this.addresses.length; i++) {
-      this.optionsMenu.push(false);
+    // for (let i = 0; i < this.addresses.length; i++) {
+    //   this.optionsMenu.push(false);
+    // }
+
+  }
+  ngOnInit(): void {
+    this.loadAddresses();
+  }
+loadAddresses(){
+   this.userAddressesService.GetUserAddresses().subscribe({
+    next: (data) => {
+      this.addresses = data;
+    },
+    error: (error) => {
+      console.error('Error loading cart items:', error);
+    }
+  });
+}
+
+//method to delete address
+deleteAddress(addressId: number | undefined) {
+    this.userAddressesService.DeleteUserAddress(addressId).subscribe({
+      next: () => {
+        console.log('Address deleted successfully');
+        this.loadAddresses();
+        this.router.navigate(['user/profile/:id/addresses']);
+      },
+      error: (error) => {
+        console.error('Error deleting address:', error);
+      }
+    });
+
+  }
+
+
+
+  //method to edit address
+  editAddress(addressId: number | undefined) {
+    if (addressId) {
+      this.router.navigate(['/update-address', addressId]);
     }
   }
- 
-
   
   // Toggles the menu visibility for the clicked icon
   toggleOptionsMenu(event: MouseEvent, index: number): void {
@@ -60,7 +79,7 @@ export class UserAddressesComponent {
   toggleModal(event: MouseEvent, index: number): void {
     event.stopPropagation(); // Prevent the click event from propagating
     this.isModalVisible = !this.isModalVisible;
-    this.modalHasDelete = this.addresses[index]?.selected || false;
+    this.modalHasDelete = this.addresses[index]?.active || false;
 
   }
    
@@ -93,13 +112,4 @@ export class UserAddressesComponent {
 }
  
   
-interface UserAddress{
-  userName:string
-  street:string
-  area:string
-  city:string
-  state:string
-  phone:string
-  selected:boolean
 
-}

@@ -4,6 +4,7 @@ import { FooterComponent } from '../../../../shared/components/footer/footer.com
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../../shopping/cart/services/cart.service';
+import { PaymentService } from '../../services/payment.service';
 
 @Component({
   selector: 'app-payment-options',
@@ -22,8 +23,8 @@ export class PaymentOptionsComponent implements OnInit {
   selectedPaymentOption: string = "Mastercard";
   totalAmount!: number;
   currencyCode: string = 'EGP';
-  
-  constructor(private router: Router, private cartService: CartService) {}
+  showModal: boolean = false; 
+  constructor(private router: Router, private cartService: CartService,private paymentService: PaymentService) {}
 
   ngOnInit(): void {
     this.totalAmount = this.cartService.getCartData().totalPrice;
@@ -35,17 +36,50 @@ export class PaymentOptionsComponent implements OnInit {
     selectedDivs.forEach((div) => div.classList.remove('selected'));
     (event.currentTarget as HTMLElement).classList.add('selected');
   }
-
-  proceedToConfirmOrder() {
-    // Set the payment method in the service
-    this.cartService.setPaymentMethod(this.selectedPaymentOption);
+  openModal() {
+    this.showModal = true;
+  }
   
-    // Now you can retrieve the entire cart data if needed for final confirmation
+  closeModal() {
+    this.showModal = false;
+  }
+
+  
+  proceedToConfirmOrder() {
+    
     const cartData = this.cartService.getCartData();
     console.log(cartData);
+    cartData.paymentMethod = 'ONLINE';
+    this.paymentService.createOrder(cartData).subscribe({
+      next: (response) => {
+        // Access the hash here
+        console.log(response.status);
+        if(response.redirectUrl){
+        window.location.href = response.redirectUrl;
+        }else{
+          console.log(response.message);
+          this.openModal();
+          setTimeout(() => {
+            this.closeModal();
+          }, 2000);
+          setTimeout(() => {
+            this.router.navigate(['/home']);
+          }, 3000);
+          
+        }
+        
+        // Use the hash for Kashier payment or whatever you need
+      },
+      error: (error) => {
+        console.error('Error creating order:', error);
+        // Handle error appropriately
+    console.log(cartData);
+  
   
     // You can send this data to the backend for order processing
 
+  }});
+  
   }
   
 }

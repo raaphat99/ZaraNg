@@ -13,6 +13,10 @@ import { HomeComponent } from './features/home/components/home/home.component';
 import { LoginComponent } from "./features/authentication/components/login/login.component";
 import { RegisterComponent } from "./features/authentication/components/register/register.component";
 import { ProductfilterComponent } from "./features/productfilter/components/productfilter/productfilter.component";
+import { AdminMainComponent } from "./features/admin-dashboard/components/admin-main/admin-main.component";
+import { AdminCustomersComponent } from "./features/admin-dashboard/components/admin-customers/admin-customers.component";
+import { UpdateAddressComponent } from "./features/user/components/update-address/update-address.component";
+import { AdminCategoryComponent } from "./features/admin-dashboard/components/admin-category/admin-category.component";
 
 @Component({
   selector: 'app-root',
@@ -27,7 +31,12 @@ import { ProductfilterComponent } from "./features/productfilter/components/prod
     WishlistComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AdminMainComponent,
+    AdminCustomersComponent,
+    UpdateAddressComponent,
+    AdminMainComponent,
+    AdminCategoryComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

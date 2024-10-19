@@ -1,0 +1,105 @@
+<app-header></app-header>
+<div id="container">
+    <div>
+        <button (click)="notifyAllAction()">Notify All</button>
+    </div>
+    <table>
+        <thead>
+          <tr>
+            <th>Full name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Active mesurment</th>
+            <th colspan="5">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userData; let i = index">
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phoneNumber?? "N/A" }}</td>
+            <td>{{ user.activeMesurment?? "N/A" }}</td>
+            <td colspan="5">
+              <button (click)="toggleaddress(i)">Invoicing address</button>
+              <button (click)="toggleorder(i)">Orders</button>
+              <button (click)="notifyAction(i)">Notify</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+ 
+   
+</div> 
+
+
+<div class="modal-address" [style.display]="showAddress[i] ? 'block' : 'none'" *ngFor="let user of userData; let i = index">
+    <div class="modal-address-content">
+        <span (click)="toggleaddress(i)" class="close-btn">&times;</span>
+        <h3>Invoicing Address</h3>
+        <p>{{ user.activeAddress?.street }}</p>
+        <p>{{ user.activeAddress?.city }}</p>
+        <p>{{ user.activeAddress?.state }}</p>
+        <p>{{ user.activeAddress?.country }}</p>
+    </div>
+</div>
+
+<div class="modal-orders" [style.display]="showOrder[i] ? 'block' : 'none'" *ngFor="let user of userData; let i = index">
+    <div class="modal-orders-content">
+        <span (click)="toggleorder(i)" class="close-btn">&times;</span>
+        <h3>Orders</h3>
+        <div class="order" *ngFor="let order of user.orders">
+            <p>Tracking: {{ order.trackingNumber }}</p>
+            <p>Date: {{ order.created }}</p>
+            <p>Total: {{ order.totalPrice }}</p>
+            <p>Status: {{ order.status }}</p>
+            <div class="order-items">
+                <div class="order-item" *ngFor="let item of order.items">
+                <div>
+                    <img [src]="item.productImage" alt="Product image" />
+                </div>
+                <p>{{ item.name }}</p>
+                <p>Unit price: {{ item.unitPrice }}</p>
+                <p>Quantity: {{ item.quantity }}</p>
+                <p>Subtotal: {{ item.subtotal }}</p>
+            </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="modal-overlay " *ngIf="showNotifyUser">
+  <div class="modal-container">
+   <form [formGroup]="notifyForm" (ngSubmit)="notifyUser()">
+    <input type="text"
+    class="note-input"
+    required
+    formControlName="message"
+    placeholder="Enter message"
+    >
+    <div class="button-group">
+      <button class="modal-btn" type="submit" value="Send notification">Send notification</button>
+
+      <button class="modal-btn" (click)="showNotifyUser = false">Cancel</button>
+
+    </div>
+   </form>
+    
+  </div>
+</div>
+<div class="modal-overlay " *ngIf="showNotifyAll">
+  <div class="modal-container">
+    <form [formGroup]="notifyAllForm" (ngSubmit)="notifyAllUsers()">
+      <input type="text"
+      class="note-input"
+      required
+      formControlName="message"
+      placeholder="Enter message"
+      >
+      <div class="button-group">
+        <button class="modal-btn" type="submit" value="Send notification">Send notification</button>
+        <button class="modal-btn" (click)="showNotifyAll = false">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-footer></app-footer>

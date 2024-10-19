@@ -3,7 +3,7 @@
         <nav>
             <div class="nav-icons">
                 <button id="shoppingBagBtn" class="nav-icon" [routerLink]="['/shop/cart']">
-                    SHOPPING BAG ({{ 1 }})
+                    SHOPPING BAG ({{ cartItemsCount }})
                 </button>
                 <button id="favoritesBtn" class="nav-icon" (click)="toggleFavorite()">
                     <div class="fav">
@@ -21,7 +21,7 @@
         </nav>
         <nav class="user-name">
             <div id="userName">
-                Ahmed'S List
+                {{userName}}'S List
             </div>
         </nav>
         <div class="content">
@@ -68,12 +68,10 @@
                 <span id="deletionMessage">The item has been removed from favourites.</span>
                 <button (click)="undoDelete()">UNDO</button>
             </div>
-        </div>
-        <div *ngFor="let product of wishlistItems; let i = index">
-            <div *ngIf="addedToCart" class="addedToW-message">
-                <span id="addedToWMessage">item added to your shopping bag</span>
-                <button [routerLink]="['/shop/cart']">VIEW</button>
-            </div>
+                <div *ngIf="addedToCart" class="addedToW-message">
+                    <span id="addedToWMessage">item added to your shopping bag</span>
+                    <button [routerLink]="['/shop/cart']">VIEW</button>
+                </div>
         </div>
     </div>
 
