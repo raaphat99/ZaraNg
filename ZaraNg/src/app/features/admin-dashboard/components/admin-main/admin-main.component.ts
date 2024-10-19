@@ -38,7 +38,51 @@ export class AdminMainComponent {
     });
 
     this.statisticsService.getUsersCount().subscribe(count => {
-      this.totalCustomers = count; // If you have a way to get customer count from the API
+      this.totalCustomers = count; 
     });
   }
+   sections = [
+    {
+      name: 'Categories',
+      isExpanded: false,
+      actions: [
+        { label: 'View', link: ['/admin', 'categories'] },
+      ]
+    },
+    {
+      name: 'Products',
+      isExpanded: false,
+      actions: [
+        { label: 'View', link: ['/admin', 'products'] },
+        { label: 'Add', link: ['/admin', 'products', 'create'] },
+      ]
+    },
+    {
+      name: 'Orders',
+      isExpanded: false,
+      actions: [
+        { label: 'View', link: ['/admin', 'orders'] }
+      ]
+    },
+    {
+      name: 'Customers',
+      isExpanded: false,
+      actions: [
+        { label: 'View', link: ['/admin', 'customers'] },
+      ]
+    },
+    {
+      name: 'Admin',
+      isExpanded: false,
+      actions: [
+        { label: 'ADD', link: ['/admin', 'registerAdmin'] },
+      ]
+    }
+ 
+  ];
+
+  toggleActions(section: any) {
+    section.isExpanded = !section.isExpanded;
+  }
+
 }

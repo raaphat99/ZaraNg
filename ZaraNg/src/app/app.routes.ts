@@ -5,6 +5,8 @@ import { HomeComponent } from './features/home/components/home/home.component';
 import { filter } from 'rxjs';
 import { ProductfilterComponent } from './features/productfilter/components/productfilter/productfilter.component';
 import { FiltersearchComponent } from './features/search/components/filtersearch/filtersearch.component';
+import { authGuard } from './core/guards/authentication.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
 
@@ -14,15 +16,17 @@ export const routes: Routes = [
 
     {
         path: 'user',
-        loadChildren: () => import('./features/user/user.module').then(m => m.UserModule)
+        loadChildren: () => import('./features/user/user.module').then(m => m.UserModule),
+        canActivate: [authGuard],
     },
     {
         path: 'admin',
-        loadChildren: () => import('./features/admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule)
+        loadChildren: () => import('./features/admin-dashboard/admin-dashboard.module').then(m => m.AdminDashboardModule),
+        canActivate: [authGuard,AdminGuard], 
     },
     {
         path: 'auth',
-        loadChildren: () => import('./features/authentication/authentication.module').then(m => m.AuthenticationModule)  // Lazy load the user module
+        loadChildren: () => import('./features/authentication/authentication.module').then(m => m.AuthenticationModule) 
     },
 
     {
@@ -37,7 +41,8 @@ export const routes: Routes = [
 
     {
         path: 'shop',
-        loadChildren: () => import('./features/shopping/shopping.module').then(m => m.ShoppingModule) 
+        loadChildren: () => import('./features/shopping/shopping.module').then(m => m.ShoppingModule) ,
+        canActivate: [authGuard]
     },
 
     {

@@ -133,7 +133,7 @@ export class AdminRegisterComponent {
       const { email, password, name, surname } = this.registerForm.value;
       this.authService.registerAdmin(email, password, name, surname).subscribe({
         next: (response) =>{
-          this.router.navigate(['/admin/dashboard']);
+          this.router.navigate(['/admin']);
         },
         error: (error) => {
           console.error('Registration failed', error);

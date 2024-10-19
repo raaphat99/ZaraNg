@@ -93,5 +93,10 @@ notifyAllUsers() {
 toggleorder(index: number) {
     this.showOrder[index] = !this.showOrder[index];
 }
-
+getOrderTotal(items: any[]): number {
+  return items.reduce(
+    (total, item) => total + item.unitPrice * item.quantity,
+    0
+  );
+}
 }

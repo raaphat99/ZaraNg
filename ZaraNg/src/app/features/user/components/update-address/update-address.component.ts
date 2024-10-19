@@ -34,6 +34,8 @@ export class UpdateAddressComponent {
   addAddressform!: FormGroup;
   governorates: Governorate[] = egyptGovernoratesList;
   cities: City[] = egyptCities;
+  userName: string | null = null;
+  userSurname: string | null = null;
 
   adressParam :UserAddressDTO= {
     name: '',
@@ -71,7 +73,7 @@ userAddressId!: number;  // Using definite assignment assertion
 addressData: any;
 
   ngOnInit() {
-    
+    this.extractUserInfo();
     this.addAddressform = this.fb.group({
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]],
@@ -98,8 +100,8 @@ addressData: any;
             if (data) {
               this.currentAddressId = data.id ?? null;
               this.addAddressform.patchValue({
-                name: data.name,
-                surname: data.name,
+                name: this.userName,
+                surname: this.userSurname,
                 street: data.street,
                 moreInfo: data.area,
                 governorate: data.state,
@@ -115,8 +117,21 @@ addressData: any;
             }
           }
         });      }
+      
+  
+      
     }
 
+    extractUserInfo(): void {
+      const token = localStorage.getItem('token'); // or however you retrieve your token
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        const fullName = decoded.name;
+        const [firstName, ...lastNameParts] = fullName.split(' ');
+        this.userName = firstName;
+        this.userSurname = lastNameParts.join(' '); // Join back if there are multiple last name parts
+      }
+    }
   onGovernorateChange() {
     const governorateControl = this.addAddressform.get('governorate');
     const cityControl = this.addAddressform.get('city');

@@ -12,13 +12,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
-userName:string = 'AMIR SHERIF';
-userEmail:string = 'm_sh8004@yahoo.com';
+userName: string | null = null;
+userEmail: string | null = null;
+showModal: boolean = false;
 constructor(
   private authService: AuthService,
   private router: Router
 ){}
-showModal: boolean = false;
+ngOnInit() {
+  this.checkLoginStatus();
+}
+checkLoginStatus(): void {
+  this.userName = this.authService.getUserName();
+  this.userEmail=this.authService.getEmailFromToken();
+}
 openModal() {
   this.showModal = true;
 }
@@ -26,17 +33,22 @@ openModal() {
 closeModal() {
   this.showModal = false;
 }
-
 deleteAccount() {
-   this.authService.deleteAccount().subscribe((response) => {
-     if (response.status === 200) {
-      console.log('Account deleted successfully.');
-       this.authService.logout();
-       this.router.navigate(['/home']);
-     }
-     
-   });
-  this.closeModal();
+  this.authService.deleteAccount().subscribe({
+    next: (response) => {
+      if (response.status === 200) {
+        console.log('Account deleted successfully.');
+        this.authService.logout();
+        this.router.navigate(['/home']);
+      }
+    },
+    error: (err) => {
+      console.error('Error deleting account:', err);
+    },
+    complete: () => {
+      this.closeModal();
+    }
+  });
 }
 logout(){
   this.authService.logout();

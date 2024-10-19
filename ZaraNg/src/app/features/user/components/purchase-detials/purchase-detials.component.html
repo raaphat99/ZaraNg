@@ -3,7 +3,7 @@
 <div class="purchase-details">
   <ng-container *ngIf="orderDetails; else noOrderDetails">
     <h1>
-      Order #{{ orderDetails.trackingNumber }} - {{ orderDetails.status }}
+      Order {{ orderDetails.trackingNumber }} - {{ orderDetails.status }}
     </h1>
     <p>Placed on: {{ orderDetails.orderDate | date }}</p>
 
@@ -70,9 +70,9 @@
       EGP
     </h3>
 
-    <button class="order-action-btn" [routerLink]="['/returns']">
+    <!-- <button class="order-action-btn" [routerLink]="['/returns']">
       Request Return
-    </button>
+    </button> -->
   </ng-container>
 
   <ng-template #noOrderDetails>

@@ -24,10 +24,10 @@
         </a>
       </li>
       <li class="ItemLI">
-          <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'returns']">
+          <a class="LinkStyle" data-qa-id="my-account-wallet"  [routerLink]="['/shop', 'cart']">
 
           <div class="ContainerText">
-            <span class="Text">Returns</span>
+            <span class="Text">Shopping Bag</span>
           </div>
 
           <svg
@@ -113,7 +113,7 @@
               ></path></svg>
         </a>
       </li>
-      <li class="ItemLI">
+      <!-- <li class="ItemLI">
         <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'wallet']">
           <div class="ContainerText">
             <span class="Text">Payment methods</span>
@@ -135,7 +135,7 @@
              
               ></path></svg>
         </a>
-      </li>
+      </li> -->
       <li class="ItemLI">
         <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'profile']">
           <div class="ContainerText">
@@ -169,9 +169,9 @@
     </a>
   </li>
   <li class="ItemLI">
-    <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'returns']">
+    <a class="LinkStyle" data-qa-id="my-account-wallet"  [routerLink]="['/shop', 'cart']">
       <div class="ContainerText">
-        <span class="Text">Returns</span>
+        <span class="Text">Shopping Bag</span>
       </div>
     </a>
   </li>
@@ -215,16 +215,16 @@
       </div>
     </a>
   </li>
-  <li class="ItemLI">
+  <!-- <li class="ItemLI">
       <a class="LinkStyle" data-qa-id="my-account-wallet" [routerLink]="['/user', 'wallet']">
 
       <div class="ContainerText">
         <span class="Text">Payment methods</span>
       </div>
     </a>
-  </li>
+  </li> -->
   <li class="ItemLI">
-    <a class="LinkStyle" data-qa-id="my-account-profile" type="button">
+    <a class="LinkStyle" data-qa-id="my-account-profile" type="button" [routerLink]="['/user', 'profile']">
       <div class="ContainerText">
         <span class="Text">Profile</span>
       </div>

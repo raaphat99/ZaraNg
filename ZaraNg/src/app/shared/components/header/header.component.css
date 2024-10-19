@@ -14,8 +14,8 @@
 .header:hover {
   background-color: rgb(255, 255, 255, 0.9);
 }
-.div5{
-display: none;
+.div5 {
+  display: none;
   top: 0;
   left: -100%;
   width: 100%;
@@ -57,7 +57,20 @@ display: none;
   letter-spacing: 0.8px;
   transition: all 0.5s ease, margin-left 0.5s ease-in-out;
 }
-
+.LinkContainer1 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  transition: all 0.5s ease, margin-left 0.5s ease-in-out;
+  cursor: pointer;
+}
 .LogoSVG {
   height: 100%;
   max-width: 100%;
@@ -121,28 +134,41 @@ display: none;
   font-family: inherit;
 }
 
-*{
+/* * {
   font-weight: 300;
-font-stretch: 100%;
-line-height: 16px;
-font-family: inherit;
-font-size: 14px;
-letter-spacing: 0.8px;
-text-transform: uppercase;
-}
-.ulstyle{
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+} */
+.ulstyle {
   list-style: none;
-   padding: 0; 
-   margin-left: 0px;
-    display: flex; 
-    justify-content: flex-start;
-    margin-top: 40px;
-    padding-left: 0px;
-    cursor: pointer;
+  padding: 0;
+  margin-left: 0px;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 40px;
+  padding-left: 0px;
+  cursor: pointer;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
-.ulstyle1{
-
-   display: none;
+.ulstyle1 {
+  display: none;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 .sticky-header {
   position: fixed;
@@ -153,8 +179,15 @@ text-transform: uppercase;
 .sticky-header {
   background-color: transparent;
 }
-li{
+li {
   margin-left: 20px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 .border-div {
   border: solid black;
@@ -164,128 +197,162 @@ li{
   display: none;
   z-index: 1000;
   background-size: cover;
-  background-position: center
-}
-.white-background {
-  background-color: white;
-}
-#div2{
-  margin-left: 20px;
-  margin-top: 10px; 
-  background-color: white;
-  border: 0.8 solid black;
-  padding-left: 10px;
-  z-index: 5000;
-  cursor: pointer;
-  max-height: 350px;
-   overflow-y: auto;
-   scrollbar-width: thin; 
-   scrollbar-color: black;
-   font-weight: 300;
-   font-stretch: 100%;
-   line-height: 16px;
-   font-family: inherit;
-   font-size: 5px;
-   letter-spacing: 0.8px;
-   text-transform: uppercase;
-}
-
-.fs{
+  background-position: center;
   font-weight: 300;
   font-stretch: 100%;
   line-height: 16px;
   font-family: inherit;
   font-size: 14px;
   letter-spacing: 0.8px;
-  text-transform: uppercase;
+  text-transform: uppercase;
 }
-#div2 ul {
-  list-style-type: none; /* إزالة النقاط من القائمة */
-  padding-left: 0; /* إزالة الفراغات على اليسار */
-  margin-top: 5px; /* إضافة فراغ بين الكلمة والقائمة */
+.white-background {
+  background-color: white;
 }
-.div6{
-  z-index: 10000;
-  display: none;
-}
-.div6 ul{
-  list-style-type: none; /* إزالة النقاط من القائمة */
-  padding-left: 0; /* إزالة الفراغات على اليسار */
-  margin-top: 5px; /* إضافة فراغ بين الكلمة والقائمة */
-  display: none;
-}
-#div2 li {
-  padding: 5px 0; /* مسافة بين العناصر */
+#div2 {
+  margin-left: 20px;
+  margin-top: 10px;
+  background-color: white;
+  border: 0.8 solid black;
+  padding-left: 10px;
+  z-index: 5000;
+  cursor: pointer;
+  max-height: 350px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: black;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 5px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
+.fs {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+#div2 ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 5px;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.div6 {
+  z-index: 10000;
+  display: none;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.div6 ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 5px;
+  display: none;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+#div2 li {
+  padding: 5px 0;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
 #div2 .clickable {
   cursor: pointer;
 }
-
 #div2 ul li {
-  border: none; /* إزالة أي حدود إن وجدت */
+  border: none;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
-
-/* تخصيص عرض شريط التمرير */
 #div2::-webkit-scrollbar {
-width: 2px; /* قم بزيادة العرض */
+  width: 2px;
 }
-
-
 .div2 li {
-  padding: 5px 0; /* مسافة بين العناصر */
+  padding: 5px 0;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
-
 .div2 .clickable {
   cursor: pointer;
 }
-
 .div2 ul li {
-  border: none; /* إزالة أي حدود إن وجدت */
+  border: none;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
-
-/* تخصيص عرض شريط التمرير */
 .div2::-webkit-scrollbar {
-width: 2px; /* قم بزيادة العرض */
+  width: 2px;
 }
-
-
-
-/* تخصيص مسار شريط التمرير */
 #div2::-webkit-scrollbar-track {
-background: #000; /* لون المسار الأسود */
-border-radius: 10px;
+  background: #000;
+  border-radius: 10px;
 }
-
-/* تخصيص مؤشر التمرير */
 #div2::-webkit-scrollbar-thumb {
-background: #000; /* لون مؤشر التمرير الأسود */
-border-radius: 10px;
+  background: #000;
+  border-radius: 10px;
 }
 
-/* تخصيص لون المؤشر عند التمرير عليه */
 .div2::-webkit-scrollbar-thumb:hover {
-background: #333; /* تغيير اللون عند التمرير عليه */
+  background: #333;
 }
 
 .div2::-webkit-scrollbar-track {
-  background: #000; /* لون المسار الأسود */
+  background: #000;
   border-radius: 10px;
-  }
-  
-  /* تخصيص مؤشر التمرير */
-  .div2::-webkit-scrollbar-thumb {
-  background: #000; /* لون مؤشر التمرير الأسود */
+}
+
+.div2::-webkit-scrollbar-thumb {
+  background: #000;
   border-radius: 10px;
-  }
-  
-  /* تخصيص لون المؤشر عند التمرير عليه */
-  .div2::-webkit-scrollbar-thumb:hover {
-  background: #333; /* تغيير اللون عند التمرير عليه */
-  }
+}
 
-
-
+.div2::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
 
 .zara-logo {
   width: 100%;
@@ -293,28 +360,42 @@ background: #333; /* تغيير اللون عند التمرير عليه */
   height: auto;
   margin-left: 30px;
   padding-top: 20px;
-  padding-left: 10px; 
+  padding-left: 10px;
   z-index: 3000;
   margin-bottom: 0px;
   padding-bottom: 0px;
 }
-.div1{
+.div1 {
   margin-left: 150px;
   z-index: 20000;
   position: fixed;
 }
-.frop{
-  margin-bottom: 5px; 
-  font-weight: 250; 
+.frop {
+  margin-bottom: 5px;
+  font-weight: 250;
   color: black;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
-.secp{
+.secp {
   margin-bottom: 30px;
-   margin-top: 30px;
+  margin-top: 30px;
 }
-a{
-  text-decoration: none; 
+a {
+  text-decoration: none;
   color: black;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
 /* Media queries for smooth resizing and moving logo to the left */
@@ -598,7 +679,7 @@ a{
     display: flex;
     right: 10px;
   }
-  .div5{
+  .div5 {
     display: block;
     width: 100%;
     height: 100%;
@@ -606,9 +687,9 @@ a{
     margin-top: 170px;
     z-index: 2000;
   }
-  .div6{
+  .div6 {
     margin-left: 20px;
-    margin-top: 10px; 
+    margin-top: 10px;
     background-color: white;
     border: 0.8 solid black;
     padding-left: 10px;
@@ -620,24 +701,25 @@ a{
     font-family: inherit;
     font-size: 5px;
     letter-spacing: 0.8px;
-    text-transform:uppercase;
+    text-transform: uppercase;
     display: block;
   }
-  .div6 ul{
-    list-style-type: none; /* إزالة النقاط من القائمة */
-    padding-left: 0; /* إزالة الفراغات على اليسار */
-    margin-top: 5px; /* إضافة فراغ بين الكلمة والقائمة */
+  .div6 ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 5px;
   }
-  .ulstyle1{
+  .ulstyle1 {
     list-style: none;
-    padding: 0; 
+    padding: 0;
     margin-left: 0px;
-     display: flex; 
-     justify-content: flex-start;
-     margin-top: 40px;
-     padding-left: 0px;
-     cursor: pointer;  }
-  .div1{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 40px;
+    padding-left: 0px;
+    cursor: pointer;
+  }
+  .div1 {
     display: none;
   }
 }
