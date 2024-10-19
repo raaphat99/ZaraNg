@@ -11,9 +11,17 @@ export class NotificationService {
   constructor(private http: HttpClient) {}
 
  public notifyAll(message: string): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/notify-all`, { message });
+  const token = localStorage.getItem('token');  
+  const headers = { 
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json' };
+    return this.http.post<any>(`${this.apiUrl}/notify-all`, { message} ,{headers});
   }
 public  notifyUser(userId: string, message: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/notify-user`, { userId, message });
+  const token = localStorage.getItem('token');  
+  const headers = { 
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json' };
+    return this.http.post<any>(`${this.apiUrl}`, { userId, message },{headers}).pipe();
   }
 }
