@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { FilterService } from '../../services/filter.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Productsearch } from '../../viewmodels/product-search';
 
 @Component({
   selector: 'app-price-modal',
@@ -11,29 +12,32 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./price-modal.component.css'] // تأكد من تصحيح الاسم هنا
 })
 export class PriceModalComponent {
-  minPrice: number = 390;  // السعر الأدنى
-  maxPrice: number = 22990; // السعر الأعلى
-  startPrice: number = this.minPrice; // بداية السعر
-  endPrice: number = this.maxPrice;   // نهاية السعر
+  products: Productsearch;
+  minPrice: number = 390;  // Minimum price
+  maxPrice: number = 22990; // Maximum price
+  startPrice: number = this.minPrice; // Starting price
+  endPrice: number = this.maxPrice;   // Ending price
 
-  isopen: boolean = false;
-  selectedstyle: string[] = [];
+  isOpen: boolean = false; // Renamed for consistency
+  selectedStyles: string[] = []; // Renamed for clarity
   
-  initialStartPrice: number = this.minPrice; // القيم الافتراضية لبداية السعر
-  initialEndPrice: number = this.maxPrice;   // القيم الافتراضية لنهاية السعر
+  initialStartPrice: number = this.minPrice; // Default value for starting price
+  initialEndPrice: number = this.maxPrice;   // Default value for ending price
 
   @Output() priceSelected = new EventEmitter<Productsearch>(); 
-  @Input() productselected: Productsearch[] = []; 
+  @Input() productSelected: Productsearch[] = []; // Renamed for consistency
 
-  constructor(public filter: FilterService) {}
+  constructor(public filter: FilterService) {
+    this.products = this.filter.clearProductvc();
+  }
 
   open(): void {
-    this.isopen = true;
+    this.isOpen = true; // Consistent naming
   }
 
   close(): void {
     console.log('Modal closed'); 
-    this.isopen = false;
+    this.isOpen = false; // Consistent naming
   }
 
   ngOnInit(): void {
@@ -45,77 +49,57 @@ export class PriceModalComponent {
     this.checkWindowSize();
   }
 
-  checkWindowSize() {
-    if (window.innerWidth < 700 && this.isopen) {
+  checkWindowSize(): void {
+    if (window.innerWidth < 700 && this.isOpen) {
       this.close();
     }
   }
 
-  updatePrices() {
-    // ضمان أن startPrice لا يتجاوز endPrice
+  updatePrices(): void {
+    // Ensure that startPrice does not exceed endPrice
     if (this.startPrice > this.endPrice) {
       this.startPrice = this.endPrice;
     }
   }
 
-  emitPriceSelection() {
-  }
-  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
   viewResults(): void {
-    const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null;
+    const categoryId = this.productSelected.length > 0 ? this.productSelected[0].categoryId : null;
 
     if (categoryId !== null) {
       this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&priceFrom=${this.startPrice}&priceTo=${this.endPrice}`;
       console.log('Fetching URL:', this.filter.url);
-      this.products=new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0); 
+      this.products = this.filter.clearProductvc();
+
       this.filter.getAll().subscribe({
         next: data => {
           this.products = data;
           this.priceSelected.emit(this.products);
-
-          console.log("Products with selected sizes", this.products);
+          console.log("Products with selected prices:", this.products);
         },
         error: err => {
-          console.error('Error fetching products for selected sizes:', err);
+          console.error('Error fetching products for selected prices:', err);
         }
       });
-      this.priceSelected.emit(this.products);
 
     } else {
-      console.error('No categoryId found in productselected');
+      console.error('No categoryId found in productSelected');
     }
+    this.close();
   }
 
-  clearSelection() {
-    // إعادة تعيين قيم الـ slider إلى القيم الافتراضية
+  clearSelection(): void {
+    // Reset slider values to default
     this.startPrice = this.minPrice;
     this.endPrice = this.maxPrice;
-    this.selectedstyle = [];
+    this.selectedStyles = []; // Consistent naming
     console.log('Selection cleared'); 
   }
 
   isStyleSelected(style: string): boolean {
-    return this.selectedstyle.includes(style);
+    return this.selectedStyles.includes(style); // Consistent naming
   }
 
   isClearDisabled(): boolean {
-    console.log((this.startPrice === this.minPrice && this.endPrice === this.maxPrice));
-    return this.startPrice === this.minPrice && this.endPrice === this.maxPrice;
+    return (this.startPrice === this.minPrice && this.endPrice === this.maxPrice);
   }
-}
-
-// تعريف الكلاس Productsearch
-class Productsearch {
-  constructor(
-    public id: number, 
-    public productId: number, 
-    public productName: string, 
-    public sizeId: number, 
-    public sizeValue: string,
-    public price: number, 
-    public stockQuantity: number, 
-    public productColor: number, 
-    public productMaterial: number, 
-    public categoryId: number
-  ) {}
 }

@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { environment } from '../../../../enviroment/enviroment.prod';
 import { ProductVariant } from '../viewmodels/product-variant';
 import { ProductImage } from '../viewmodels/product-image';
+import { Product } from '../viewmodels/product';
 
 @Injectable({
   providedIn: 'root',

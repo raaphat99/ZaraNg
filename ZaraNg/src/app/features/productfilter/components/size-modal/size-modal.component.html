@@ -1,12 +1,12 @@
-<div class="modal" *ngIf="isopen" (click)="close()">
+<div class="modal" *ngIf="isOpen" (click)="close()">
     <div class="modal-content">
         <div class="styles-list">
             <div class="grid-container">
                 <button 
                     class="btn1" 
                     *ngFor="let style of sizes" 
-                    (click)="toggleStyle(style); $event.stopPropagation()"  
-                    [ngClass]="{'selected': isStyleSelected(style)}">
+                    (click)="toggleSize(style); $event.stopPropagation()"  
+                    [ngClass]="{'selected': isSizeSelected(style)}">
                     {{ style }}
                 </button>
             </div>
@@ -14,7 +14,7 @@
 
         <div class="modal-actions">
             <!-- Add $event.stopPropagation() to prevent modal from closing -->
-            <button (click)="clearSelection(); $event.stopPropagation()" [disabled]="selectedstyle.length === 0">CLEAR</button>
+            <button (click)="clearSelection(); $event.stopPropagation()" [disabled]="selectedSizes.length === 0">CLEAR</button>
             <button (click)="viewResults(); $event.stopPropagation()">VIEW RESULTS</button>
         </div>
     </div>

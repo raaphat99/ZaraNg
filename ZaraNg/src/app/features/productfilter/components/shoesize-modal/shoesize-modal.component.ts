@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { FilterService } from '../../services/filter.service';
 import { CommonModule, formatCurrency } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Productsearch } from '../../viewmodels/product-search';
 
 @Component({
   selector: 'app-shoesize-modal',
@@ -11,118 +12,91 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './shoesize-modal.component.css'
 })
 export class ShoesizeModalComponent {
-  sizes: string[] = [
-    '36',
-    '38',
-    '40',
-    '42',
-  ];
-  
-  isopen: boolean = false;
-  selectedstyle: string[] = [];
-  
-  @Output() shsizeSelected = new EventEmitter<Productsearch>(); // توحيد التسمية
-  @Input() productselected: Productsearch[] = []; 
+  products: Productsearch;
+  sizes: string[] = ['36', '38', '40', '42'];
 
-  constructor(public filter: FilterService) {}
+  isOpen: boolean = false;
+  selectedSizes: string[] = [];
+
+  @Output() shoeSizeSelected = new EventEmitter<Productsearch>(); // Improved naming
+  @Input() productSelected: Productsearch[] = [];
+
+  constructor(public filter: FilterService) {
+    this.products = this.filter.clearProductvc();
+  }
 
   open(): void {
-    this.isopen = true;
+    this.isOpen = true;
   }
 
   close(): void {
-    console.log('Modal closed'); 
-    this.isopen = false;
+    console.log('Modal closed');
+    this.isOpen = false;
   }
 
-  toggleStyle(style: string) {
-    const index = this.selectedstyle.indexOf(style);
+  toggleSizeSelection(size: string) {
+    const index = this.selectedSizes.indexOf(size);
     if (index === -1) {
-      this.selectedstyle.push(style);
+      this.selectedSizes.push(size);
     } else {
-      this.selectedstyle.splice(index, 1);
+      this.selectedSizes.splice(index, 1);
     }
   }
-
-  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
-
 
   viewResults(): void {
-    if (this.selectedstyle.length > 0) {
-      const sizeParams = this.selectedstyle
-        .map(style => `sizes=${style}`) 
-        .join('&'); 
-    
-    
-      const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null;
-    
-      if (categoryId !== null) {
-        // بناء الرابط النهائي باستخدام categoryId ومعلمات "sizes"
-        this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${sizeParams}`;
+    if (this.selectedSizes.length > 0) {
+      const sizeParams = this.selectedSizes
+        .map(size => `sizes=${size}`)
+        .join('&');
 
-        console.log('Fetching URL:', this.filter.url); 
-    
-        // إرسال الطلب إلى الـ API
+      const categoryId = this.productSelected.length > 0 ? this.productSelected[0].categoryId : null;
+
+      if (categoryId !== null) {
+        this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${sizeParams}`;
+        console.log('Fetching URL:', this.filter.url);
+
         this.filter.getAll().subscribe({
           next: data => {
-            this.products = data; 
-            this.shsizeSelected.emit(this.products); 
-
-            console.log("Products with selected sizes", this.products);
+            this.products = data;
+            this.shoeSizeSelected.emit(this.products);
+            console.log('Products with selected sizes:', this.products);
           },
           error: err => {
-            console.error('Error fetching products for selected sizes:', err);
+            console.log('Error fetching products for selected sizes:', err);
           }
         });
-        this.shsizeSelected.emit(this.products); 
-
       } else {
-        console.error('No categoryId found in productselected');
+        console.log('No categoryId found in productSelected');
       }
     } else {
-      console.log('No styles selected');
+      console.log('No sizes selected');
     }
-  }
-  
-  
-
-  clearSelection() {
-    this.selectedstyle = [];
-    console.log('Selection cleared'); 
+    this.close();
   }
 
-  isStyleSelected(style: string): boolean {
-    return this.selectedstyle.includes(style);
+  clearSelection(): void {
+    this.selectedSizes = [];
+    console.log('Selection cleared');
   }
+
+  isSizeSelected(size: string): boolean {
+    return this.selectedSizes.includes(size);
+  }
+
   ngOnInit(): void {
     this.checkWindowSize();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  onResize(event: any): void {
     this.checkWindowSize();
   }
 
-  checkWindowSize() {
-    if (window.innerWidth < 700 && this.isopen) {
+  checkWindowSize(): void {
+    if (window.innerWidth < 700 && this.isOpen) {
       this.close();
     }
   }
 }
 
-// تعريف الكلاس Productsearch
-class Productsearch {
-  constructor(
-    public id: number, 
-    public productId: number, 
-    public productName: string, 
-    public sizeId: number, 
-    public sizeValue: string,
-    public price: number, 
-    public stockQuantity: number, 
-    public productColor: number, 
-    public productMaterial: number, 
-    public categoryId: number
-  ) {}
-}
 

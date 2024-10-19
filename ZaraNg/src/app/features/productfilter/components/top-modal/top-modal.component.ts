@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { FilterService } from '../../services/filter.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Productsearch } from '../../viewmodels/product-search';
 
 @Component({
   selector: 'app-top-modal',
@@ -11,7 +12,8 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./top-modal.component.css']
 })
 export class TopModalComponent {
-  Styles: string[] = [
+  products: Productsearch;
+  styles: string[] = [
     'BLAZERS',
     'TROUSERS',
     'JEANS',
@@ -21,35 +23,14 @@ export class TopModalComponent {
     'KNITWEAR',
     'SWEATSHIRTS',
     'SUITS',
-  ];
-  
-  isopen: boolean = false;
-  selectedtop: string[] = [];
-  
+  ]; // Renamed to lowercase "styles" for consistency
+
+  isOpen: boolean = false; // Updated naming to camelCase for consistency
+  selectedTop: string[] = [];
+
   @Output() topSelected = new EventEmitter<Productsearch>();
-  @Input() productselected: Productsearch[] = []; 
+  @Input() productSelected: Productsearch[] = [];
 
-  constructor(public filter: FilterService) {}
-
-  open(): void {
-    this.isopen = true;
-  }
-
-  close(): void {
-    console.log('Modal closed'); 
-    this.isopen = false;
-  }
-
-  toggleStyle(style: string) {
-    const index = this.selectedtop.indexOf(style);
-    if (index === -1) {
-      this.selectedtop.push(style);
-    } else {
-      this.selectedtop.splice(index, 1);
-    }
-  }
-
-  // Mapping of styles to product IDs
   private styleProductIdMap: { [key: string]: number } = {
     'BLAZERS': 13,
     'TROUSERS': 18,
@@ -61,73 +42,89 @@ export class TopModalComponent {
     'SWEATSHIRTS': 24,
     'SUITS': 30,
   };
+
+  constructor(public filter: FilterService) {
+    this.products = this.filter.clearProductvc();
+  }
+
   ngOnInit(): void {
     this.checkWindowSize();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  onResize(event: any): void {
     this.checkWindowSize();
   }
 
-  checkWindowSize() {
-    if (window.innerWidth < 700 && this.isopen) {
+  checkWindowSize(): void {
+    if (window.innerWidth < 700 && this.isOpen) {
       this.close();
-      this.selectedtop.length === 0
     }
   }
-  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
-  viewResults() {
 
-    if (this.selectedtop.length > 0) {
-      const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null;
+  open(): void {
+    this.isOpen = true;
+  }
+
+  close(): void {
+    console.log('Modal closed');
+    this.isOpen = false;
+  }
+
+  toggleStyle(style: string): void {
+    const index = this.selectedTop.indexOf(style);
+    if (index === -1) {
+      this.selectedTop.push(style);
+    } else {
+      this.selectedTop.splice(index, 1);
+    }
+  }
+
+  viewResults(): void {
+    if (this.selectedTop.length > 0) {
+      const categoryId = this.productSelected.length > 0 ? this.productSelected[0].categoryId : null;
 
       if (categoryId !== null) {
+        this.products = this.filter.clearProductvc();
 
-        this.products=new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0); 
-        for (let style of this.selectedtop) {
-          const productId = this.styleProductIdMap[style]; // Get product ID from the mapping
+        for (const style of this.selectedTop) {
+          const productId = this.styleProductIdMap[style]; // Get product ID based on the selected style
 
           if (productId) {
-            // Construct the final URL with category ID and each selected style (productId)
             const url = `http://localhost:5250/api/Products/category/${productId}`;
             console.log('Fetching URL:', url);
 
-            this.filter.url = url; // Update filter URL for each request
+            this.filter.url = url;
 
-            // Send the API request for each productId
             this.filter.getAll().subscribe({
-              next: data => {
+              next: (data) => {
                 this.products = data;
-                this.topSelected.emit(this.products); // Emit the selected styles
-                console.log("Products with selected style", data);
+                this.topSelected.emit(this.products); // Emit the products after fetching
+                console.log('Products with selected style', this.products);
               },
-              error: err => {
-                console.error('Error fetching products for selected style:', err);
-              }
+              error: (err) => {
+                console.log('Error fetching products for selected style:', err);
+              },
             });
           }
         }
-        this.topSelected.emit(this.products); // Emit the selected styles
 
       } else {
-        console.error('No categoryId found in productselected');
+        console.log('No categoryId found in productSelected');
       }
+    } else {
+      console.log('No styles selected');
     }
+
+    this.close();
   }
 
-
-  clearSelection() {
-    this.selectedtop = [];
-    console.log('Selection cleared'); 
+  clearSelection(): void {
+    this.selectedTop = [];
+    console.log('Selection cleared');
   }
 
   isStyleSelected(style: string): boolean {
-    return this.selectedtop.includes(style);
+    return this.selectedTop.includes(style);
   }
-}
-
-class Productsearch {
-  constructor(public id: number, public productId: number, public productName: string, public sizeId: number, public sizeValue: string,
-    public price: number, public stockQuantity: number, public productColor: number, public productMaterial: number, public categoryId: number) {}
 }

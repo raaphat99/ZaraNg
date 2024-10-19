@@ -317,6 +317,8 @@ a{
   color: black;
 }
 
+
+
 /* Media queries for smooth resizing and moving logo to the left */
 @media (max-width: 1400px) {
   .header {
