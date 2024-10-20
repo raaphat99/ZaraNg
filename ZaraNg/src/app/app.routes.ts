@@ -5,6 +5,7 @@ import { HomeComponent } from './features/home/components/home/home.component';
 import { filter } from 'rxjs';
 import { ProductfilterComponent } from './features/productfilter/components/productfilter/productfilter.component';
 import { FiltersearchComponent } from './features/search/components/filtersearch/filtersearch.component';
+import { AdminProductComponent } from './features/admin-dashboard/components/admin-product/admin-product.component';
 
 export const routes: Routes = [
 
@@ -57,6 +58,8 @@ export const routes: Routes = [
     {
         path:'filtersearch',
         component:FiltersearchComponent
-    },
+    }
+  
+    ,
     { path: '**', component: NotFoundComponent }
 ];

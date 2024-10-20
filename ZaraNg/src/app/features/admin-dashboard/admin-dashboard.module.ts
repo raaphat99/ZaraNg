@@ -8,7 +8,8 @@ import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    AdminDashboardRoutingModule
+    AdminDashboardRoutingModule,
+        
   ]
 })
 export class AdminDashboardModule { }
