@@ -6,9 +6,6 @@ import { SharedModule } from './shared/shared.module';
 import { CartComponent } from './features/shopping/cart/cart.component';
 import { WishlistComponent } from './features/shopping/wishlist/wishlist.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './features/home/components/home/home.component';
 import { LoginComponent } from "./features/authentication/components/login/login.component";
 import { RegisterComponent } from "./features/authentication/components/register/register.component";
@@ -39,6 +36,7 @@ import { AdminRegisterComponent } from "./features/admin-dashboard/components/ad
     AdminMainComponent,
     AdminCategoryComponent,
     AdminRegisterComponent
+   
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

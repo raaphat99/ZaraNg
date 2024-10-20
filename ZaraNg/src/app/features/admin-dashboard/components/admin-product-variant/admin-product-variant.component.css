@@ -1,0 +1,292 @@
+.order-container {
+    padding: 20px;
+    margin-top: 140px;
+  }
+  
+  h1,h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .order-table th,
+  .order-table td {
+    border: 0.8px solid #000;
+    padding: 8px;
+  }
+  
+  .order-table th {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .order-table td {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  p{
+      margin-bottom: 20px;
+      font-weight: 300;
+      font-stretch: 100%;
+      line-height: 16px;
+      font-family: inherit;
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;  
+  }
+  .view-button,
+  .delete-button,
+  .edit-button {
+    padding: 5px 15px;
+    margin-right: 20px;
+    text-decoration: none;
+    background-color: #fff;
+    color: black;
+    border: 0.8px solid black;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .delete-button {
+    margin-top: 5px;
+  }
+  
+  .view-button:hover,
+  .delete-button:hover {
+    background-color: #000;
+    border: 0.8px solid black;
+    color: white;
+    border-radius: 4px;
+  }
+  h2 {
+    display: inline;
+    margin-bottom: 10px;
+  }
+  svg {
+    margin-left: 330px;
+  }
+  .order-details-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 0.8px solid #000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+  }
+  .order-delete-dialog{
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 0.8px solid #000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      z-index: 1000; 
+  }
+  .close-button {
+    padding: 5px 10px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .product-image {
+    width: 30%;
+    height: 50vh;
+    margin-left: 10px;
+  }
+  .status-pending {
+    color: orange;
+  }
+  
+  .status-shipped {
+    color: green;
+  }
+  
+  .status-delivered {
+    color: blue;
+  }
+  
+  .status-canceled {
+    color: red;
+  }
+  
+  .confirm-button {
+    background-color: red;
+    color: white;
+    padding: 8px 20px;
+    margin-right: 20px;
+    border: 0.8px solid rgb(0, 0, 0);
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .cancel-button {
+    background-color: #fff;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 8px 20px;
+    margin-right: 20px;
+    color: black;
+    border: 0.8px solid black;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border-radius: 4px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  form input,
+  form select {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  /* الخلفية شبه الشفافة للمودال */
+.custom-modal {
+  display: none; /* إخفاء المودال افتراضيًا */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* محتوى المودال */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 600px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+.btn1{
+  padding: 10px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  border: 0.8px solid black;
+}
+.btn:focus{
+  color: black;
+  background-color: white;
+}
+/* زر الإغلاق */
+.close-btn {
+  font-size: 24px;
+  color: black;
+  float: right;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* عرض المودال عند إضافة فئة show */
+.show {
+  display: flex;
+}
+
+  form input:focus,
+  form select:focus {
+    border-color: black;
+    outline: none;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form select {
+    padding: 10px;
+  }
+  
+  form button {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  form button:hover {
+    background-color: white;
+    color: black;
+
+  }
+  
+  

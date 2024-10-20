@@ -8,6 +8,7 @@ import { FiltersearchComponent } from './features/search/components/filtersearch
 import { authGuard } from './core/guards/authentication.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 
+
 export const routes: Routes = [
 
     {path: 'home', component: HomeComponent},
@@ -62,6 +63,8 @@ export const routes: Routes = [
     {
         path:'filtersearch',
         component:FiltersearchComponent
-    },
+    }
+  
+    ,
     { path: '**', component: NotFoundComponent }
 ];
