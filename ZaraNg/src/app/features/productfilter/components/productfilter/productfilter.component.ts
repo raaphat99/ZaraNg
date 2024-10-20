@@ -136,8 +136,9 @@ export class ProductfilterComponent {
 
   handleColorSelection(color: Productsearch): void {
     // Reset productvc to null before assigning the new color
-    this.productvc = this.filterService.clearProductvc();
-    this.productvc = color; // Assign the new value
+    // this.productvc = this.filterService.clearProductvc();
+    // this.productvc = color; // Assign the new value
+    // this.products = color;
     console.log('color product v ', color);
   }
 
