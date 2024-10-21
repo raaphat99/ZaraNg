@@ -34,10 +34,10 @@ export class ProductService extends ApiService {
     );
   }
 
-  getSizesBySizeType(sizeType: string): Observable<string[]> {
+  getSizesBySizeType(sizeType: string): string[] {
     let sizes: string[] = [];
 
-    if (sizeType === 'Alpha') sizes = ['S', 'M', 'L', 'XL'];
+    if (sizeType === 'Alpha') sizes = ['Small', 'Medium', 'Large', 'ExtraLarge'];
     else if (sizeType === 'Numeric') sizes = ['36', '38', '40', '42', '44'];
     else if (sizeType === 'OneToSix')
       sizes = [
@@ -57,7 +57,7 @@ export class ProductService extends ApiService {
         '13-14 years (164 cm)',
       ];
       
-      return of(sizes);
+      return sizes;
   }
 
   // generateProducts(count: number):  Observable<Product[]> {

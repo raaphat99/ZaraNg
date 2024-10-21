@@ -1,4 +1,3 @@
-import { UserAddressService } from './../../../user/services/user-address.service';
 import { Router } from '@angular/router';
 import {
   Component,
@@ -13,6 +12,7 @@ import { FooterComponent } from '../../../../shared/components/footer/footer.com
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { CartService } from '../../../shopping/cart/services/cart.service';
 import { CommonModule } from '@angular/common';
+import { UserAddressesService } from '../../../user/services/user-addresses.service';
 
 @Component({
   selector: 'app-shipping-method-selection',
@@ -44,7 +44,7 @@ export class ShippingMethodSelectionComponent implements OnInit {
     private renderer: Renderer2,
     private cartService: CartService,
     private router: Router,
-    private userAddressService: UserAddressService
+    private userAddressService: UserAddressesService
   ) {}
 
   ngOnInit(): void {
@@ -125,7 +125,7 @@ export class ShippingMethodSelectionComponent implements OnInit {
   }
 
   getActiveAddress() {
-    this.userAddressService.getUserAddresses()
+    this.userAddressService.GetUserAddresses()
       .subscribe({
         next: (addresses: any) => {
           this.activeAddress = addresses.find((address: any )=> address.active === true);

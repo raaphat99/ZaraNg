@@ -1,6 +1,12 @@
 import { CustomValidators } from './../../../../shared/custom-validators/custom-validators';
 import { CartService } from '../../../shopping/cart/services/cart.service';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ProductVariant } from '../../viewmodels/product-variant';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,15 +19,14 @@ import { WishlistService } from '../../../shopping/wishlist/services/wishlist.se
 @Component({
   selector: 'product-details',
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.css'
+  styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent implements OnInit {
-
   @ViewChild('scrollGallery', { static: true }) scrollGallery!: ElementRef;
   isExpanded = false;
   activeIndex = 0;
   isBookmarked: boolean = false;
-  isStoreSizesModalOpen = false; 
+  isStoreSizesModalOpen = false;
   isFindSizeModalOpen = false;
   productVariants: ProductVariant[] = [];
   productId!: number;
@@ -32,15 +37,18 @@ export class ProductDetailsComponent implements OnInit {
   sizes: string[] = []; // List of all possible sizes
   availableSizes: string[] = [];
   selectedSize: string | null = null;
-  @ViewChild(WishlistNotificationComponent) notificationComponent!: WishlistNotificationComponent;
+  @ViewChild(WishlistNotificationComponent)
+  notificationComponent!: WishlistNotificationComponent;
   showModal: boolean = false;
   variantId!: number;
 
-  constructor(private route: ActivatedRoute, 
-              private router: Router,
-              private productService: ProductService, 
-              private wishlistService: WishlistService,
-              private CartService: CartService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private productService: ProductService,
+    private wishlistService: WishlistService,
+    private CartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.productId = +this.route.snapshot.paramMap.get('id')!;
@@ -51,68 +59,70 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getCurrentVariant() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.variantId = +params['variantId']; // Get the variantId from the URL
     });
   }
 
-  addToCart() {
-    if (!this.selectedSize) {
-      this.showModal = true; // Show modal if size is not selected
-    } else {
-      // Add the variant to the cart using the CartService
-      this.CartService.addCartItem(this.variantId)
-        .subscribe({
-          next: (response: any) => console.log("This item is successfully added to your cart."),
+  addToCart(event: Event) {
+    const element = event.target as HTMLElement;
+    if (!element.classList.contains('disable-btn')) {
+      if (!this.selectedSize) {
+        this.showModal = true; // Show modal if size is not selected
+      } else {
+        // Add the variant to the cart using the CartService
+        this.CartService.addCartItem(this.variantId).subscribe({
+          next: (response: any) =>
+            console.log('This item is successfully added to your cart.'),
           error: (error: any) => console.log(error),
         });
+      }
     }
   }
 
   closeModal() {
     this.showModal = false;
   }
-  
 
-  initializeSizes() {
-    this.productService.getSizesBySizeType(this.mainProduct!.sizeType)
-      .subscribe({
-        next: (sizes: string[]) => this.sizes = sizes,
-      });
+  initializeSizes(sizeType: string) {
+    this.sizes = this.productService.getSizesBySizeType(sizeType);
   }
 
   isSizeAvailable(size: string): boolean {
-    return this.productVariants.some(variant => variant.sizeName === size);
+    return this.availableSizes.includes(size);
   }
 
   onSizeClick(event: MouseEvent, size: string): void {
-    if (this.isSizeAvailable(size)) {
-      this.selectedSize = size;
-      // Handle logic when size is selected
-    }
-
-      // Remove 'active' class from all list items
-      const sizeItems = document.querySelectorAll('.size-item');
-      sizeItems.forEach(item => item.classList.remove('active'));
+    const element = (event.target as HTMLElement).closest('li.size-item');
     
+    if (!element) return; // Ensure the event is from a size-item element
+  
+    if (this.isSizeAvailable(size)) {
+      this.selectedSize = size; // Store the selected size in the component's state
+      
+      // Remove 'active' class from all size items using Angular's bindings
+      const sizeItems = document.querySelectorAll('.size-item');
+      sizeItems.forEach((item) => item.classList.remove('active'));
+      
       // Add 'active' class to the clicked item
-      const clickedItem = event.target as HTMLElement;
-      clickedItem.classList.add('active');
+      element.classList.add('active');
+    }
   }
+  
 
   getMainProduct(): void {
-    this.productService.getByID(this.productId)
-      .subscribe({
-        next: (data: any) => {
-          this.mainProduct = data;
-          this.initializeSizes();
-          this.checkWishlistStatus();
-        },
-      });
+    this.productService.getByID(this.productId).subscribe({
+      next: (data: any) => {
+        this.mainProduct = data;
+        this.initializeSizes(data.sizeType);
+        this.checkWishlistStatus();
+      },
+    });
   }
 
   loadProductVariants(): void {
-    this.productService.getProductVariants(this.productId)
+    this.productService
+      .getProductVariants(this.productId)
       .subscribe((data: any) => {
         this.productVariants = data;
 
@@ -124,49 +134,45 @@ export class ProductDetailsComponent implements OnInit {
           this.loadImagesByColor(this.selectedColor); // Load images for default color
         }
       });
-
-      
   }
 
   extractAvailableSizes(): void {
-    const sizes = this.productVariants.map(variant => variant.sizeName);
+    const sizes = this.productVariants.map((variant) => variant.sizeName);
     this.availableSizes = [...new Set(sizes)]; // Get distinct sizes
     // console.log(this.availableSizes);
   }
 
   getAvailableColors(): void {
-    this.productService.getProductColors(this.productId)
-      .subscribe({
-        next: (colors: string[]) => {
-          this.availableColors = colors;
+    this.productService.getProductColors(this.productId).subscribe({
+      next: (colors: string[]) => {
+        this.availableColors = colors;
 
-          // After fetching colors, load images for the default color
-          if (this.availableColors.length > 0) {
-            this.selectedColor = this.availableColors[0]; // Set default color
-            this.loadImagesByColor(this.selectedColor); // Load images for default color
-          }
-        },
-      });
+        // After fetching colors, load images for the default color
+        if (this.availableColors.length > 0) {
+          this.selectedColor = this.availableColors[0]; // Set default color
+          this.loadImagesByColor(this.selectedColor); // Load images for default color
+        }
+      },
+    });
   }
 
   // Load images for the selected color
   loadImagesByColor(color: string): void {
-
-    const selectedVariant = this.productVariants.find(variant => variant.productColor === color);
+    const selectedVariant = this.productVariants.find(
+      (variant) => variant.productColor === color
+    );
 
     if (selectedVariant) {
-
       // Add variantId to the URL as a query parameter
       this.router.navigate([], {
         relativeTo: this.route,
         queryParams: { variantId: selectedVariant.id },
-        queryParamsHandling: 'merge' // Keep other query parameters if any
+        queryParamsHandling: 'merge', // Keep other query parameters if any
       });
 
-      this.productService.getVariantImages(selectedVariant.id)
-        .subscribe({
-          next: (images: ProductImage[]) => this.filteredImages = images,
-        });
+      this.productService.getVariantImages(selectedVariant.id).subscribe({
+        next: (images: ProductImage[]) => (this.filteredImages = images),
+      });
     } else {
       this.filteredImages = [];
     }
@@ -190,25 +196,25 @@ export class ProductDetailsComponent implements OnInit {
     let productId = this.mainProduct!.id;
 
     if (this.isBookmarked) {
-      this.wishlistService.removeFromWishlist(productId).subscribe(
-        {
-          next: () => {
-            this.isBookmarked = false;
-            this.notificationComponent.showNotification('The item has been removed from favourites.');
-          },
-          error: (error) => console.error('Error removing product from wishlist', error),
-        }
-      );
+      this.wishlistService.removeFromWishlist(productId).subscribe({
+        next: () => {
+          this.isBookmarked = false;
+          this.notificationComponent.showNotification(
+            'The item has been removed from favourites.'
+          );
+        },
+        error: (error) =>
+          console.error('Error removing product from wishlist', error),
+      });
     } else {
-      this.wishlistService.addProductToWishlist(productId).subscribe(
-        {
-          next: () => {
-            this.isBookmarked = true;
-            this.notificationComponent.showNotification('Saved.');
-          },
-          error: (error) => console.error('Error adding product to wishlist', error),
-        }
-      );
+      this.wishlistService.addProductToWishlist(productId).subscribe({
+        next: () => {
+          this.isBookmarked = true;
+          this.notificationComponent.showNotification('Saved.');
+        },
+        error: (error) =>
+          console.error('Error adding product to wishlist', error),
+      });
     }
   }
 
@@ -218,25 +224,26 @@ export class ProductDetailsComponent implements OnInit {
     // Call a service method to check if the product is in the user's wishlist
     this.wishlistService.isInWishlist(productId).subscribe({
       next: (isInWishlist) => {
-            this.isBookmarked = isInWishlist;
-        },
+        this.isBookmarked = isInWishlist;
+      },
       error: (error) => {
-            console.error('Error checking wishlist status', error);
-        }
+        console.error('Error checking wishlist status', error);
+      },
     });
-}
+  }
 
   setActiveImage(index: number) {
     this.activeIndex = index; // Update the active index
     this.scrollGallery.nativeElement.scrollTo({
       top: index * 400, // Scroll to the position of the selected image
-      behavior: 'smooth' // Smooth scroll behavior
+      behavior: 'smooth', // Smooth scroll behavior
     });
   }
 
   @HostListener('window:scroll', [])
   onScroll() {
-    const galleryItems = this.scrollGallery.nativeElement.querySelectorAll('.gallery-item');
+    const galleryItems =
+      this.scrollGallery.nativeElement.querySelectorAll('.gallery-item');
 
     galleryItems.forEach((item: HTMLImageElement, index: number) => {
       const rect = item.getBoundingClientRect();

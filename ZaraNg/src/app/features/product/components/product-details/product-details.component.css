@@ -234,12 +234,15 @@
 }
 
 .size-item {
+    display: flex;
+    flex-direction: column;
     padding: 1em;
     text-align: center;
     font-size: 11px;
     color: black;
     border: 1px solid black;
     transition: background-color 0.4s ease;
+    cursor: pointer;
 }
 
 .size-item.active {
@@ -248,11 +251,21 @@
     font-weight: 400;
 }
 
-
+.coming-soon {
+    pointer-events: none;
+    margin-top: 3px;
+    font-size: 9px;
+  }
 
 .disabled {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.8;
+}
+
+.disable-btn {
+    background-color: grey;
+    color: white;
+    cursor: not-allowed;
 }
 
 .clickable {

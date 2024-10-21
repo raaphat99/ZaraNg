@@ -3,13 +3,20 @@
     position: fixed;
     top: 0;
     right: -100%;
-    width: 430px;
-    height: 100%;
+    width: 30vw;
+    height: 100vh;
     background-color: white;
     transition: right 0.5s ease-in-out;
     z-index: 1000;
     border-left: 1px solid black;
     padding: 1em 0;
+}
+
+.modal-content {
+    width: 400px;  /* Set modal width */
+    max-height: 100vh; /* Set a maximum height */
+    padding-bottom: 30px; /* Padding to make space for the fixed button */
+    overflow-y: auto; /* Enable scroll for overflow content */
 }
 
 .header {
@@ -33,13 +40,19 @@
     cursor: pointer;
 }
 
-.body {
+.addresses-list {
+    padding: 16px;
+    max-height: calc(80vh - 120px); /* Keep addresses list responsive */
+    overflow-y: auto; /* Ensure vertical scrolling for address list */
+}
+
+.address-item {
     margin: 1em 0;
     padding: 0 1.5em;
     border-bottom: 1px solid black;
 }
 
-.body p {
+.address-item p {
     margin: 0;
     margin-bottom: 2px;
     font-size: 11px;
@@ -59,7 +72,7 @@
     text-align: center;
     cursor: pointer;
     padding: 1em;
-    margin-top: 17em;
+    margin: 2em 0;
     border: none;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
@@ -78,9 +91,16 @@
     font-size: 12px;
 }
 
+.active-label {
+    font-size: 11px;
+    display: block;
+    width: fit-content;
+    padding: 3px 3px 0px 3px;
+    border: 1px solid black;
+}
+
 
 /* When modal is active (visible), slide it from the right */
 .modal.active {
     right: 0;
 }
-

@@ -24,7 +24,10 @@ export interface UserDTO {
     street?: string;
     active?: boolean;
     userId?: string;
+    phoneNumber?: string;
+    area?: string;
   }
+
   export interface OrderItemDTO {
     name?: string;
     productImage?: string;
