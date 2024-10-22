@@ -18,16 +18,18 @@
     </thead>
     <tbody style="color: black;">
       <tr *ngFor="let product1 of pv">
-        <td>{{ product?.name }}</td>
-        <td>{{ product1.productColor }}</td>
-        <td>{{ product1.price }}</td>
-        <td>{{ product1.stockQuantity }}</td>
-        <td>{{ product1.productMaterial }}</td>
-        <td>{{ product1.sizeName }}</td>
-        <td>
+        <td *ngIf="product1.stockQuantity>0">{{ product?.name }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.productColor }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.price }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.stockQuantity }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.productMaterial }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.sizeName }}</td>
+        <td *ngIf="product1.stockQuantity>0">
           <button class="edit-button" (click)="editproductv(product1)">Edit</button>
           <button class="delete-button" (click)="ViewDetails(product1)">Show Image</button>
           <button class="delete-button" (click)="addimage(product1)">Add Image</button> 
+          <button class="delete-button" (click)="delet(product1)">Delete</button> 
+
         </td>
       </tr>
     </tbody>

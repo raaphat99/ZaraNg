@@ -4,7 +4,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { HomeComponent } from './features/home/components/home/home.component';
 import { filter } from 'rxjs';
 import { ProductfilterComponent } from './features/productfilter/components/productfilter/productfilter.component';
-import { FiltersearchComponent } from './features/search/components/filtersearch/filtersearch.component';
+import { FiltersearchComponent } from './features/search/components/filtersearch/FiltersearchComponent';
 import { authGuard } from './core/guards/authentication.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 

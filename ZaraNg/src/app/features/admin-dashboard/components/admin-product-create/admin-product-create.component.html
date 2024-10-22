@@ -31,6 +31,14 @@
             <option *ngFor="let item of Scat" [value]="item.id">{{item.name}}</option>
         </select>
         
+        <div *ngIf="SScat && SScat.length > 0">
+            <label>Product Sub Sub Category</label>
+            <select [(ngModel)]="addProduct.CategoryId" name="subCategoryId" #subSubCategoryId="ngModel" (change)="onSubCategoryChange($event)" [disabled]="!selectedMainCategory || showVariantForm">
+                <option value="">Select Sub Sub Category</option>
+                <option *ngFor="let item of SScat" [value]="item.id">{{item.name}}</option>
+            </select>
+        </div>
+        
         <button type="submit" [disabled]="productForm.invalid || showVariantForm">ADD</button>
         
     </form>

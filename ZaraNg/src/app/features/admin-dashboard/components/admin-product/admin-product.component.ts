@@ -27,9 +27,6 @@ export class AdminProductComponent {
 
   ngOnInit(): void {
     this.api.url = ' http://localhost:5250/api/ProductAdmin';
-    
-   
-
     this.api.getAll().subscribe({
       next: (data: Product[]) => {  
         this.allproduct = data.filter((product: Product) => product.categoryName !== 'VIEW ALL'); 
@@ -74,9 +71,29 @@ export class AdminProductComponent {
     return Array.from(new Set(this.productvariant?.map(item => item.productMaterial))).join(', ') || '';
   }
 
-  
+  confirmDelete(pro: Product) {
+    const confirmation = window.confirm(`Are you sure you want to delete the product: ${pro.name}?`);
 
+    if (confirmation) {
+        this.deleteProduct(pro.id); 
+    } else {
+       console.log("Delete action was cancelled.");
+    }
+}
+
+deleteProduct(productId: number) {
+    console.log(`Product with ID ${productId} deleted.`);
+    this.api.url='http://localhost:5250/api/Products/deactivate/'+productId;
+    this.api.deactivateProduct(productId).subscribe({
+      next: (response) => {  
+          console.log(`Product with ID ${productId} stock quantity set to zero successfully.`);
+          // يمكنك هنا تحديث قائمة المنتجات أو القيام بأي إجراء آخر بعد تعطيل المنتج
+      },
+      error: (err) => {
+          console.log('Error deactivating product:', err);
+      }
+  });
 
 }
 
-
+}

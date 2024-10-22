@@ -20,7 +20,7 @@
 }
 
 .modal-content {
-    background-color: transparent;
+    background-color: white;
     width: 80%;
     max-width: 400px; 
     border: 0.8px solid black;
@@ -41,7 +41,7 @@
 
 .btn1 {
     border: 0.8px solid black;
-    background-color: transparent;
+    background-color: white;
     cursor: pointer;
     height: 40px;
 }

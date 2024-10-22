@@ -51,7 +51,7 @@ export class ColorsearchComponent implements OnChanges, OnInit {
       this.filter.url = url;
       this.filter.getAll().subscribe({
         next: data => {
-          this.products = [...this.products, ...data]; // دمج المنتجات الجديدة مع القائمة الحالية
+          this.products = [...this.products, ...data];
           console.log("Products with selected colors for category", catId, data);
         },
         error: err => {
@@ -60,9 +60,7 @@ export class ColorsearchComponent implements OnChanges, OnInit {
       });
     });
   }
-
 }
-
 class Productsearch {
   constructor(
     public id: number,

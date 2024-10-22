@@ -46,8 +46,12 @@ editproduct(resource: any, id: number) {
   return this.httpClient.put<any>(`${this.url}/${id}`, formattedData);
 
 }
-deleteProduct(productId: number): Observable<void> {
-  return this.httpClient.delete<void>(`http://localhost:5250/api/ProductAdmin/${productId}`);
+
+deactivateProduct(productId: number): Observable<void> {
+  return this.httpClient.put<void>(`http://localhost:5250/api/Products/deactivate/${productId}`, {});
+}
+deactivateProductV(productId: number): Observable<void> {
+  return this.httpClient.put<void>(`http://localhost:5250/api/Products/deactivateVariant/${productId}`, {});
 }
 add2(resource: any) {
   const formattedData = {
@@ -82,5 +86,6 @@ uploadImage(file: File, variantId: number): Observable<any> {
   return this.httpClient.post<any>(`${this.url}/${variantId}`, formData);
 }
 
+  // دالة لحذف منتج
 
 }

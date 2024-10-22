@@ -15,6 +15,9 @@
         
         </ul>
     </div>
+
 </div>
+<product-list [products]="transformedProducts"></product-list>
+
 <app-colorsearch *ngIf="selectedCategoryId.length!=0" [colorAndCategory]="colorAndCategory"></app-colorsearch>
 

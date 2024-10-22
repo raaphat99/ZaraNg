@@ -15,20 +15,22 @@
     </thead>
     <tbody style="color: black;">
       <tr *ngFor="let product of allproduct">
-        <td>{{ product.name }}</td>
-        <td>{{ product.description }}</td>
-        <td>{{ product.price }}</td>
-        <td>{{ product.stockQuantity }}</td>
-        <td>{{ product.categoryName }}</td>
+        <td *ngIf="product.stockQuantity>0">{{ product.name }}</td>
+        <td  *ngIf="product.stockQuantity>0">{{ product.description }}</td>
+        <td  *ngIf="product.stockQuantity>0">{{ product.price }}</td>
+        <td  *ngIf="product.stockQuantity>0">{{ product.stockQuantity }}</td>
+        <td  *ngIf="product.stockQuantity>0">{{ product.categoryName }}</td>
         
-        <td>
+        <td *ngIf="product.stockQuantity>0">
           <button class="view-button" (click)="viewproduct(product)">
             View Details
           </button>
           <button class="edit-button" [routerLink]="['/admin/products/update/', product.id]">
             Edit                                    
           </button>
-      
+          <button class="delete-button" (click)="confirmDelete(product)">
+            Delete                                    
+          </button>
           <button class="delete-button" [routerLink]="['/admin/products/productvariant/', product.id]">
             Show Variant
           </button> 

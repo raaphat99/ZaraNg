@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Output, EventEmitter, Input, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../services/filter.service';
+import { Product2 } from '../productfilter/productfilter.component';
 
 @Component({
   selector: 'app-characteristics-modal',
@@ -34,8 +35,8 @@ export class CharacteristicsModalComponent {
   isopen: boolean = false;
   selectedCharacteristics: string[] = [];
   
-  @Output() characteristicsSelected = new EventEmitter<Productsearch>();
-  @Input() productselected: Productsearch[] = []; 
+  @Output() characteristicsSelected = new EventEmitter<Productsearch[]>();
+  @Input() productselected: Product2[]=[]; 
 
   constructor(public filter: FilterService) {}
 
@@ -57,38 +58,69 @@ export class CharacteristicsModalComponent {
     }
   }
 
-  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
+  products: Productsearch[]=[];
+  test:Productsearch|null=null;
 
-  viewResults() {
+  viewResults(): void {
+  if (this.selectedCharacteristics.length >= 1) {
+    // بناء معلمات الخصائص باستخدام الأسماء
+    const selectedCharacteristicNames = this.selectedCharacteristics
+      .map(materialValue => {
+        const material = this.characteristics.find(material => material === materialValue);
+        return material ? material : null;
+      })
+      .filter(name => name !== null); // تصفية الأسماء غير الموجودة
 
-    if (this.selectedCharacteristics.length > 0) {
-      const characteristicParams = this.selectedCharacteristics.map(characteristic => `materials=${characteristic}`).join('&');
+    // بناء رابط مع تكرار معلمة "materials" لكل خاصية
+    const characteristicParams = selectedCharacteristicNames.map(name => `materials=${name}`).join('&');
+    console.log("productselected:", this.productselected);
 
-      const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null; // استخدام categoryId من أول منتج كمثال
-
-      if (categoryId !== null) {
-        this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${characteristicParams}`;
-        console.log('Fetching URL:', this.filter.url); // لعرض الرابط في وحدة التحكم
-
-        this.products=new Productsearch(0,0,"",0,"",0,0,0,0,0);
+    // تأكد من أن productselected يحتوي على كائنات يمكن الوصول إلى categoryId منها
+    if (this.productselected.length > 0) {
+      for (let index = 0; index < this.productselected.length; index++) {
+        const productId = this.productselected[index].id; // الحصول على معرف المنتج
+        this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`;
 
         this.filter.getAll().subscribe({
           next: data => {
-            this.products = data; 
-            this.characteristicsSelected.emit(this.products);
+            this.test = data; // تعيين القيمة بشكل صحيح
 
-            console.log("Products with selected characteristics", this.products);
+            // Correct access to categoryId
+            const categoryId = this.test?.categoryId; // تأكد من أن الحقل صحيح
+
+            if (categoryId !== undefined) {
+              this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${characteristicParams}`;
+              console.log('URL: ', this.filter.url);
+
+              this.filter.getAll().subscribe({
+                next: data => {
+                  this.products.push(...data); // استخدم push لإضافة المنتجات
+                  this.characteristicsSelected.emit(this.products);
+                  console.log("Products with selected characteristics", this.products);
+                },
+                error: err => {
+                  this.characteristicsSelected.emit(this.products);
+                  console.log('Error fetching products for selected characteristics:', err);
+                }
+              });
+            } else {
+              console.log('CategoryId is undefined for product:', this.test);
+            }
           },
           error: err => {
-            console.error('Error fetching products for selected characteristics:', err);
+            console.log('Error fetching product details:', err);
           }
         });
-        this.characteristicsSelected.emit(this.products);
-      } else {
-        console.error('No categoryId found in productselected');
       }
+    } else {
+      console.log('No products selected.');
     }
+  } else {
+    console.log('No characteristics selected.');
   }
+}
+
+  
 
   clearSelection() {
     this.selectedCharacteristics = [];

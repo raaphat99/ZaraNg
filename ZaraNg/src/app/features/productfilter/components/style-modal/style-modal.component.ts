@@ -35,7 +35,7 @@ export class StyleModalComponent {
   isopen: boolean = false;
   selectedstyle: string[] = [];
   
-  @Output() styleSelected = new EventEmitter<Productsearch>();
+  @Output() styleSelected = new EventEmitter<Productsearch[]>();
   @Input() productselected: Productsearch[] = []; 
 
   constructor(public filter: FilterService) {}
@@ -58,7 +58,7 @@ export class StyleModalComponent {
     }
   }
 
-  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
+  products: Productsearch[]=[];
 
   // Mapping of styles to product IDs
 private styleProductIdMap: { [key: string]: number } = {
@@ -74,7 +74,7 @@ viewResults() {
     const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null;
 
     if (categoryId !== null) {
-      this.products=new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0); 
+      this.products=[]; 
       for (let style of this.selectedstyle) {
         const productId = this.styleProductIdMap[style]; // احصل على معرف المنتج بناءً على الـ style
         if (productId) {
@@ -90,14 +90,15 @@ viewResults() {
               console.log("Products with selected style", this.products);
             },
             error: err => {
-              console.error('Error fetching products for selected style:', err);
+              this.styleSelected.emit(this.products);
+              console.log('Error fetching products for selected style:', err);
             }
           });
         }
       }
       this.styleSelected.emit(this.products);
     } else {
-      console.error('No categoryId found in productselected');
+      console.log('No categoryId found in productselected');
     }
   }
 }

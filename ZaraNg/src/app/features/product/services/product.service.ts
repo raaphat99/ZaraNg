@@ -14,7 +14,7 @@ export class ProductService extends ApiService {
   private apiUrl: string = environment.apiUrl;
 
   constructor(httpClient: HttpClient) {
-    super('http://localhost:5250/api/products', httpClient);
+    super('http://localhost:5250/api/ProductAdmin', httpClient);
   }
 
   getProductVariants(productId: number): Observable<ProductVariant[]> {

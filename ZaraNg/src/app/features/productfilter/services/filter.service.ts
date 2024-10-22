@@ -9,4 +9,13 @@ export class FilterService extends ApiService {
   constructor(httpClient: HttpClient) { 
     super("http://localhost:5250/api/Category/main-categories", httpClient);
   }
+  private products: any[] = [];
+
+  setProducts(products: any[]) {
+    this.products = products;
+  }
+
+  getProducts() {
+    return this.products;
+  }
 }

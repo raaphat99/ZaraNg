@@ -39,12 +39,13 @@ export class AdminProductCreateComponent {
   }
   subcategory = []; // Populate with your subcategories
   Scat:MainCategory[]|null=null;
+  SScat:MainCategory[]=[]
   selectedMainCategory: boolean = false; 
 
   onMainCategoryChange(event: Event) {
     const target = event.target as HTMLSelectElement; // Type assertion
     const selectedId = target.value;
-
+    this.SScat=[];
     if (selectedId) {
       this.addProduct.CategoryId = +selectedId; // Set CategoryId to the selected main category
       this.selectedMainCategory = true; // Indicate a main category is selected
@@ -53,7 +54,6 @@ export class AdminProductCreateComponent {
       this.selectedMainCategory = false; 
     }
 
-    // Fetch subcategories for the selected main category
     this.api.url = 'http://localhost:5250/api/Category/' + this.addProduct.CategoryId + '/subcategories';
     this.api.getAll().subscribe({
       next: (data: MainCategory[]) => {
@@ -74,11 +74,23 @@ export class AdminProductCreateComponent {
     console.log(category ? category.name : 'Category not found for id: ' + categoryId);
     return category ? category.name : '';
   }
+
   onSubCategoryChange(event: Event) {
     const target = event.target as HTMLSelectElement; // Type assertion
     const selectedId = target.value;
-
-    if (selectedId) {
+    console.log("selectedId"+selectedId);
+    this.api.url='http://localhost:5250/api/Category/'+selectedId+'/subcategories';
+    this.api.getAll().subscribe({
+      next: (data: MainCategory[]) => {
+        this.SScat = data; // Populate the subcategories
+        console.log("SScat cat", this.SScat);
+      },
+      error: err => {
+        console.log('Error fetching subcat:', err);
+      }
+    });
+  
+      if (selectedId) {
       this.addProduct.CategoryId = +selectedId; // Set CategoryId to the selected subcategory
     }
   }

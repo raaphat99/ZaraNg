@@ -26,7 +26,7 @@ export class TopModalComponent {
   isopen: boolean = false;
   selectedtop: string[] = [];
   
-  @Output() topSelected = new EventEmitter<Productsearch>();
+  @Output() topSelected = new EventEmitter<Productsearch[]>();
   @Input() productselected: Productsearch[] = []; 
 
   constructor(public filter: FilterService) {}
@@ -76,7 +76,7 @@ export class TopModalComponent {
       this.selectedtop.length === 0
     }
   }
-  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
+  products: Productsearch[]=[];
   viewResults() {
 
     if (this.selectedtop.length > 0) {
@@ -84,7 +84,7 @@ export class TopModalComponent {
 
       if (categoryId !== null) {
 
-        this.products=new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0); 
+        this.products=[]; 
         for (let style of this.selectedtop) {
           const productId = this.styleProductIdMap[style]; // Get product ID from the mapping
 
@@ -103,7 +103,8 @@ export class TopModalComponent {
                 console.log("Products with selected style", data);
               },
               error: err => {
-                console.error('Error fetching products for selected style:', err);
+                this.topSelected.emit(this.products); // Emit the selected styles
+                console.log('Error fetching products for selected style:', err);
               }
             });
           }
@@ -111,7 +112,7 @@ export class TopModalComponent {
         this.topSelected.emit(this.products); // Emit the selected styles
 
       } else {
-        console.error('No categoryId found in productselected');
+        console.log('No categoryId found in productselected');
       }
     }
   }

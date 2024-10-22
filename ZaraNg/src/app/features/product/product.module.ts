@@ -37,6 +37,7 @@ import { CustomModalComponent } from '../../shared/components/custom-modal/custo
   providers: [
     ProductService, 
     provideHttpClient(),
-  ]
+  ],
+  exports:[ProductListComponent]
 })
 export class ProductModule { }

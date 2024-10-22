@@ -8,6 +8,7 @@ import { MainCategory } from './MainCategory';
 import { ProductV } from './ProductV';
 import { Product } from './Product';
 import { PSize } from './PSize';
+import { productV } from '../admin-product/productV';
 
 @Component({
   selector: 'app-admin-product-variant',
@@ -317,5 +318,26 @@ ImageAdd() {
   });
   
 }
+
+delet(product1:any){
+  const confirmation = window.confirm(`Are you sure you want to delete?`);
+
+  if (confirmation) {
+    this.api.deactivateProductV(product1.id).subscribe({
+      next: (response) => {  
+          console.log(`Product with ID ${product1.id} stock quantity set to zero successfully.`);
+          // يمكنك هنا تحديث قائمة المنتجات أو القيام بأي إجراء آخر بعد تعطيل المنتج
+      },
+      error: (err) => {
+          console.log('Error deactivating product:', err);
+      }
+    });  } else {
+     console.log("Delete action was cancelled.");
+  }
+
+//this.api.url='http://localhost:5250/api/Products/deactivateVariant/'+product1.id;
+
+}
+
 }
 

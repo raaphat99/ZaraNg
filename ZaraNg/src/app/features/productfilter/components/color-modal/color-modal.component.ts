@@ -4,6 +4,8 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../../core/services/api.service';
 import { FilterService } from '../../services/filter.service';
+import { Product } from '../../../admin-dashboard/components/admin-product/Product';
+import { Product2 } from '../productfilter/productfilter.component';
 
 @Component({
   selector: 'app-color-modal',
@@ -38,9 +40,9 @@ export class ColorModalComponent {
     { name: 'Yellow', hsl: 'hsl(60, 100%, 50%)' },
   ];
   
-  @Output() colorSelected = new EventEmitter<Productsearch>();
-
-  @Input() productselected: Productsearch[]=[]; 
+  @Output() colorSelected = new EventEmitter<Productsearch[]>();
+  @Input() productselected: Product2[]=[]; 
+  
   open(): void {
     this.isOpen = true;
   }
@@ -69,36 +71,69 @@ clearSelection(): void {
 constructor(public filter:FilterService){}
 
 
-
-products:Productsearch=new Productsearch(0,0,"",0,"",0,0,0,0,0);
+test:Productsearch|null=null;
+products:Productsearch[]=[];
 selectedCategoryId: number = 0; // يمكنك تحديد قيمة افتراضية للفئة
 
 viewResults(): void {
   if (this.selectedColors.length >= 1) {
-    // قم بتحويل قيم HSL إلى أسماء الألوان
+    // بناء معلمات الألوان باستخدام الأسماء
     const selectedColorNames = this.selectedColors
       .map(hslValue => {
         const color = this.colors.find(color => color.hsl === hslValue);
-        return color ? color.name : null; // استخدم null إذا لم يتم العثور على اللون
+        return color ? color.name : null;
       })
-      .filter(name => name !== null); // إزالة null من النتائج
-  
-    // إنشاء المعلمات الخاصة بالألوان
+      .filter(name => name !== null); // تأكد من تصفية الأسماء الغير موجودة
+
+    // بناء رابط مع تكرار معلمة "colors" لكل لون
     const colorParams = selectedColorNames.map(name => `colors=${name}`).join('&');
-  
-    // التحقق من وجود منتجات مختارة وإنشاء URL
-    if (this.productselected.length > 0 && this.selectedCategoryId) {
-      // التحقق من أن categoryId ليس فارغًا
-      const categoryId = this.selectedCategoryId; // تأكد من أن categoryId مأخوذ من مكان صحيح
-  
-      // إنشاء الرابط مع categoryId ومعلمات الألوان
-      this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${colorParams}`;
-      console.log('Generated URL:', this.filter.url); // طباعة URL للتحقق
+    console.log("productselected:", this.productselected);
+
+    // تأكد من أن productselected يحتوي على كائنات يمكن الوصول إلى categoryId منها
+    if (this.productselected.length > 0) {
+      for (let index = 0; index < this.productselected.length; index++) {
+        const productId = this.productselected[index].id; // الحصول على معرف المنتج
+        this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`;
+        
+        this.filter.getAll().subscribe({
+          next: data => {
+            this.test = data; // تعيين القيمة بشكل صحيح
+            
+            // Correct access to categoryId
+            const categoryId = this.test?.categoryId; // Ensure this is the correct case
+            
+            if (categoryId !== undefined) {
+              this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${colorParams}`;
+              console.log('URL: ', this.filter.url);
+              
+              this.filter.getAll().subscribe({
+                next: data => {
+                  this.products.push(...data); // استخدم push بدلاً من append
+                  this.colorSelected.emit(this.products);
+                  console.log("Products with selected colors", this.products);
+                },
+                error: err => {
+                  this.colorSelected.emit(this.products);
+                  console.log('Error fetching products for selected colors:', err);
+                }
+              });
+            } else {
+              console.log('CategoryId is undefined for product:', this.test);
+            }
+          },
+          error: err => {
+            console.log('Error fetching product details:', err);
+          }
+        });
+      }
     } else {
-      console.warn('No products selected or category ID is missing.');
+      console.error('No products selected.');
     }
+  } else {
+    console.error('No colors selected.');
   }
-}  
+}
+
 
 ngOnInit(): void {
   this.checkWindowSize();
@@ -119,6 +154,7 @@ checkWindowSize() {
 } 
 class Productsearch{
   constructor(public id:number,public productId:number,public productName:string ,public sizeId:number,public sizeValue:string,
-    public price:number,public stockQuantity:number,public productColor:number,public productMaterial:number,public categoryId:number
+    public price:number,public stockQuantity:number,public productColor:number,public productMaterial:number,
+    public categoryId:number
   ){}
 }

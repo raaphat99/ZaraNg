@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { FilterService } from '../../services/filter.service';
 import { CommonModule, formatCurrency } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Product2 } from '../productfilter/productfilter.component';
 
 @Component({
   selector: 'app-shoesize-modal',
@@ -21,8 +22,8 @@ export class ShoesizeModalComponent {
   isopen: boolean = false;
   selectedstyle: string[] = [];
   
-  @Output() shsizeSelected = new EventEmitter<Productsearch>(); // توحيد التسمية
-  @Input() productselected: Productsearch[] = []; 
+  @Output() shsizeSelected = new EventEmitter<Productsearch[]>(); // توحيد التسمية
+  @Input() productselected: Product2[]=[]; 
 
   constructor(public filter: FilterService) {}
 
@@ -44,43 +45,69 @@ export class ShoesizeModalComponent {
     }
   }
 
-  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
+  products: Productsearch[]=[];
+  test:Productsearch|null=null;
 
 
   viewResults(): void {
+    // التأكد من أن هناك أحجام مختارة
     if (this.selectedstyle.length > 0) {
+      // بناء معلمات الأحجام
       const sizeParams = this.selectedstyle
-        .map(style => `sizes=${style}`) 
-        .join('&'); 
-    
-    
-      const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null;
-    
-      if (categoryId !== null) {
-        // بناء الرابط النهائي باستخدام categoryId ومعلمات "sizes"
-        this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${sizeParams}`;
-
-        console.log('Fetching URL:', this.filter.url); 
-    
-        // إرسال الطلب إلى الـ API
-        this.filter.getAll().subscribe({
-          next: data => {
-            this.products = data; 
-            this.shsizeSelected.emit(this.products); 
-
-            console.log("Products with selected sizes", this.products);
-          },
-          error: err => {
-            console.error('Error fetching products for selected sizes:', err);
-          }
-        });
-        this.shsizeSelected.emit(this.products); 
-
+        .map(style => `sizes=${style}`)
+        .join('&');
+  
+      // التأكد من وجود منتجات مختارة
+      if (this.productselected.length > 0) {
+        this.products = []; // تفريغ قائمة المنتجات قبل طلب البيانات الجديدة
+  
+        // التكرار على كل منتج مختار
+        for (let index = 0; index < this.productselected.length; index++) {
+          const productId = this.productselected[index].id; // الحصول على معرف المنتج
+          this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`; // بناء الرابط للحصول على تفاصيل المنتج
+          console.log("Fetching product details URL:", this.filter.url); // تحقق من الرابط النهائي
+  
+          // طلب الحصول على تفاصيل المنتج
+          this.filter.getAll().subscribe({
+            next: data => {
+              this.test = data; // تعيين القيمة بشكل صحيح
+  
+              // الوصول الصحيح إلى categoryId
+              const categoryId = this.test?.categoryId; // تأكد من أن الحقل صحيح
+  
+              // التحقق من وجود categoryId
+              if (categoryId !== undefined) {
+                // بناء الرابط باستخدام categoryId ومعلمات الأحجام
+                this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${sizeParams}`;
+                console.log('Fetching URL for products with selected sizes:', this.filter.url);
+  
+                // طلب الحصول على المنتجات بناءً على الرابط الجديد
+                this.filter.getAll().subscribe({
+                  next: data => {
+                    this.products.push(...data); // إضافة المنتجات المستلمة إلى القائمة
+                    this.shsizeSelected.emit(this.products); // Emit the selected sizes
+  
+                    console.log(`Products for product ID ${productId}:`, data);
+                  },
+                  error: err => {
+                    this.shsizeSelected.emit(this.products);
+                    console.log(`Error fetching products for product ID ${productId}:`, err);
+                  }
+                });
+              } else {
+                console.log(`CategoryId is undefined for product ID ${productId}`);
+              }
+            },
+            error: err => {
+              console.log('Error fetching product details:', err);
+            }
+          });
+        }
       } else {
-        console.error('No categoryId found in productselected');
+        console.log('No products selected.');
       }
     } else {
-      console.log('No styles selected');
+      console.log('No sizes selected.');
     }
   }
   

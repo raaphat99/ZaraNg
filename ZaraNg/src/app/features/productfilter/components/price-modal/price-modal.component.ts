@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { FilterService } from '../../services/filter.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Product2 } from '../productfilter/productfilter.component';
 
 @Component({
   selector: 'app-price-modal',
@@ -22,8 +23,8 @@ export class PriceModalComponent {
   initialStartPrice: number = this.minPrice; // القيم الافتراضية لبداية السعر
   initialEndPrice: number = this.maxPrice;   // القيم الافتراضية لنهاية السعر
 
-  @Output() priceSelected = new EventEmitter<Productsearch>(); 
-  @Input() productselected: Productsearch[] = []; 
+  @Output() priceSelected = new EventEmitter<Productsearch[]>(); 
+  @Input() productselected: Product2[]=[]; 
 
   constructor(public filter: FilterService) {}
 
@@ -60,31 +61,60 @@ export class PriceModalComponent {
 
   emitPriceSelection() {
   }
-  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
+  products: Productsearch[]=[];
+  test:Productsearch|null=null;
+
+  
   viewResults(): void {
-    const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null;
-
-    if (categoryId !== null) {
-      this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&priceFrom=${this.startPrice}&priceTo=${this.endPrice}`;
-      console.log('Fetching URL:', this.filter.url);
-      this.products=new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0); 
-      this.filter.getAll().subscribe({
-        next: data => {
-          this.products = data;
-          this.priceSelected.emit(this.products);
-
-          console.log("Products with selected sizes", this.products);
-        },
-        error: err => {
-          console.error('Error fetching products for selected sizes:', err);
-        }
-      });
-      this.priceSelected.emit(this.products);
-
+    if (this.productselected.length > 0) {
+      this.products = []; // تفريغ القائمة قبل إضافة المنتجات الجديدة
+  
+      // بناء معلمات السعر
+      const priceParams = `priceFrom=${this.startPrice}&priceTo=${this.endPrice}`;
+      console.log("productselected:", this.productselected);
+  
+      // التأكد من أن productselected يحتوي على كائنات يمكن الوصول إلى categoryId منها
+      for (let index = 0; index < this.productselected.length; index++) {
+        const productId = this.productselected[index].id; // الحصول على معرف المنتج
+        this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`;
+        console.log(" this.filter.url"+ this.filter.url);
+        this.filter.getAll().subscribe({
+          next: data => {
+            this.test = data; // تعيين القيمة بشكل صحيح
+  
+            // Correct access to categoryId
+            const categoryId = this.test?.categoryId; // تأكد من أن الحقل صحيح
+  
+            if (categoryId !== undefined) {
+              // بناء الرابط باستخدام categoryId ومعلمات السعر
+              this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${priceParams}`;
+              console.log('Fetching URL for product:', this.filter.url);
+  
+              this.filter.getAll().subscribe({
+                next: data => {
+                  this.products.push(...data); // استخدم push لإضافة المنتجات
+                  this.priceSelected.emit(this.products);
+                  console.log("Products with selected price range", this.products);
+                },
+                error: err => {
+                  this.priceSelected.emit(this.products);
+                  console.log('Error fetching products for selected price range:', err);
+                }
+              });
+            } else {
+              console.log('CategoryId is undefined for product:', this.test);
+            }
+          },
+          error: err => {
+            console.log('Error fetching product details:', err);
+          }
+        });
+      }
     } else {
-      console.error('No categoryId found in productselected');
+      console.error('No products selected.');
     }
   }
+  
 
   clearSelection() {
     // إعادة تعيين قيم الـ slider إلى القيم الافتراضية
