@@ -88,17 +88,31 @@ export class AdminCategoryComponent implements OnInit {
     return this.subcategoriesMap.get(categoryId) || [];
   }
 
-  showAddDialog() {
+  // showAddDialog() {
+  //   this.isNewCategory = true;
+  //   this.selectedCategory = { ...this.newCategory };
+  //   this.displayCategoryDialog = true;
+  // }
+
+  // showEditDialog(category: Category) {
+  //   // this.isNewCategory = false;
+  //   // this.selectedCategory = { ...category };
+  //   // this.displayCategoryDialog = true;
+  // }
+  showAddDialog(categoryForm?: NgForm) {
     this.isNewCategory = true;
     this.selectedCategory = { ...this.newCategory };
     this.displayCategoryDialog = true;
+    this.resetForm(categoryForm);
   }
-
-  showEditDialog(category: Category) {
+  showEditDialog(category: Category, categoryForm?: NgForm) {
     this.isNewCategory = false;
     this.selectedCategory = { ...category };
     this.displayCategoryDialog = true;
+    this.resetForm(categoryForm);
   }
+  
+  
 
   confirmDelete(category: Category) {
     this.selectedCategory = category;
@@ -125,7 +139,19 @@ export class AdminCategoryComponent implements OnInit {
       });
     }
   }
-
+  closeDialog(categoryForm?: NgForm) {
+    this.displayCategoryDialog = false;
+    this.resetForm(categoryForm);
+  }
+  resetForm(categoryForm?: NgForm) {
+    if (categoryForm) {
+      categoryForm.resetForm();
+    }
+    this.submitted = false;
+    this.showErrorPopup = false;
+  }
+  
+  
 
 //   saveCategory() {
 //     if (this.selectedCategory) {
@@ -227,8 +253,6 @@ saveCategory(categoryForm: NgForm) {
     console.error('No category selected to save');
   }
 }
-
-// Function to close the error pop-up
 closeErrorPopup() {
   this.showErrorPopup = false;
 }

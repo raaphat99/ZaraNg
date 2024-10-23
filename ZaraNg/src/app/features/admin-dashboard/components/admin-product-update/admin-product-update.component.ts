@@ -16,6 +16,7 @@ import { MainCategory } from '../admin-product-create/MainCategory';
 })
  export class AdminProductUpdateComponent {
   productId: number | null = null;
+  showErrorPopup = false; // To control the display of the error popup
   category: MainCategory[] = [];
   pv: productV[] = []; // تهيئة pv كصفيف فارغ
   product: Product | null = null;
@@ -48,7 +49,9 @@ import { MainCategory } from '../admin-product-create/MainCategory';
       }
     });
   }
-  
+  closeErrorPopup() {
+    this.showErrorPopup = false;
+  }
 
   fetchProductData(productId: number) {
     this.api.url = 'http://localhost:5250/api/ProductAdmin/' + productId;
@@ -64,7 +67,9 @@ import { MainCategory } from '../admin-product-create/MainCategory';
   }
 
   onSubmit(productForm: any) {
+
     if (productForm.invalid) {
+      this.showErrorPopup = true;
       console.log("Form is invalid. Please check your input.");
       return;
     }

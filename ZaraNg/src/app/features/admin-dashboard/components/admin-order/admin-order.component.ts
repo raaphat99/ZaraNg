@@ -85,9 +85,9 @@ export class AdminOrderComponent implements OnInit {
       return;
     }
 
-    if (this.selectedOrderr.newStatus === this.selectedOrderr.currentStatus) {
-      this.statusError =
-        'The selected status is the same as the current status. Please choose a different status.';
+    if (newStatus === this.selectedOrderr.status) {
+      this.statusError = 'The selected status is the same as the current status. Please choose a different status.';
+      return; // Do not proceed with the API call
     }
 
     console.log('Selected order:', this.selectedOrderr);

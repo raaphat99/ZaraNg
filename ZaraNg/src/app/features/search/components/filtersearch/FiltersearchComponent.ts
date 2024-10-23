@@ -141,16 +141,16 @@
 
 // fetchProductsByKeyword(keyword: string): void {
 //   const words = keyword.split(' ');
-//   const matchingCategories: Set<string> = new Set(); 
+//   const matchingCategories: Set<string> = new Set();
 //   const matchingColors: string[] = [];
-//   const selectedCategoryIds: number[] = []; 
+//   const selectedCategoryIds: number[] = [];
 
 //   // البحث عن الفئات المتطابقة
 //   words.forEach(word => {
-//       const categories = Object.keys(this.styleProductIdMap).filter(cat => 
+//       const categories = Object.keys(this.styleProductIdMap).filter(cat =>
 //           cat.toUpperCase().includes(word.toUpperCase())
 //       );
-//       categories.forEach(cat => matchingCategories.add(cat)); 
+//       categories.forEach(cat => matchingCategories.add(cat));
 //   });
 
 //   // استخراج أول قيمة من matchingCategories
@@ -176,7 +176,7 @@
 //     }
 //   });
 //   if (matchingColors.length > 0) {
-//     let styleKey = firstCategory || 'BLAZERS'; 
+//     let styleKey = firstCategory || 'BLAZERS';
 
 //     this.sendToColorSearchComponent(matchingColors, styleKey);
 // }
@@ -244,7 +244,7 @@
 //                     }
 //                   }
 //           )}
-//               } 
+//               }
 //               else if (index === 1 && !this.productForMen.some(p => p.id === product.id)) {
 //                 this.productForMen.push(product);
 //                 console.log("Products for Men:", this.productForMen);
@@ -287,7 +287,7 @@
 // private fetchTransformedProductsForGroup(products: Productsearch[], groupName: string): void {
 //   products.forEach(product => {
 //     this.filter.url = `http://localhost:5250/api/ProductAdmin/${product.productId}`;
-    
+
 //     this.filter.getAll().subscribe({
 //       next: (data: any[]) => {
 //         const transformedProduct = data.find(prod => prod.id === product.id);
@@ -329,7 +329,7 @@
 //       next: (data: any) => {
 //         // التحقق من عدم وجود المنتج مسبقًا في transformedProducts
 //         const exists = this.transformedProducts.some((existingProduct: any) => existingProduct.id === data.id);
-        
+
 //         if (!exists) {
 //           // إذا لم يكن المنتج موجودًا، أضفه
 //           this.transformedProducts.push(data);
@@ -513,16 +513,16 @@ public fetchProductsByCategory(category: string): void {
 
 fetchProductsByKeyword(keyword: string): void {
   const words = keyword.split(' ');
-  const matchingCategories: Set<string> = new Set(); 
+  const matchingCategories: Set<string> = new Set();
   const matchingColors: string[] = [];
-  const selectedCategoryIds: number[] = []; 
+  const selectedCategoryIds: number[] = [];
 
   // البحث عن الفئات المتطابقة
   words.forEach(word => {
-      const categories = Object.keys(this.styleProductIdMap).filter(cat => 
+      const categories = Object.keys(this.styleProductIdMap).filter(cat =>
           cat.toUpperCase().includes(word.toUpperCase())
       );
-      categories.forEach(cat => matchingCategories.add(cat)); 
+      categories.forEach(cat => matchingCategories.add(cat));
   });
 
   // استخراج أول قيمة من matchingCategories
@@ -548,7 +548,7 @@ fetchProductsByKeyword(keyword: string): void {
     }
   });
   if (matchingColors.length > 0) {
-    let styleKey = firstCategory || 'BLAZERS'; 
+    let styleKey = firstCategory || 'BLAZERS';
 
     this.sendToColorSearchComponent(matchingColors, styleKey);
 }
@@ -595,6 +595,7 @@ fetchProducts(url: string, category: string): void {
         item.productId, item.sizeId, item.sizeValue, item.productColor,
         item.productMaterial, item.created, item.updated, item.description, item.mainImageUrl, item.filterName
       ));
+      this.productForWomen=[];
 
       if (Array.isArray(products)) {
         products.forEach(product => {
@@ -605,7 +606,7 @@ fetchProducts(url: string, category: string): void {
               const index = categoryIds.indexOf(product.categoryId);
 
               if (index === 0 && !this.productForWomen.some(p => p.id === product.id)) {
-                this.productForWomen=[];
+                // this.productForWomen=[];
                 this.transformedProducts=[];
                 this.productForWomen.push(product);
                 console.log("Products for Women:", this.productForWomen);
@@ -619,7 +620,7 @@ fetchProducts(url: string, category: string): void {
                     }
                   }
           )}
-              } 
+              }
               else if (index === 1 && !this.productForMen.some(p => p.id === product.id)) {
                 this.productForMen.push(product);
                 console.log("Products for Men:", this.productForMen);
@@ -662,7 +663,7 @@ fetchProducts(url: string, category: string): void {
 private fetchTransformedProductsForGroup(products: Productsearch[], groupName: string): void {
   products.forEach(product => {
     this.filter.url = `http://localhost:5250/api/ProductAdmin/${product.productId}`;
-    
+
     this.filter.getAll().subscribe({
       next: (data: any[]) => {
         const transformedProduct = data.find(prod => prod.id === product.id);
@@ -690,7 +691,7 @@ getproduct() {
     this.fetchAndLogProducts(this.productForWomen);
   } else if (this.selectedCategory === 'MAN') {
     console.log("Products for Men:", this.productForMen);
-    this.fetchAndLogProducts(this.productForMen); 
+    this.fetchAndLogProducts(this.productForMen);
   } else {
     console.log("No category selected or no products found.");
   }
@@ -706,7 +707,7 @@ private fetchAndLogProducts(products: any[]) {
       next: (data: any) => {
         // التحقق من عدم وجود المنتج مسبقًا في transformedProducts
         const exists = this.transformedProducts.some((existingProduct: any) => existingProduct.id === data.id);
-        
+
         if (!exists) {
           // إذا لم يكن المنتج موجودًا، أضفه
           this.transformedProducts.push(data);
