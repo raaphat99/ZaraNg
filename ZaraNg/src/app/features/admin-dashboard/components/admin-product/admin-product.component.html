@@ -100,10 +100,10 @@
     <h3>Product Name: {{ selectedProduct.name }}</h3>
 
     <!-- Conditionally display fields based on CategoryId -->
-    <div *ngIf="selectedProduct && ![62, 63, 64, 65].includes(selectedProduct.CategoryId)">
-      <p><strong>Product Variant Color:</strong> {{ productColors }}</p>
-      <p><strong>Product Variant Size:</strong> {{ productSizes }}</p>
-      <p><strong>Product Variant Material:</strong> {{ productMaterials }}</p>
+    <div *ngIf="selectedProduct">
+      <p *ngIf="productColors"><strong>Product Variant Color:</strong> {{ productColors }}</p>
+      <p *ngIf="productSizes"><strong>Product Variant Size:</strong> {{ productSizes }}</p>
+      <p *ngIf="productMaterials"><strong>Product Variant Material:</strong> {{ productMaterials }}</p>
     </div>
   
        

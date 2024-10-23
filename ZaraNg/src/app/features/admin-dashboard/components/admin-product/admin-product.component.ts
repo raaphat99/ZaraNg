@@ -51,14 +51,23 @@ viewproduct(p: Product) {
   this.api.url = `http://localhost:5250/api/ProductAdmin/${this.productid}/variants`;
 
   this.api.getAll().subscribe({
-      next: (data: productV[]) => {  
-          this.productvariant = data; 
-          console.log("Filtered Products Variant", this.productvariant); // Log product variants
-      },
-      error: err => {
-          console.log('Error fetching products Variant:', err);
-      }
-  });
+    next: (data: productV[]) => {  
+        this.productvariant = data.map(variant => {
+            // التحقق من categoryId 
+            if ([62, 63, 64, 65].includes(variant.categoryId)) {
+                variant.productMaterial = '';
+                variant.productColor = '';
+                variant.sizeName = '';
+            }
+            return variant;
+        });
+        console.log("Filtered Products Variant", this.productvariant); // Log product variants
+    },
+    error: err => {
+        console.log('Error fetching products Variant:', err);
+    }
+});
+
 }
 
   // viewproduct(p: Product) {
