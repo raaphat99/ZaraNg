@@ -1,18 +1,17 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FilterService } from '../../services/filter.service';
-import { Productsearch } from '../../viewmodels/product-search';
+import { Component, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ProductModule } from '../../../product/product.module';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ColorModalComponent } from '../color-modal/color-modal.component';
-import { PriceModalComponent } from '../price-modal/price-modal.component';
-import { ShoesizeModalComponent } from '../shoesize-modal/shoesize-modal.component';
-import { SizeModalComponent } from '../size-modal/size-modal.component';
+import { CharacteristicsModalComponent } from '../characteristics-modal/characteristics-modal.component';
 import { StyleModalComponent } from '../style-modal/style-modal.component';
 import { TopModalComponent } from '../top-modal/top-modal.component';
-import { MaterialModalComponent } from '../material-modal/material-modal.component';
+import { SizeModalComponent } from '../size-modal/size-modal.component';
+import { ShoesizeModalComponent } from '../shoesize-modal/shoesize-modal.component';
+import { PriceModalComponent } from '../price-modal/price-modal.component';
+import { FilterService } from '../../services/filter.service';
+import { ProductModule } from '../../../product/product.module';
 
 @Component({
   selector: 'app-productfilter',
@@ -24,170 +23,245 @@ import { MaterialModalComponent } from '../material-modal/material-modal.compone
     ColorModalComponent,
     PriceModalComponent,
     ShoesizeModalComponent,
-    MaterialModalComponent,
+    CharacteristicsModalComponent,
     SizeModalComponent,
     StyleModalComponent,
     TopModalComponent,
-    ProductModule,
+    ProductModule
   ],
   templateUrl: './productfilter.component.html',
   styleUrls: ['./productfilter.component.css'],
 })
 export class ProductfilterComponent {
+  filterforman: string[] = [];
+  filterforwoman: string[] = [];
   products: any[] = [];
-  hideFilters: boolean = false;
   selectedButton: string = 'VIEW ALL'; // Default selected button
-  product3: Productsearch[] = [];
-
-  @ViewChild('colorModal') colorModal!: ColorModalComponent;
-  @ViewChild('materialModal') materialModal!: MaterialModalComponent;
-  @ViewChild('styleModal') styleModal!: StyleModalComponent;
-  @ViewChild('topModal') topModal!: TopModalComponent;
-  @ViewChild('sizeModal') sizeModal!: SizeModalComponent;
-  @ViewChild('shsizeModal') shsizeModal!: ShoesizeModalComponent;
-  @ViewChild('priceModal') priceModal!: PriceModalComponent;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
-    private filterService: FilterService
+    public filter: FilterService
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       if (params['products']) {
         this.products = JSON.parse(params['products']);
-        console.log('Received Products from query params:', this.products);
+        console.log('Received Products from query params: ', this.products);
       }
     });
   }
 
+  @ViewChild('colorModal') colorModal!: ColorModalComponent;
+  @ViewChild('characteristicModal')
+  characteristicModal!: CharacteristicsModalComponent;
+  @ViewChild('styleModal') styleModal!: StyleModalComponent;
+  @ViewChild('topModal') topModal!: TopModalComponent;
+  @ViewChild('sizeModal') sizeModal!: SizeModalComponent;
+  @ViewChild('shsizeModal') shsizeModal!: ShoesizeModalComponent;
+  @ViewChild('priceModal') priceModal!: PriceModalComponent;
+
+  selectedItem: string | null = null;
+
+  product2: Productsearch = new Productsearch(0, 0, '', 0, '', 0, 0, 0, 0, 0);
+  product3: Productsearch[] = [];
   openModal(item: string): void {
-    this.selectedButton = item;
-    const modalsMap: { [key: string]: any } = {
-      COLOUR: this.colorModal,
-      MATERIALS: this.materialModal,
-      STYLE: this.styleModal,
-      'TYPE OF PRODUCT': this.topModal,
-      SIZE: this.sizeModal,
-      'SHOE SIZES': this.shsizeModal,
-      PRICE: this.priceModal,
-    };
+    this.selectedButton = item; // Update the selected button
+    this.selectedButton = item; // Update the selected button
+    if (item === 'COLOUR') {
+      this.colorModal.open();
+    }
+    if (item === 'MATERIALS') {
+      this.characteristicModal.open();
+    }
+    if (item === 'STYLE') {
+      this.styleModal.open();
+    }
+    if (item === 'TYPE OF PRODUCT') {
+      this.topModal.open();
+    }
+    if (item === 'SIZE') {
+      this.sizeModal.open();
+    }
+    if (item === 'SHOE SIZES') {
+      this.shsizeModal.open();
+    }
+    if (item === 'PRICE') {
+      this.priceModal.open();
+    }
+    if (item === 'DENIM') {
+      if (this.products.length > 0) {
+        const categoryId =
+          this.products.length > 0 ? this.products[0].categoryId : null; // Using categoryId from the first product as an example
 
-    const modal = modalsMap[item];
-    if (modal) modal.open();
+        if (categoryId !== null) {
+          this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&materials=DENIM`;
 
-    if (item === 'DENIM') this.applyFilter('DENIM');
-    if (item === 'JACKETS | COATS') this.applyMultipleFilters([38, 39]);
-    if (item === 'SHOES | BAGS') this.applyFilterByCategory(53);
-    if (item === 'ACCESSORIES | PERFUMES') this.applyMultipleFilters([44, 55]);
-  }
+          console.log('Fetching URL:', this.filter.url); // Log the URL in the console
 
-  applyFilter(material: string): void {
-    if (this.products.length > 0) {
-      const categoryId = this.products[0]?.categoryId || null;
-      if (categoryId) {
-        this.filterService
-          .fetchProductsByMaterial(categoryId, material)
-          .subscribe({
+          // Send the request to the API
+          this.filter.getAll().subscribe({
             next: (data) => {
-              console.log(`Filtered products for ${material}:`, data);
+              this.product2 = data;
+              console.log('Products with selected:', this.product2);
             },
-            error: (err) =>
-              console.log(`Error fetching ${material} products:`, err),
+            error: (err) => {
+              console.error('Error fetching products for selected:', err);
+            },
           });
+        } else {
+          console.error('No categoryId found in productselected');
+        }
       }
     }
-  }
 
-  applyMultipleFilters(categoryIds: number[]): void {
-    this.filterService
-      .fetchProductsByMultipleCategories(categoryIds)
-      .subscribe({
-        next: (data) => {
-          this.product3 = data;
-          console.log(
-            `Combined products for categories ${categoryIds.join(', ')}:`,
-            this.product3
-          );
-        },
-        error: (err) =>
-          console.log('Error fetching products for categories:', err),
-      });
-  }
+    if (item === 'JACKETS | COATS') {
+      if (this.products.length > 0) {
+        // Fetch products for category 38 (JACKETS)
+        this.filter.url = `http://localhost:5250/api/Products/category/38`;
+        console.log('Fetching URL for JACKETS:', this.filter.url);
 
-  applyFilterByCategory(categoryId: number): void {
-    this.filterService.fetchProductsByCategory(categoryId).subscribe({
-      next: (data) => {
-        this.product3 = data;
-        console.log(
-          `Filtered products for category ${categoryId}:`,
-          this.product3
-        );
-      },
-      error: (err) =>
-        console.log(
-          `Error fetching products for category ${categoryId}:`,
-          err
-        ),
-    });
+        this.filter.getAll().subscribe({
+          next: (data) => {
+            // Initialize product3 with the data from the first request
+            this.product3 = data;
+            console.log('Products from JACKETS:', this.product3);
+
+            // Now fetch products for category 39 (COATS)
+            this.filter.url = `http://localhost:5250/api/Products/category/39`;
+            console.log('Fetching URL for COATS:', this.filter.url);
+
+            this.filter.getAll().subscribe({
+              next: (data) => {
+                // Use concat to combine both results
+                this.product3 = this.product3.concat(data); // Concatenate results
+                console.log(
+                  'Combined Products for JACKETS | COATS:',
+                  this.product3
+                );
+              },
+              error: (err) => {
+                console.error('Error fetching products for COATS:', err);
+              },
+            });
+          },
+          error: (err) => {
+            console.error('Error fetching products for JACKETS:', err);
+          },
+        });
+      }
+    }
+
+    if (item === 'SHOES | BAGS') {
+      if (this.products.length > 0) {
+        // Fetch products for category 53 (SHOES | BAGS)
+        this.filter.url = `http://localhost:5250/api/Products/category/53`;
+        console.log('Fetching URL for SHOES | BAGS:', this.filter.url);
+
+        this.filter.getAll().subscribe({
+          next: (data) => {
+            // Initialize product3 with the data from the request
+            this.product3 = data;
+            console.log('Products for SHOES | BAGS:', this.product3);
+          },
+          error: (err) => {
+            console.error('Error fetching products for SHOES | BAGS:', err);
+          },
+        });
+      }
+    }
+    if (item === 'ACCESSORIES | PERFUMES') {
+      if (this.products.length > 0) {
+        // Fetch products for category 44 (ACCESSORIES)
+        this.filter.url = `http://localhost:5250/api/Products/category/44`;
+        console.log('Fetching URL for ACCESSORIES:', this.filter.url);
+
+        this.filter.getAll().subscribe({
+          next: (data: Productsearch[]) => {
+            // Initialize product3 with the data from the first request
+            this.product3 = data;
+            console.log('Products from ACCESSORIES:', this.product3);
+
+            // Now fetch products for category 55 (PERFUMES)
+            this.filter.url = `http://localhost:5250/api/Products/category/55`;
+            console.log('Fetching URL for PERFUMES:', this.filter.url);
+
+            this.filter.getAll().subscribe({
+              next: (data: Productsearch[]) => {
+                // Use concat to combine both results
+                this.product3 = this.product3.concat(data); // Concatenate results
+                console.log(
+                  'Combined Products for ACCESSORIES | PERFUMES:',
+                  this.product3
+                );
+              },
+              error: (err) => {
+                console.error('Error fetching products for PERFUMES:', err);
+              },
+            });
+          },
+          error: (err) => {
+            console.error('Error fetching products for ACCESSORIES:', err);
+          },
+        });
+      }
+    }
   }
 
   productvc: Productsearch | null = null;
 
   handleColorSelection(color: Productsearch): void {
     // Reset productvc to null before assigning the new color
-    // this.productvc = this.filterService.clearProductvc();
-    // this.productvc = color; // Assign the new value
-    // this.products = color;
+    this.productvc = new Productsearch(0, 0, '', 0, '', 0, 0, 0, 0, 0); // Clear previous value
+    this.productvc = color; // Assign the new value
     console.log('color product v ', color);
   }
 
-  handleMaterialSelection(selectedMaterials: Productsearch): void {
-    this.productvc = this.filterService.clearProductvc();
-    this.productvc = selectedMaterials; // Assign the new value
-    console.log('Selected materials:', selectedMaterials);
+  handleCharacteristicsSelection(selectedCharacteristics: Productsearch): void {
+    this.productvc = new Productsearch(0, 0, '', 0, '', 0, 0, 0, 0, 0); // Clear previous value
+    this.productvc = selectedCharacteristics; // Assign the new value
+    console.log('Selected characteristics:', selectedCharacteristics);
   }
 
   handleStyleSelection(selectedstyle: Productsearch): void {
-    this.productvc = this.filterService.clearProductvc();
+    this.productvc = new Productsearch(0, 0, '', 0, '', 0, 0, 0, 0, 0); // Clear previous value
     this.productvc = selectedstyle; // Assign the new value
     console.log('Selected Style:', selectedstyle);
   }
 
   handletopSelection(selectedtop: Productsearch): void {
-    this.productvc = this.filterService.clearProductvc();
+    this.productvc = new Productsearch(0, 0, '', 0, '', 0, 0, 0, 0, 0); // Clear previous value
     this.productvc = selectedtop; // Assign the new value
     console.log('Selected type of product:', selectedtop);
   }
-
   handlesizeSelection(selectedsize: Productsearch): void {
-    this.productvc = this.filterService.clearProductvc();
+    this.productvc = new Productsearch(0, 0, '', 0, '', 0, 0, 0, 0, 0); // Clear previous value
     this.productvc = selectedsize; // Assign the new value
     console.log('Selected size:', selectedsize);
   }
-
   handleshsizeSelection(selectedshsize: Productsearch): void {
-    this.productvc = this.filterService.clearProductvc();
+    this.productvc = new Productsearch(0, 0, '', 0, '', 0, 0, 0, 0, 0); // Clear previous value
     this.productvc = selectedshsize; // Assign the new value
     console.log('Selected size:', selectedshsize);
   }
-
   handleshpriceSelection(selectedshprice: Productsearch): void {
-    
+    this.productvc = new Productsearch(0, 0, '', 0, '', 0, 0, 0, 0, 0); // Clear previous value
     this.productvc = selectedshprice; // Assign the new value
     console.log('Selected size:', selectedshprice);
   }
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollPosition = window.scrollY;
-    
-    // Check scroll position and toggle filters visibility
-    if (scrollPosition > 32) { // Adjust the scroll threshold as needed
-      this.hideFilters = true;
-    } else {
-      this.hideFilters = false;
-    }
-  }
-
+}
+class Productsearch {
+  constructor(
+    public id: number,
+    public productId: number,
+    public productName: string,
+    public sizeId: number,
+    public sizeValue: string,
+    public price: number,
+    public stockQuantity: number,
+    public productColor: number,
+    public productMaterial: number,
+    public categoryId: number
+  ) {}
 }

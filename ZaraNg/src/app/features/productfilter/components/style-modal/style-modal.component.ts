@@ -2,7 +2,6 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { FilterService } from '../../services/filter.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Productsearch } from '../../viewmodels/product-search';
 
 @Component({
   selector: 'app-style-modal',
@@ -12,102 +11,110 @@ import { Productsearch } from '../../viewmodels/product-search';
   styleUrls: ['./style-modal.component.css'] // التصحيح هنا
 })
 export class StyleModalComponent {
-  products: Productsearch;
-
-  styles: string[] = ['DRESSES', 'TOPS', 'T-SHIRTS', 'BASIC']; // Updated variable name to lowercase for consistency
-  isOpen: boolean = false;
-  selectedStyles: string[] = [];
-
-  @Output() styleSelected = new EventEmitter<Productsearch>();
-  @Input() productSelected: Productsearch[] = [];
-
-  private styleProductIdMap: { [key: string]: number } = {
-    'DRESSES': 14,
-    'TOPS': 15,
-    'T-SHIRTS': 16,
-    'BASIC': 33,
-  };
-
-  constructor(public filter: FilterService) {
-    this.products = this.filter.clearProductvc();
-  }
-
+  
+  Styles: string[] = [
+    'DRESSES',
+    'TOPS',
+    'T-SHIRTS',
+    'BASIC',
+  ];
   ngOnInit(): void {
     this.checkWindowSize();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any): void {
+  onResize(event: any) {
     this.checkWindowSize();
   }
 
-  checkWindowSize(): void {
-    if (window.innerWidth < 700 && this.isOpen) {
+  checkWindowSize() {
+    if (window.innerWidth < 700 && this.isopen) {
       this.close();
     }
   }
+  isopen: boolean = false;
+  selectedstyle: string[] = [];
+  
+  @Output() styleSelected = new EventEmitter<Productsearch>();
+  @Input() productselected: Productsearch[] = []; 
+
+  constructor(public filter: FilterService) {}
 
   open(): void {
-    this.isOpen = true;
+    this.isopen = true;
   }
 
   close(): void {
-    console.log('Modal closed');
-    this.isOpen = false;
+    console.log('Modal closed'); 
+    this.isopen = false;
   }
 
-  toggleStyle(style: string): void {
-    const index = this.selectedStyles.indexOf(style);
+  toggleStyle(style: string) {
+    const index = this.selectedstyle.indexOf(style);
     if (index === -1) {
-      this.selectedStyles.push(style);
+      this.selectedstyle.push(style);
     } else {
-      this.selectedStyles.splice(index, 1);
+      this.selectedstyle.splice(index, 1);
     }
   }
 
-  viewResults(): void {
-    if (this.selectedStyles.length > 0) {
-      const categoryId = this.productSelected.length > 0 ? this.productSelected[0].categoryId : null;
+  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
 
-      if (categoryId !== null) {
-        this.products = this.filter.clearProductvc();
+  // Mapping of styles to product IDs
+private styleProductIdMap: { [key: string]: number } = {
+  'DRESSES': 14,
+  'TOPS': 15,
+  'T-SHIRTS': 16,
+  'BASIC': 33,
+};
 
-        for (const style of this.selectedStyles) {
-          const productId = this.styleProductIdMap[style];
-          if (productId) {
-            const url = `http://localhost:5250/api/Products/category/${productId}`;
-            console.log('Fetching URL:', url);
+viewResults() {
 
-            this.filter.url = url;
+  if (this.selectedstyle.length > 0) {
+    const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null;
 
-            this.filter.getAll().subscribe({
-              next: (data) => {
-                this.products = data;
-                this.styleSelected.emit(this.products);
-                console.log('Products with selected style', this.products);
-              },
-              error: (err) => {
-                console.error('Error fetching products for selected style:', err);
-              },
-            });
-          }
+    if (categoryId !== null) {
+      this.products=new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0); 
+      for (let style of this.selectedstyle) {
+        const productId = this.styleProductIdMap[style]; // احصل على معرف المنتج بناءً على الـ style
+        if (productId) {
+          const url = `http://localhost:5250/api/Products/category/${productId}`;
+          console.log('Fetching URL:', url);
+
+          this.filter.url = url; // تعيين عنوان URL للفلتر
+
+          this.filter.getAll().subscribe({
+            next: data => {
+              this.products = data;
+              this.styleSelected.emit(this.products);
+              console.log("Products with selected style", this.products);
+            },
+            error: err => {
+              console.error('Error fetching products for selected style:', err);
+            }
+          });
         }
-
-      } else {
-        console.error('No categoryId found in productSelected');
       }
+      this.styleSelected.emit(this.products);
     } else {
-      console.log('No styles selected');
+      console.error('No categoryId found in productselected');
     }
-    this.close();
   }
+}
 
-  clearSelection(): void {
-    this.selectedStyles = [];
-    console.log('Selection cleared');
+
+
+  clearSelection() {
+    this.selectedstyle = [];
+    console.log('Selection cleared'); 
   }
 
   isStyleSelected(style: string): boolean {
-    return this.selectedStyles.includes(style);
-  }
+    return this.selectedstyle.includes(style);
+}
+}
+class Productsearch {
+  constructor(public id: number, public productId: number, public productName: string, public sizeId: number, public sizeValue: string,
+    public price: number, public stockQuantity: number, public productColor: number, public productMaterial: number, public categoryId: number
+  ) {}
 }

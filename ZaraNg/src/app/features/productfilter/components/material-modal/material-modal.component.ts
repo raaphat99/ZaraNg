@@ -1,65 +1,89 @@
-import { Component, EventEmitter, Input, Output, HostListener } from '@angular/core';
-import { Productsearch } from '../../viewmodels/product-search';
-import { FilterService } from '../../services/filter.service';
 import { CommonModule } from '@angular/common';
-
+import { Component, Output, EventEmitter, Input, HostListener } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'app-material-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './material-modal.component.html',
-  styleUrls: ['./material-modal.component.scss']
+  styleUrls: ['./material-modal.component.css']
 })
 export class MaterialModalComponent {
-  products: Productsearch;
-  isOpen: boolean = false;
-  selectedMaterials: string[] = [];
-
-  @Input() productselected: Productsearch[] = [];
-  @Output() materialSelected = new EventEmitter<Productsearch>();
-
   materials: string[] = [
-    'Cotton', 'Polyester', 'TheSkin', 'Rafia', 'Leather', 'Burlap', 'Lstered', 'Vinyl', 
-    'Linen', 'Shiny', 'Sequins', 'TedSkin', 'Denim', 'Wool', 'Viscose', 'Elastane', 'Silk'
+    'Cotton',
+    'Polyester',
+    'TheSkin',
+    'Rafia',
+    'Leather',
+    'Burlap',
+    'Lstered',
+    'Vinyl',
+    'Linen',
+    'Shiny',
+    'Sequins',
+    'TedSkin',
+    'Denim',
+    'Wool',
+    'Viscose',
+    'Elastane',
+    'Silk'
   ];
+  
+  isopen: boolean = false;
+  selectedMaterial: string[] = [];
+  
+  @Output() materialSelected = new EventEmitter<Productsearch>();
+  @Input() productselected: Productsearch[] = []; 
 
-  constructor(public filter: FilterService) {
-    this.products = this.filter.clearProductvc();
-  }
+  constructor(public filter: FilterService) {}
 
-  // Modal controls
   open(): void {
-    this.isOpen = true;
+    this.isopen = true;
   }
 
   close(): void {
-    console.log('Modal closed');
-    this.isOpen = false;
+    console.log('Modal closed'); // للتحقق من استدعاء الدالة
+    this.isopen = false;
   }
 
-  // Toggle material selection
-  toggleMaterial(material: string): void {
-    const index = this.selectedMaterials.indexOf(material);
+  toggleMaterial(material: string) {
+    const index = this.selectedMaterial.indexOf(material);
     if (index === -1) {
-      this.selectedMaterials.push(material);
+      this.selectedMaterial.push(material);
     } else {
-      this.selectedMaterials.splice(index, 1);
+      this.selectedMaterial.splice(index, 1);
     }
   }
 
-  // View products with selected materials
-  viewResults(): void {
-    if (this.selectedMaterials.length > 0) {
-      const materialParams = this.selectedMaterials.map(material => `materials=${material}`).join('&');
+  products: Productsearch = new Productsearch(0, 0, "", 0, "", 0, 0, 0, 0, 0);
 
-      const categoryId = this.getCategoryId();
+  viewResults() {
+
+    if (this.selectedMaterial.length > 0) {
+      const materialParams = this.selectedMaterial.map(material => `materials=${material}`).join('&');
+
+      const categoryId = this.productselected.length > 0 ? this.productselected[0].categoryId : null; // استخدام categoryId من أول منتج كمثال
 
       if (categoryId !== null) {
-        const filterUrl = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${materialParams}`;
-        console.log('Fetching URL:', filterUrl);
+        this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${materialParams}`;
+        console.log('Fetching URL:', this.filter.url); // لعرض الرابط في وحدة التحكم
 
-        this.fetchFilteredProducts(filterUrl);
+        this.products=new Productsearch(0,0,"",0,"",0,0,0,0,0);
+
+        this.filter.getAll().subscribe({
+          next: data => {
+            this.products = data; 
+            this.materialSelected.emit(this.products);
+
+            console.log("Products with selected materials", this.products);
+          },
+          error: err => {
+            console.error('Error fetching products for selected materials:', err);
+          }
+        });
+        this.materialSelected.emit(this.products);
       } else {
         console.error('No categoryId found in productselected');
       }
@@ -67,43 +91,27 @@ export class MaterialModalComponent {
     this.close();
   }
 
-  // Fetch filtered products from the API
-  private fetchFilteredProducts(url: string): void {
-    this.filter.getAll().subscribe({
-      next: data => {
-        this.products = data;
-        this.materialSelected.emit(this.products);
-        console.log("Products with selected materials:", this.products);
-      },
-      error: err => {
-        console.error('Error fetching products for selected materials:', err);
-      }
-    });
+  clearSelection() {
+    this.selectedMaterial = [];
   }
-
-  // Clear all selected materials
-  clearSelection(): void {
-    this.selectedMaterials = [];
-  }
-
-  // Get category ID from selected products
-  private getCategoryId(): number | null {
-    return this.productselected.length > 0 ? this.productselected[0].categoryId : null;
-  }
-
-  // Responsive design adjustments
-  @HostListener('window:resize', ['$event'])
-  onResize(): void {
-    this.checkWindowSize();
-  }
-
-  private checkWindowSize(): void {
-    if (window.innerWidth < 700 && this.isOpen) {
-      this.close();
-    }
-  }
-
   ngOnInit(): void {
     this.checkWindowSize();
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkWindowSize();
+  }
+
+  checkWindowSize() {
+    if (window.innerWidth < 700 && this.isopen) {
+      this.close();
+    }
+  }
+}
+
+class Productsearch {
+  constructor(public id: number, public productId: number, public productName: string, public sizeId: number, public sizeValue: string,
+    public price: number, public stockQuantity: number, public productColor: number, public productMaterial: number, public categoryId: number
+  ) {}
 }
