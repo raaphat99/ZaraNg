@@ -130,6 +130,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    if(!this.registerForm.valid){
+      this.errorSummary = true;
+      
+    }
     if (this.registerForm.valid) {
       const { email, password, name, surname } = this.registerForm.value;
       this.authService.register(email, password, name, surname).subscribe({
@@ -154,7 +158,6 @@ export class RegisterComponent implements OnInit {
         error: (error) => {
           console.error('Registration failed', error);
          console.log(email, password, name, surname);
-          this.errorSummary = true;
 
           // Handle registration error (e.g., show error message to user)
         }

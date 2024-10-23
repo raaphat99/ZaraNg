@@ -43,7 +43,8 @@ export class ChangeEmailComponent {
   modalMessage: string = 'Loading...';
 
   touchedFields: { [key: string]: boolean } = {};
-
+  showSummary:boolean=false;
+  summary:string="Please fill all require fields";
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -143,6 +144,9 @@ export class ChangeEmailComponent {
     return '';
   }
   onSubmit() {
+    if(!this.changeEmailForm.valid){
+      this.showSummary=true;
+    }
     if (this.changeEmailForm.valid) {
       const { password, email } = this.changeEmailForm.value;
       const dialogRef = this.dialog.open(this.modalTemplate, {

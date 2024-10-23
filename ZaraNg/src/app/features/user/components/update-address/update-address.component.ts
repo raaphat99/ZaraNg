@@ -71,6 +71,8 @@ currentAddressId: number | null = null;
 addressId: number | undefined;
 userAddressId!: number;  // Using definite assignment assertion
 addressData: any;
+errorSummary: boolean = false;
+summary: string = 'fill all required fields';
 
   ngOnInit() {
     this.extractUserInfo();
@@ -243,6 +245,9 @@ addressData: any;
 
 
   onSubmit() {
+    if(!this.addAddressform.valid) {
+      this.errorSummary = true;
+    }
     if (this.addAddressform.valid) {
       const { name, surname, street, moreInfo, governorate, city, phonePrefix, phoneNumber } = this.addAddressform.value;
       

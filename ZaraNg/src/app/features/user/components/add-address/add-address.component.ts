@@ -70,7 +70,8 @@ constructor(
 }
 isEditing = false;
 currentAddressId: number | null = null;
-
+showSummary:boolean=false;
+summary:string="Please fill all require fields";
   ngOnInit() {
     this.addAddressform = this.fb.group({
       name: ['', [Validators.required]],
@@ -198,6 +199,9 @@ currentAddressId: number | null = null;
 
 
   onSubmit() {
+    if(!this.addAddressform.valid){
+      this.showSummary=true;
+    }
     if (this.addAddressform.valid) {
       const { name, surname, street, moreInfo, governorate, city, phonePrefix, phoneNumber } = this.addAddressform.value;
       

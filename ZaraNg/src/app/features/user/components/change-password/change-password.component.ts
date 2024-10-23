@@ -27,7 +27,8 @@ export class ChangePasswordComponent {
 
   modalMessage: string = 'Loading...';
   touchedFields: { [key: string]: boolean } = {};
-
+  showSummary:boolean=false;
+  summary:string="Please fill all require fields";
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -135,6 +136,9 @@ export class ChangePasswordComponent {
     this.showNewPassword = !this.showNewPassword;
   }
   onSubmit() {
+    if(!this.changPasswordForm.valid){
+      this.showSummary=true;
+    }
     if (this.changPasswordForm.valid) {
       const { currentpassword, newpassword } = this.changPasswordForm.value;
       const dialogRef = this.dialog.open(this.modalTemplate, {
