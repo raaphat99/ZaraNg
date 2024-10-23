@@ -1,4 +1,3 @@
-import { CustomValidators } from './../../../../shared/custom-validators/custom-validators';
 import { CartService } from '../../../shopping/cart/services/cart.service';
 import {
   Component,
@@ -13,8 +12,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../viewmodels/product';
 import { ProductImage } from '../../viewmodels/product-image';
 import { WishlistNotificationComponent } from '../../../../shared/components/wishlist-notification/wishlist-notification.component';
-import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { WishlistService } from '../../../shopping/wishlist/services/wishlist.service';
+import { CategoryService } from '../../../category/services/category.service';
+import { ProductVariantService } from '../../services/product-variant.service';
+import { variantSize } from '../../viewmodels/variant-size';
+import { UserMeasurement } from '../../viewmodels/user-measurement';
+import { UserMeasurementService } from '../../services/user-measurement.service';
 
 @Component({
   selector: 'product-details',
@@ -30,24 +33,34 @@ export class ProductDetailsComponent implements OnInit {
   isFindSizeModalOpen = false;
   productVariants: ProductVariant[] = [];
   productId!: number;
-  mainProduct?: Product;
+  mainProduct?: Product = {} as Product;
   availableColors: string[] = [];
   filteredImages: ProductImage[] = []; // Images to display based on selected color
   selectedColor: string | null = null; // Currently selected color
   sizes: string[] = []; // List of all possible sizes
-  availableSizes: string[] = [];
+  availableSize: string = '';
   selectedSize: string | null = null;
   @ViewChild(WishlistNotificationComponent)
   notificationComponent!: WishlistNotificationComponent;
   showModal: boolean = false;
   variantId!: number;
+  isAdding: boolean = false;
+  showCartModal: boolean = false;
+  hasBeautyAncestor: boolean = false;
+  userMeasurements: UserMeasurement[] = [];
+  lastActiveMeasurement: UserMeasurement | null = null;
+  hasMeasurements: boolean = false;
+  sizeValue: string = "";
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
     private wishlistService: WishlistService,
-    private CartService: CartService
+    private cartService: CartService,
+    private categoryService: CategoryService,
+    private variantService: ProductVariantService,
+    private userMeasurementService: UserMeasurementService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +69,47 @@ export class ProductDetailsComponent implements OnInit {
     this.loadProductVariants();
     this.getAvailableColors();
     this.getCurrentVariant();
+    this.getSizesByVariantId(this.variantId);
+    this.getUserMeasurements();
+  }
+
+
+  getUserMeasurements(): void {
+    this.userMeasurementService.getUserMeasurements().subscribe({
+      next: (data: UserMeasurement[]) => {
+        this.userMeasurements = data;
+        this.hasMeasurements = data.length > 0;
+        this.lastActiveMeasurement =
+          this.findLastActiveMeasurement() ??
+          this.userMeasurements[this.userMeasurements.length - 1];
+      },
+    });
+  }
+
+  findLastActiveMeasurement(): UserMeasurement | null {
+    const activeMeasurements = this.userMeasurements.filter(
+      (measurement) => measurement.active
+    );
+    return activeMeasurements.length > 0
+      ? activeMeasurements[activeMeasurements.length - 1]
+      : null;
+  }
+
+  getSizesByVariantId(variantId: number) {
+    this.variantService.getSizesByVariantId(variantId).subscribe({
+      next: (size: variantSize[]) => {
+        this.availableSize = size[0].stringifiedValue;
+      },
+      error: (error) => {
+        console.error('Error fetching sizes:', error);
+      },
+    });
+  }
+
+  isOrHasBeautyAncestor(categoryId: number) {
+    this.categoryService.hasBeautyAncestor(categoryId).subscribe((result) => {
+      this.hasBeautyAncestor = result;
+    });
   }
 
   getCurrentVariant() {
@@ -66,22 +120,46 @@ export class ProductDetailsComponent implements OnInit {
 
   addToCart(event: Event) {
     const element = event.target as HTMLElement;
+
     if (!element.classList.contains('disable-btn')) {
-      if (!this.selectedSize) {
+      if (!this.selectedSize && !this.hasBeautyAncestor) {
         this.showModal = true; // Show modal if size is not selected
       } else {
-        // Add the variant to the cart using the CartService
-        this.CartService.addCartItem(this.variantId).subscribe({
-          next: (response: any) =>
-            console.log('This item is successfully added to your cart.'),
-          error: (error: any) => console.log(error),
-        });
+        this.isAdding = true;
+        setTimeout(() => {
+          this.cartService.addCartItem(this.variantId).subscribe({
+            next: (response: any) => {
+              // console.log('This item is successfully added to your cart.');
+              this.isAdding = false;
+              this.showCartModal = true;
+            },
+            error: (error: any) => console.log(error),
+          });
+
+          setTimeout(() => {
+            this.showCartModal = false;
+          }, 5000);
+        }, 1500);
       }
     }
   }
 
+  goToCart() {
+    this.router.navigate(['shop/cart']);
+    this.closeModal();
+  }
+
+  closeCartModal(): void {
+    this.showCartModal = false;
+  }
+
   closeModal() {
     this.showModal = false;
+  }
+
+  closeAllModals() {
+    this.closeCartModal();
+    this.closeModal();
   }
 
   initializeSizes(sizeType: string) {
@@ -89,31 +167,38 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   isSizeAvailable(size: string): boolean {
-    return this.availableSizes.includes(size);
+    return this.availableSize === size;
   }
 
   onSizeClick(event: MouseEvent, size: string): void {
     const element = (event.target as HTMLElement).closest('li.size-item');
-    
+
     if (!element) return; // Ensure the event is from a size-item element
-  
+
+    this.resetSizes();
+
     if (this.isSizeAvailable(size)) {
       this.selectedSize = size; // Store the selected size in the component's state
-      
-      // Remove 'active' class from all size items using Angular's bindings
-      const sizeItems = document.querySelectorAll('.size-item');
-      sizeItems.forEach((item) => item.classList.remove('active'));
-      
+
       // Add 'active' class to the clicked item
       element.classList.add('active');
     }
   }
-  
+
+  resetSizes() {
+    // Remove 'active' class from all size items using Angular's bindings
+    const sizeItems = document.querySelectorAll('.size-item');
+    sizeItems.forEach((item) => item.classList.remove('active'));
+    this.selectedSize = null;
+  }
 
   getMainProduct(): void {
     this.productService.getByID(this.productId).subscribe({
       next: (data: any) => {
         this.mainProduct = data;
+        if (this.mainProduct?.categoryId !== undefined) {
+          this.isOrHasBeautyAncestor(this.mainProduct.categoryId);
+        }
         this.initializeSizes(data.sizeType);
         this.checkWishlistStatus();
       },
@@ -126,7 +211,7 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe((data: any) => {
         this.productVariants = data;
 
-        this.extractAvailableSizes();
+        // this.extractAvailableSizes();
 
         // Set the default color to the first available color
         if (this.availableColors.length > 0) {
@@ -136,11 +221,11 @@ export class ProductDetailsComponent implements OnInit {
       });
   }
 
-  extractAvailableSizes(): void {
-    const sizes = this.productVariants.map((variant) => variant.sizeName);
-    this.availableSizes = [...new Set(sizes)]; // Get distinct sizes
-    // console.log(this.availableSizes);
-  }
+  // extractAvailableSizes(): void {
+  //   const sizes = this.productVariants.map((variant) => variant.sizeName);
+  //   this.availableSizes = [...new Set(sizes)]; // Get distinct sizes
+  //   // console.log(this.availableSizes);
+  // }
 
   getAvailableColors(): void {
     this.productService.getProductColors(this.productId).subscribe({
@@ -180,8 +265,10 @@ export class ProductDetailsComponent implements OnInit {
 
   // Filter images based on the selected color
   onColorClick(color: string): void {
+    this.resetSizes();
     this.selectedColor = color;
     this.loadImagesByColor(color); // Load images for the clicked color
+    this.getSizesByVariantId(this.variantId);
   }
 
   // getSizes() : void {
@@ -235,7 +322,7 @@ export class ProductDetailsComponent implements OnInit {
   setActiveImage(index: number) {
     this.activeIndex = index; // Update the active index
     this.scrollGallery.nativeElement.scrollTo({
-      top: index * 400, // Scroll to the position of the selected image
+      top: index * 447, // Scroll to the position of the selected image
       behavior: 'smooth', // Smooth scroll behavior
     });
   }

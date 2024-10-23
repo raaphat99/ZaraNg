@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { CartService, CartItemDTO } from './services/cart.service';
+import { ProductVariantService } from '../../product/services/product-variant.service';
 
 @Component({
   selector: 'app-cart',
@@ -19,10 +20,12 @@ export class CartComponent implements OnInit {
   addedToWishlist: CartItemDTO | null = null;
   deletedProduct: CartItemDTO | null = null;
   currencyCode: string = 'EGP';
+  productVariant: any;
 
   constructor(
     private router: Router,
     private cartService: CartService,
+    private variantService: ProductVariantService,
   ) {}
 
   ngOnInit(): void {
@@ -154,6 +157,17 @@ export class CartComponent implements OnInit {
   
     // Navigate to the shipping method selection
     this.router.navigate(['/payment']);
+  }
+
+  navigateToProductDetails(item: CartItemDTO) {
+    this.variantService.getVariantByVariantId(item.productVariantId)
+      .subscribe({
+        next: (productVariant: any) => {
+          this.productVariant = productVariant;
+          this.router.navigate([`products/${this.productVariant.productId}`]);
+        }
+
+      })
   }
 }
 

@@ -17,6 +17,7 @@ export class ZaraStoreModalComponent {
   searchForm = new FormGroup({
     searchQuery: new FormControl('')
   });
+  selectedStore: string | null = null;
 
   constructor(private storeService: StoreService) {}
 
@@ -38,5 +39,15 @@ export class ZaraStoreModalComponent {
     this.isZaraStoreModalOpen = !this.isZaraStoreModalOpen;
     this.searchForm.get('searchQuery')?.reset();
     this.stores = [];
+  }
+
+  saveSelection() {
+    this.isZaraStoreModalOpen = false;
+    
+    if (this.selectedStore !== null) {
+      console.log('Selected store:', this.selectedStore);
+    } else {
+      console.log('No store selected');
+    }
   }
 }

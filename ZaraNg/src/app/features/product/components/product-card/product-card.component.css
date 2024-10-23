@@ -4,13 +4,13 @@
     margin-bottom: -1px;
     height: 380px;
     position: relative;
-    cursor: pointer;
 }
 
 .product-image-container {
     position: relative;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 img {

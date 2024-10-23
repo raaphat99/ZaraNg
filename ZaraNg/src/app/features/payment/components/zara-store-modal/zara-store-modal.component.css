@@ -33,16 +33,13 @@
 
 /* Modal Content */
 .modal-content {
-    flex-grow: 1;
-    /* So the content doesn't overlap with the button */
-    padding-bottom: 60px
+    width: 100%;  /* Set modal width */
+    max-height: 100vh; /* Set a maximum height */
+    overflow-y: auto; /* Enable scroll for overflow content */
 }
 
 /* Modal Footer */
 .modal-footer {
-    position: absolute;
-    bottom: 25px;
-    left: 0;
     width: 100%;
     text-align: center;
 }
@@ -261,7 +258,7 @@ li {
     text-align: center;
     cursor: pointer;
     padding: 1em;
-    margin-top: 17em;
+    margin: 7em 0;
     color: white;
     background-color: black;
     border: none;

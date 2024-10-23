@@ -22,7 +22,6 @@ export interface CartItemDTO {
 })
 export class CartService {
   private apiUrl = 'http://localhost:5250/api/Cart'; 
-  private headers: any;
   private cartData = new BehaviorSubject<any>({
     cartItems: [],
     shippingMethod: null,

@@ -41,8 +41,16 @@
                     <option *ngFor="let a of ageOptions" [value]="a">{{a}} YEARS</option>
                 </select>
 
+                <!-- Active Checkbox -->
+                <label class="active-label">
+                    <input type="checkbox" name="activeCheckbox" type="checkbox" [value]="true"
+                        (change)="onCheckboxChange($event)" [checked]="isActive" />
+                    <span>Active</span>
+                </label>
+
                 <button type="submit" class="modal-btn">Continue</button>
             </form>
+
         </div>
 
         <!-- Result Tab Content -->
@@ -54,7 +62,7 @@
             <p>Weight: {{ weight }} KG</p>
             <p>Age: {{ age }} Years</p>
             <h3>Your Recommended Size: {{ recommendedSize }}</h3>
-            
+
             <div class="recommended-size">
                 <img [src]="recommendedSizeImage" alt="Recommended Size Image" />
             </div>
@@ -104,5 +112,3 @@
         </form>
     </div>
 </div> -->
-
-

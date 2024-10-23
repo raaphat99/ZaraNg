@@ -39,7 +39,6 @@ export const zaraStores: Store[] = [
     { name: 'Zara - V&A Waterfront', city: 'Cape Town', address: 'V&A Waterfront', country: 'South Africa' },
     { name: 'Zara - Sandton City Mall', city: 'Johannesburg', address: 'Sandton City Mall', country: 'South Africa' },
     { name: 'Zara - King Abdulaziz Road', city: 'Riyadh', address: 'Kingdom Centre', country: 'Saudi Arabia' },
-    { name: 'Zara - Cairo Festival City', city: 'Cairo', address: 'Cairo Festival City', country: 'Egypt' },
     { name: 'Zara - Westfield London', city: 'London', address: 'Westfield London', country: 'UK' },
     { name: 'Zara - Stratford City', city: 'London', address: 'Westfield Stratford City', country: 'UK' },
     { name: 'Zara - La Défense', city: 'Paris', address: 'Les Quatre Temps', country: 'France' },
@@ -66,8 +65,6 @@ export const zaraStores: Store[] = [
     { name: 'Zara - Mall of Africa', city: 'Midrand', address: 'Mall of Africa', country: 'South Africa' },
     { name: 'Zara - Gateway Theatre of Shopping', city: 'Durban', address: 'Gateway Theatre of Shopping', country: 'South Africa' },
     { name: 'Zara - Eastgate Shopping Centre', city: 'Johannesburg', address: 'Eastgate Shopping Centre', country: 'South Africa' },
-    { name: 'Zara - City Stars', city: 'Cairo', address: 'City Stars', country: 'Egypt' },
-    { name: 'Zara - Mall of Arabia', city: 'Cairo', address: 'Mall of Arabia', country: 'Egypt' },
     { name: 'Zara - Eldorado Mall', city: 'São Paulo', address: 'Eldorado Mall', country: 'Brazil' },
     { name: 'Zara - Iguatemi São Paulo', city: 'São Paulo', address: 'Iguatemi São Paulo', country: 'Brazil' },
     { name: 'Zara - Barra Shopping', city: 'Rio de Janeiro', address: 'Barra Shopping', country: 'Brazil' },
@@ -75,5 +72,11 @@ export const zaraStores: Store[] = [
     { name: 'Zara - Select Citywalk', city: 'New Delhi', address: 'Select Citywalk', country: 'India' },
     { name: 'Zara - DLF Mall of India', city: 'Noida', address: 'DLF Mall of India', country: 'India' },
     { name: 'Zara - Orion Mall', city: 'Bangalore', address: 'Orion Mall', country: 'India' },
+    { name: "City Stars", address: "Omar Ibn El-Khattab St.", city: "Nasr City", country: "Egypt" },
+    { name: "Cairo Festival City Mall", address: "Fifth Settlement", city: "", country: "Egypt" },
+    { name: "Almaza City Centre", address: "Nozha", city: "Cairo", country: "Egypt" },
+    { name: "Maadi City Centre", address: "Maadi", city: "Cairo", country: "Egypt" },
+    { name: "Mall of Egypt", address: "6th of October", city: "Cairo", country: "Egypt" },
+    { name: "Mall of Arabia", address: "6th of October", city: "Cairo", country: "Egypt" },
+    { name: "City Centre Alexandria", address: "6th Kilo, Cairo Alexandria Desert Road, Al-Amreya", city: "Alexandria", country: "Egypt" }
 ];
-  

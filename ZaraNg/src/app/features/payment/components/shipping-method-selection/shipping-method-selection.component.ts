@@ -37,8 +37,10 @@ export class ShippingMethodSelectionComponent implements OnInit {
   cartItems: any[] = [];
   threeDaysFromNow: Date | undefined;
   fourDaysFromNow: Date | undefined;
-  selectedShippingMethod: string = 'StandardHome';
+  selectedDelivery: string = 'StandardHome';
   activeAddress: any;
+  isDeliveryDateConfirmed: boolean = true;
+  orderTotalPrice: number = 4000;
 
   constructor(
     private renderer: Renderer2,
@@ -48,6 +50,7 @@ export class ShippingMethodSelectionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.orderTotalPrice = this.cartService.getCartData().totalPrice;
 
     const gallery = this.imageGallery.nativeElement;
 
@@ -105,7 +108,15 @@ export class ShippingMethodSelectionComponent implements OnInit {
     this.calculateOrderDeliveryDate();
 
     this.getActiveAddress();
+  }
 
+  selectDelivery(option: string) {
+    if (option === 'ZaraStore') {
+      this.isDeliveryDateConfirmed = false;
+    } else {
+      this.isDeliveryDateConfirmed = true;
+    }
+    this.selectedDelivery = option;
   }
 
   calculateOrderDeliveryDate() {
@@ -125,16 +136,20 @@ export class ShippingMethodSelectionComponent implements OnInit {
   }
 
   getActiveAddress() {
-    this.userAddressService.GetUserAddresses()
-      .subscribe({
-        next: (addresses: any) => {
-          this.activeAddress = addresses.find((address: any )=> address.active === true);
-        }
-      })
+    this.userAddressService.GetUserAddresses().subscribe({
+      next: (addresses: any) => {
+        this.activeAddress = addresses.find(
+          (address: any) => address.active === true
+        );
+      },
+    });
   }
 
   goToPaymentOptions() {
-    this.cartService.setShippingDetails(this.selectedShippingMethod, +this.activeAddress.id);
+    this.cartService.setShippingDetails(
+      this.selectedDelivery,
+      +this.activeAddress.id
+    );
     this.router.navigate(['payment', 'options']);
   }
 }

@@ -43,7 +43,9 @@ export class WishlistComponent implements OnInit {
     this.userName = this.authService.getUserName();
   }
 
-
+  navigateToProductDetails(id: number) {
+    this.router.navigate([`products/${id}`]);
+  }
 
   //load cart items
   loadCartItems() {
@@ -68,6 +70,7 @@ export class WishlistComponent implements OnInit {
     this.wishlistService.getAllItems().subscribe({
       next: (data) => {
         this.wishlistItems = data;
+        console.log(this.wishlistItems[0]);
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error loading wishlist items:', error);
