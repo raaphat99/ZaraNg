@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { HeaderComponent } from "../../../../shared/components/header/header.component";
 import { FooterComponent } from "../../../../shared/components/footer/footer.component";
 import { AdminCategoryServiceService ,Category } from '../../services/admin-category-service.service';
@@ -14,6 +14,9 @@ import { AdminCategoryServiceService ,Category } from '../../services/admin-cate
 })
 export class AdminCategoryComponent implements OnInit {
   categories: Category[] = [];
+  submitted = false;
+  showErrorPopup = false; // To control the display of the error popup
+
   subcategoriesMap: Map<number, Category[]> = new Map();
   selectedCategory: Category | null = null;
   displayCategoryDialog = false;
@@ -123,49 +126,110 @@ export class AdminCategoryComponent implements OnInit {
     }
   }
 
-  saveCategory() {
-    if (this.selectedCategory) {
-      // Ensure main categories have parentCategoryId as 0 or null
-      if (!this.selectedCategory.parentCategoryId) {
-        this.selectedCategory.parentCategoryId = 0;
-      }
+
+//   saveCategory() {
+//     if (this.selectedCategory) {
+//       // Ensure main categories have parentCategoryId as 0 or null
+//       if (!this.selectedCategory.parentCategoryId) {
+//         this.selectedCategory.parentCategoryId = 0;
+//       }
   
-      if (this.isNewCategory) {
-        console.log('Creating new category:', this.selectedCategory);  // Log the category details
-        this.categoryService.createCategory(this.selectedCategory).subscribe({
-          next: () => {
-            console.log('Category created successfully');
-            this.loadCategories();
-            if (this.selectedCategory?.parentCategoryId) {
-              this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
-            } else {
-              this.loadCategories();  // Reload all categories after creating a main category
-            }
-            this.displayCategoryDialog = false;
-          },
-          error: (error) => {
-            console.error('Error creating category:', error);  // Log the error
-          }
-        });
-      } else {
-        console.log('Updating category:', this.selectedCategory);
-        this.categoryService.updateCategory(this.selectedCategory.id, this.selectedCategory).subscribe({
-          next: () => {
-            console.log('Category updated successfully');
-            if (this.selectedCategory?.parentCategoryId) {
-              this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
-            } else {
-              this.loadCategories();  // Reload all categories after updating a main category
-            }
-            this.displayCategoryDialog = false;
-          },
-          error: (error) => {
-            console.error('Error updating category:', error);  // Log the error
-          }
-        });
-      }
-    } else {
-      console.error('No category selected to save');
-    }
+//       if (this.isNewCategory) {
+//         console.log('Creating new category:', this.selectedCategory);  // Log the category details
+//         this.categoryService.createCategory(this.selectedCategory).subscribe({
+//           next: () => {
+//             console.log('Category created successfully');
+//             this.loadCategories();
+//             if (this.selectedCategory?.parentCategoryId) {
+//               this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
+//             } else {
+//               this.loadCategories();  // Reload all categories after creating a main category
+//             }
+//             this.displayCategoryDialog = false;
+//           },
+//           error: (error) => {
+//             console.error('Error creating category:', error);  // Log the error
+//           }
+//         });
+//       } else {
+//         console.log('Updating category:', this.selectedCategory);
+//         this.categoryService.updateCategory(this.selectedCategory.id, this.selectedCategory).subscribe({
+//           next: () => {
+//             console.log('Category updated successfully');
+//             if (this.selectedCategory?.parentCategoryId) {
+//               this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
+//             } else {
+//               this.loadCategories();  // Reload all categories after updating a main category
+//             }
+//             this.displayCategoryDialog = false;
+//           },
+//           error: (error) => {
+//             console.error('Error updating category:', error);  // Log the error
+//           }
+//         });
+//       }
+//     } else {
+//       console.error('No category selected to save');
+//     }
+//   }
+// }
+
+
+// Close the error pop-up
+
+saveCategory(categoryForm: NgForm) {
+  this.submitted = true; // Mark the form as submitted
+
+  if (categoryForm.invalid) {
+    // Mark all fields as touched so that validation errors are displayed
+    categoryForm.form.markAllAsTouched();
+    
+    // Show the error pop-up
+    this.showErrorPopup = true;
+    console.error('Form is invalid. Please fill in all required fields.');
+    return;
   }
+
+  // Proceed with form submission logic if the form is valid
+  if (this.selectedCategory) {
+    // Ensure main categories have parentCategoryId as 0 or null
+    if (!this.selectedCategory.parentCategoryId) {
+      this.selectedCategory.parentCategoryId = 0;
+    }
+
+    // Your save logic (create or update)
+    if (this.isNewCategory) {
+      this.categoryService.createCategory(this.selectedCategory).subscribe({
+        next: () => {
+          console.log('Category created successfully');
+          this.loadCategories();
+          this.displayCategoryDialog = false;
+          this.submitted = false; // Reset submission state after successful save
+        },
+        error: (error) => {
+          console.error('Error creating category:', error);
+        }
+      });
+    } else {
+      this.categoryService.updateCategory(this.selectedCategory.id, this.selectedCategory).subscribe({
+        next: () => {
+          console.log('Category updated successfully');
+          this.loadCategories();
+          this.displayCategoryDialog = false;
+          this.submitted = false; // Reset submission state after successful save
+        },
+        error: (error) => {
+          console.error('Error updating category:', error);
+        }
+      });
+    }
+  } else {
+    console.error('No category selected to save');
+  }
+}
+
+// Function to close the error pop-up
+closeErrorPopup() {
+  this.showErrorPopup = false;
+}
 }

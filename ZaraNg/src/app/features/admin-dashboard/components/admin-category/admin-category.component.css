@@ -12,7 +12,33 @@
     align-items: center;
     margin-bottom: 20px;
 }
-
+/* Styles for the pop-up error message */
+.error-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .error-popup button {
+    margin-top: 10px;
+    background-color: white;
+    color: red;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .error-popup button:hover {
+    background-color: lightgray;
+  }
+  
 /* Headings */
 h1, h2 {
     text-align: center;

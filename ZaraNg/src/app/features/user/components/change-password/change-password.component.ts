@@ -152,7 +152,7 @@ export class ChangePasswordComponent {
             setTimeout(() => {
               dialogRef.close(); // Close modal on success
               this.authService.logout();
-              this.router.navigate(['/login']);
+              this.router.navigate(['/auth/login']);
             }, 4000);
             this.modalMessage = 'Loading...';
           }
