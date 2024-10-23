@@ -6,15 +6,19 @@ import { of } from 'rxjs';
 import { environment } from '../../../../enviroment/enviroment.prod';
 import { ProductVariant } from '../viewmodels/product-variant';
 import { ProductImage } from '../viewmodels/product-image';
+import { Product } from '../viewmodels/product';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService extends ApiService {
-  private apiUrl: string = environment.apiUrl;
 
   constructor(httpClient: HttpClient) {
     super('http://localhost:5250/api/ProductAdmin', httpClient);
+  }
+
+  getProductById(id: number) : Observable<Product> {
+    return this.httpClient.get<Product>(`http://localhost:5250/api/products/${id}`);
   }
 
   getProductVariants(productId: number): Observable<ProductVariant[]> {
@@ -33,10 +37,10 @@ export class ProductService extends ApiService {
     );
   }
 
-  getSizesBySizeType(sizeType: string): Observable<string[]> {
+  getSizesBySizeType(sizeType: string): string[] {
     let sizes: string[] = [];
 
-    if (sizeType === 'Alpha') sizes = ['S', 'M', 'L', 'XL'];
+    if (sizeType === 'Alpha') sizes = ['Small', 'Medium', 'Large', 'ExtraLarge'];
     else if (sizeType === 'Numeric') sizes = ['36', '38', '40', '42', '44'];
     else if (sizeType === 'OneToSix')
       sizes = [
@@ -56,7 +60,7 @@ export class ProductService extends ApiService {
         '13-14 years (164 cm)',
       ];
       
-      return of(sizes);
+      return sizes;
   }
 
   // generateProducts(count: number):  Observable<Product[]> {

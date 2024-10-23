@@ -1,8 +1,8 @@
-<div class="card" (click)="goToProductDetails(product.id)">
+<div class="card" >
 
-    <div class="product-image-container">
+    <div class="product-image-container" (click)="goToProductDetails(product.id)">
         <img src="{{product.mainImageUrl}}" style="width:100%">
-        <button class="plus-button" (click)="togglePopup()"><i class="fa-solid fa-plus"></i></button>
+        <!-- <button class="plus-button" (click)="togglePopup()"><i class="fa-solid fa-plus"></i></button> -->
     </div>
 
     <div *ngIf="isPopupVisible" class="size-popup">
@@ -21,3 +21,5 @@
         </button>
     </div>
 </div>
+
+<wishlist-notification></wishlist-notification>

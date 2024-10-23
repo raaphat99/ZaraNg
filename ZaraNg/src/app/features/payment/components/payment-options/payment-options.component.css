@@ -22,8 +22,8 @@ h2 {
 
 .payment-options {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 40%;
+    grid-template-columns: repeat(3, 1fr);
+    width: 30%;
     border: 1px solid lightgray;
 }
 

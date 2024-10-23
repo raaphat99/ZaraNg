@@ -24,7 +24,7 @@ export class UserAddressesService {
   private apiUrl = 'http://localhost:5250/api/UserAddress';
 
  // Method to get all Adresses for a user
- GetUserAddresses(): Observable<UserAddressDTO[]> {
+GetUserAddresses(): Observable<UserAddressDTO[]> {
   const token = localStorage.getItem('token');
   const headers = { 'Authorization': `Bearer ${token}` };
   return this.http.get<UserAddressDTO[]>(`${this.apiUrl}`, {

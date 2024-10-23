@@ -12,17 +12,22 @@
             <h2>Select a delivery location</h2>
         </div>
 
-        <div class="body">
-            <p>Ahmed Eid</p>
-            <p>Taba street</p>
-            <p>From Koliet Adab street</p>
-            <p>Al-Mansoura</p>
-            <p>Dakahlia</p>
-            <p>Egypt</p>
-            <p>+20 01116172997</p>
-            <a class="edit-btn">Edit</a>
+        <div class="address-list">
+            <div *ngFor="let address of addresses" class="address-item">
+                <p>{{ address.street }}</p>
+                <p *ngIf="address.area">{{ address.area }}</p> 
+                <p>{{ address.city }}</p>
+                <p>{{ address.state }}</p>
+                <p>{{ address.country }}</p>
+                <p>{{ address.phoneNumber }}</p>
+                
+                <!-- Add some logic to show if the address is active -->
+                <span *ngIf="address.active" class="active-label">Active</span>
+            
+                <a class="edit-btn" (click)="navigateToUpdateAddress(address)">Edit</a>
+            </div>
         </div>
 
-        <button class="add-address-btn">Add new home address</button>
+        <button class="add-address-btn" (click)="navigateToCreateAddress()">Add new home address</button>
     </div>
 </div>

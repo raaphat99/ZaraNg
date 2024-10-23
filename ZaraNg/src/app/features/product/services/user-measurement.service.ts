@@ -9,12 +9,17 @@ import { AuthService } from '../../../core/services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MeasurementService extends ApiService {
+export class UserMeasurementService extends ApiService {
 
   private apiUrl: string = environment.apiUrl;
 
   constructor(httpClient: HttpClient, private authService: AuthService) {
     super('http://localhost:5250/api/UserMesurments', httpClient);
+  }
+
+  getUserMeasurements(): Observable<UserMeasurement[]> {
+    var headers = this.authService.getAuthHeaders();
+    return this.httpClient.get<UserMeasurement[]>(`${this.url}`, { headers });
   }
 
   addMeasurement(measurementData: UserMeasurement): Observable<UserMeasurement> {

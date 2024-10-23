@@ -398,6 +398,8 @@ a {
   text-transform: uppercase;
 }
 
+
+
 /* Media queries for smooth resizing and moving logo to the left */
 @media (max-width: 1400px) {
   .header {

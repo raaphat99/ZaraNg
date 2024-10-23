@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { MeasurementService } from '../../services/measurement.service';
+import { UserMeasurementService } from '../../services/user-measurement.service';
 import { HttpHeaders } from '@angular/common/http';
+import { UserMeasurement } from '../../viewmodels/user-measurement';
 
 @Component({
   selector: 'size-modal',
@@ -14,6 +15,7 @@ export class SizeModalComponent {
   height: number = 0;
   weight: number = 0;
   age: number = 0;
+  isActive?: boolean = true;
   activeTab: string = 'input'; // Default tab is 'input'
   recommendedSize?: string = '';
   recommendedSizeImage: string = '';
@@ -21,7 +23,7 @@ export class SizeModalComponent {
   weightOptions = Array.from({ length: 156 }, (_, i) => i + 25); // 25 to 180 kg
   ageOptions = Array.from({ length: 88 }, (_, i) => i + 12); // 12 to 99 years
 
-  constructor(private measurementService: MeasurementService) {}
+  constructor(private measurementService: UserMeasurementService) {}
 
   openModal(event: MouseEvent) {
     event.preventDefault();
@@ -41,13 +43,19 @@ export class SizeModalComponent {
     this.age = 0;
   }
 
+  onCheckboxChange(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    this.isActive = checkbox.checked; // Update the state based on checkbox
+}
+
   onSubmit(form: any): void {
     if (form.valid) {
-      const measurementData = {
+      const measurementData: UserMeasurement = {
         mesurmentProfileName: this.name,
         height: this.height,
         weight: this.weight,
         age: this.age,
+        active: this.isActive,
       };
 
       this.measurementService.addMeasurement(measurementData).subscribe({

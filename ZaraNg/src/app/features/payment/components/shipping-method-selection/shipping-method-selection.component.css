@@ -45,6 +45,14 @@ p {
     width: 100%;
 }
 
+.row-1 div.label:last-child {
+    border-right: none !important;
+}
+
+.label.selected {
+    font-weight: 500;
+}
+
 #home,
 #store,
 #drop-point {
@@ -62,10 +70,6 @@ p {
 #home,
 #store {
     border-right: 1px solid black;
-}
-
-#home {
-    font-weight: 500;
 }
 
 #store a,

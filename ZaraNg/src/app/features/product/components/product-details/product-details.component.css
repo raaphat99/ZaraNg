@@ -94,7 +94,7 @@
 /* Container to hold the scrollable gallery */
 .vertical-gallery-container {
     width: 300px;
-    height: 400px;
+    height: 447px;
     overflow-y: scroll;
     scroll-behavior: smooth;
     margin-right: 20px;
@@ -221,6 +221,10 @@
     font-size: 10px;
 }
 
+.recommended-size {
+    cursor: pointer;
+}
+
 .pipe {
     margin: 0 0.5em;
 }
@@ -234,12 +238,16 @@
 }
 
 .size-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 1em;
-    text-align: center;
     font-size: 11px;
     color: black;
     border: 1px solid black;
     transition: background-color 0.4s ease;
+    cursor: pointer;
 }
 
 .size-item.active {
@@ -248,15 +256,29 @@
     font-weight: 400;
 }
 
-
+.coming-soon {
+    pointer-events: none;
+    margin-top: 3px;
+    font-size: 9px;
+}
 
 .disabled {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.8;
+}
+
+.disable-btn {
+    background-color: grey;
+    color: white;
+    cursor: not-allowed;
 }
 
 .clickable {
     cursor: pointer;
+}
+
+.custom {
+    border-top: none !important;
 }
 
 .btn {
@@ -381,7 +403,70 @@
     color: black;
 }
 
+.cart-modal {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 35%;
+    height: 100%;
+    background-color: white;
+    transition: right 0.5s ease;
+    z-index: 1000;
+    border-left: 1px solid black;
+}
 
+
+.cart-modal.active {
+    right: 0;
+}
+
+.cart-modal-content {
+    margin-top: 10em;
+    padding: 1.5em 2.5em;
+}
+
+.cart-modal-content h2,
+.cart-modal-content p {
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.cart-modal-content h2 {
+    font-size: 16px;
+    font-weight: 350;
+}
+
+.image-container {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    height: 250px;
+    /* Example fixed height */
+    width: 100%;
+    overflow: hidden;
+    margin: 3em 0;
+}
+
+.image-column img {
+    border-right: 1px solid black;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.text-column {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.basket-btn {
+    width: 100%;
+    padding: 1em;
+    border: 1px solid black;
+    text-align: center;
+    cursor: pointer;
+}
 
 /* Large screens: All 3 columns visible */
 @media (min-width: 992px) {
@@ -409,6 +494,11 @@
 @media (max-width: 767px) {
     .grid-container {
         grid-template-columns: 1fr;
+    }
+
+    .column {
+        margin-top: 2em;
+        justify-content: center;
     }
 
     .col-1,

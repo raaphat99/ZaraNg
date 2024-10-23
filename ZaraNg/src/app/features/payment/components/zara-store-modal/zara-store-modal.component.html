@@ -1,5 +1,6 @@
 <div class="modal-overlay" [class.active]="isZaraStoreModalOpen" (click)="toggleModal($event)">
     <div class="modal" [class.active]="isZaraStoreModalOpen" (click)="$event.stopPropagation()">
+
         <div class="modal-content">
 
             <div class="header">
@@ -34,13 +35,18 @@
                     <ul>
                         <li *ngFor="let store of stores">
                             <div class="store-location">
-                                <input type="radio" name="" id="">
-                                <label for="">{{searchQuery}}</label>
+                                <input 
+                                    type="radio" 
+                                    name="selectedStore"  
+                                    [(ngModel)]="selectedStore"  
+                                    [value]="store.name">
+                                <label>{{store.name}}</label>
                             </div>
                             <p class="store-address">{{store.address}}</p>
                         </li>
                     </ul>
                 </div>
+                
 
                 <div *ngIf="stores.length === 0 && searchQuery" class="not-found">
                     <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="inherit"
@@ -59,10 +65,13 @@
 
             </div>
 
+            <div class="modal-footer">
+                <button (click)="saveSelection()" class="save-btn">Save</button>
+            </div>
+
         </div>
 
-        <div class="modal-footer">
-            <button class="save-btn">Save</button>
-        </div>
+
+
     </div>
 </div>

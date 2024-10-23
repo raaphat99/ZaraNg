@@ -17,10 +17,10 @@ export class PaymentOptionsComponent implements OnInit {
   paymentOptions = [
     { name: 'Visa', value: 'ONLINE', iconSrc: '../../../../../assets/images/payment-options/visa.svg' },
     { name: 'Mastercard', value: 'ONLINE', iconSrc: '../../../../../assets/images/payment-options/mastercard.svg' },
-    { name: 'Gift Card', value: 'GiftCard', iconSrc: '../../../../../assets/images/payment-options/gift-card.svg' },
+    // { name: 'Gift Card', value: 'GiftCard', iconSrc: '../../../../../assets/images/payment-options/gift-card.svg' },
     { name: 'Pay on delivery', value: 'POD', iconSrc: '../../../../../assets/images/payment-options/pod.svg' },
   ];
-  selectedPaymentOption: string = "Mastercard";
+  selectedPaymentOption: string = "POD";
   totalAmount!: number;
   currencyCode: string = 'EGP';
   showModal: boolean = false; 
@@ -36,6 +36,7 @@ export class PaymentOptionsComponent implements OnInit {
     selectedDivs.forEach((div) => div.classList.remove('selected'));
     (event.currentTarget as HTMLElement).classList.add('selected');
   }
+
   openModal() {
     this.showModal = true;
   }
@@ -46,10 +47,9 @@ export class PaymentOptionsComponent implements OnInit {
 
   
   proceedToConfirmOrder() {
-    
+    this.cartService.setPaymentMethod(this.selectedPaymentOption);
     const cartData = this.cartService.getCartData();
     console.log(cartData);
-    cartData.paymentMethod = 'ONLINE';
     this.paymentService.createOrder(cartData).subscribe({
       next: (response) => {
         // Access the hash here

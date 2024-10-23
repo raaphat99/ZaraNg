@@ -1,4 +1,3 @@
-import { UserAddressService } from './../../../user/services/user-address.service';
 import { Router } from '@angular/router';
 import {
   Component,
@@ -13,6 +12,7 @@ import { FooterComponent } from '../../../../shared/components/footer/footer.com
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { CartService } from '../../../shopping/cart/services/cart.service';
 import { CommonModule } from '@angular/common';
+import { UserAddressesService } from '../../../user/services/user-addresses.service';
 
 @Component({
   selector: 'app-shipping-method-selection',
@@ -37,17 +37,20 @@ export class ShippingMethodSelectionComponent implements OnInit {
   cartItems: any[] = [];
   threeDaysFromNow: Date | undefined;
   fourDaysFromNow: Date | undefined;
-  selectedShippingMethod: string = 'StandardHome';
+  selectedDelivery: string = 'StandardHome';
   activeAddress: any;
+  isDeliveryDateConfirmed: boolean = true;
+  orderTotalPrice: number = 4000;
 
   constructor(
     private renderer: Renderer2,
     private cartService: CartService,
     private router: Router,
-    private userAddressService: UserAddressService
+    private userAddressService: UserAddressesService
   ) {}
 
   ngOnInit(): void {
+    this.orderTotalPrice = this.cartService.getCartData().totalPrice;
 
     const gallery = this.imageGallery.nativeElement;
 
@@ -105,7 +108,15 @@ export class ShippingMethodSelectionComponent implements OnInit {
     this.calculateOrderDeliveryDate();
 
     this.getActiveAddress();
+  }
 
+  selectDelivery(option: string) {
+    if (option === 'ZaraStore') {
+      this.isDeliveryDateConfirmed = false;
+    } else {
+      this.isDeliveryDateConfirmed = true;
+    }
+    this.selectedDelivery = option;
   }
 
   calculateOrderDeliveryDate() {
@@ -125,16 +136,20 @@ export class ShippingMethodSelectionComponent implements OnInit {
   }
 
   getActiveAddress() {
-    this.userAddressService.getUserAddresses()
-      .subscribe({
-        next: (addresses: any) => {
-          this.activeAddress = addresses.find((address: any )=> address.active === true);
-        }
-      })
+    this.userAddressService.GetUserAddresses().subscribe({
+      next: (addresses: any) => {
+        this.activeAddress = addresses.find(
+          (address: any) => address.active === true
+        );
+      },
+    });
   }
 
   goToPaymentOptions() {
-    this.cartService.setShippingDetails(this.selectedShippingMethod, +this.activeAddress.id);
+    this.cartService.setShippingDetails(
+      this.selectedDelivery,
+      +this.activeAddress.id
+    );
     this.router.navigate(['payment', 'options']);
   }
 }

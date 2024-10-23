@@ -60,49 +60,79 @@
 
     <div class="column col-3">
         <div class="item-details-container">
-
             <div class="item-info">
                 <div class="item-header">
                     <p class="item-name">{{mainProduct?.name}}</p>
                     <i class="bookmark-icon" (click)="toggleBookmark()"
                         [ngClass]="isBookmarked ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'"></i>
                 </div>
-                <p class="item-price">{{mainProduct?.price}}</p>
+                <p class="item-price">{{mainProduct?.price}} EGP</p>
                 <p class="item-description">{{mainProduct?.description}}</p>
-                <a href="" class="item-availability" (click)="openStoreSizesModal($event)">Check in-store
+                <!-- <a href="" class="item-availability" (click)="openStoreSizesModal($event)">Check in-store
                     availability</a><br>
-                <a href="" class="item-extra-info">SHIPPING, EXCHANGES AND RETURNS</a>
+                <a href="" class="item-extra-info">SHIPPING, EXCHANGES AND RETURNS</a> -->
             </div>
 
-            <div class="item-specifications">
+            <div *ngIf="!hasBeautyAncestor" class="item-specifications">
                 <p class="item-color">Colour: <span>{{selectedColor}}</span></p>
                 <ul class="item-color-pallete" style="display: flex;">
-                    <li [title]="color" *ngFor="let color of availableColors" [ngStyle]="{'background-color': color}"
-                        (click)="onColorClick(color)">
+                    <li [title]="color" *ngFor="let color of availableColors" [ngStyle]="{'background-color': color}" (click)="onColorClick(color)">
                     </li>
                 </ul>
                 <ul class="item-sizes-grid">
-                    <li class="size-item" *ngFor="let size of availableSizes" [class.disabled]="!isSizeAvailable(size)"
-                        (click)="onSizeClick($event, size)" [ngClass]="{'clickable': isSizeAvailable(size)}">
-                        {{ size }}
+                    <li class="size-item" *ngFor="let size of sizes" [class.disabled]="!isSizeAvailable(size)"
+                        [class.active]="selectedSize === size" (click)="onSizeClick($event, size)">
+                        <span>{{ size }}</span>
+                        <span *ngIf="!isSizeAvailable(size)" class="coming-soon">Coming soon</span>
                     </li>
                 </ul>
+                <div *ngIf="!hasMeasurements; else measurementTemplate">
+                    <a href="" class="find-your-size" (click)="sizeModal.openModal($event)">Find Your Size</a>
+                </div>
 
-                <a href="" class="find-your-size" (click)="sizeModal.openModal($event)">Find Your Size</a>
+                <ng-template #measurementTemplate>
+                    <p class="recommended-size" (click)="sizeModal.openModal($event)">Your recommended size is {{ lastActiveMeasurement?.sizeValue ?? userMeasurements[userMeasurements.length - 1].sizeValue }}</p>
+                </ng-template>
+
+                <!-- <a href="" class="find-your-size" (click)="sizeModal.openModal($event)">Find Your Size</a> -->
                 <size-modal #sizeModal></size-modal>
 
-                <span class="pipe"> | </span>
-                <a href="" class="see-measurements">See measurements</a>
+                <!-- <span class="pipe"> | </span>
+                <a href="" class="see-measurements">See measurements</a> -->
             </div>
 
-            <button class="btn add-to-cart-btn" (click)="addToCart()" [class.change-style]="selectedSize">
-                Add
+            <button class="btn add-to-cart-btn" (click)="addToCart($event)" [class.custom]="hasBeautyAncestor"
+                [class.change-style]="selectedSize">
+                {{ isAdding ? 'Adding...' : 'Add' }}
             </button>
         </div>
         <custom-modal [showModal]="showModal" (closeModalEvent)="closeModal()"></custom-modal>
     </div>
 
-    <div class="overlay" [class.active]="isStoreSizesModalOpen || isFindSizeModalOpen"></div>
+    <!-- CartModal -->
+    <div class="cart-modal" *ngIf="showCartModal" (click)="closeCartModal()" [ngClass]="{'active': showCartModal}">
+        <div class="cart-modal-content">
+
+            <span class="close-btn">×</span>
+
+            <h2>Added to your basket</h2>
+
+            <div class="image-container">
+                <div class="image-column">
+                    <img src="{{filteredImages[0].imageUrl}}" alt="{{mainProduct?.description}}">
+                </div>
+                <div class="text-column">
+                    <p>{{mainProduct?.name}}</p>
+                    <p>Price: {{mainProduct?.price}} EGP</p>
+                </div>
+            </div>
+
+            <button class="btn basket-btn" (click)="goToCart()">See shopping basket</button>
+        </div>
+    </div>
+
+    <div class="overlay" (click)="closeAllModals()"
+        [class.active]="isStoreSizesModalOpen || isFindSizeModalOpen || showCartModal"></div>
 
     <!-- Store Sizes Modal -->
     <div class="modal-item" [class.show-modal-item]="isStoreSizesModalOpen">
