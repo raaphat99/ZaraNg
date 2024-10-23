@@ -39,8 +39,8 @@
     </tbody>
   </table>
   
-  <div *ngIf="displayProductDialog" class="order-details-dialog">
-    <h2>Order Details</h2>
+  <!-- <div *ngIf="displayProductDialog" class="order-details-dialog">
+    <h2>Product Details</h2>
     <button class="close-button" (click)="displayProductDialog = false">
       <svg
         width="24"
@@ -72,5 +72,42 @@
 
   
   
+</div> -->
+<div *ngIf="displayProductDialog" class="order-details-dialog">
+  <h2>Product Details</h2>
+  <button class="close-button" (click)="displayProductDialog = false">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="inherit"
+      stroke="inherit"
+      style="box-sizing: border-box; fill: rgb(0, 0, 0)"
+    >
+      <path
+        d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"
+        style="box-sizing: border-box"
+      ></path>
+    </svg>
+  </button>
+
+  <div *ngIf="selectedProduct">
+    <div *ngIf="productvariant && productvariant.length > 0">
+      <img [src]="productvariant[0].imageUrls[0]" alt="Product Image" *ngIf="productvariant[0].imageUrls && productvariant[0].imageUrls.length > 0" class="product-image" />
+    </div>
+
+    <h3>Product Name: {{ selectedProduct.name }}</h3>
+
+    <!-- Conditionally display fields based on CategoryId -->
+    <div *ngIf="selectedProduct && ![62, 63, 64, 65].includes(selectedProduct.CategoryId)">
+      <p><strong>Product Variant Color:</strong> {{ productColors }}</p>
+      <p><strong>Product Variant Size:</strong> {{ productSizes }}</p>
+      <p><strong>Product Variant Material:</strong> {{ productMaterials }}</p>
+    </div>
+  
+       
+  </div>
 </div>
+
 <app-footer></app-footer>

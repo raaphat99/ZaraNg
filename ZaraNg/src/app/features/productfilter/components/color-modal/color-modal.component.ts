@@ -6,6 +6,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { FilterService } from '../../services/filter.service';
 import { Product } from '../../../admin-dashboard/components/admin-product/Product';
 import { Product2 } from '../productfilter/productfilter.component';
+import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-color-modal',
@@ -75,6 +76,62 @@ test:Productsearch|null=null;
 products:Productsearch[]=[];
 selectedCategoryId: number = 0; // يمكنك تحديد قيمة افتراضية للفئة
 
+// viewResults(): void {
+//   if (this.selectedColors.length >= 1) {
+//     // بناء معلمات الألوان باستخدام الأسماء
+//     const selectedColorNames = this.selectedColors
+//       .map(hslValue => {
+//         const color = this.colors.find(color => color.hsl === hslValue);
+//         return color ? color.name : null;
+//       })
+//       .filter(name => name !== null); // تأكد من تصفية الأسماء الغير موجودة
+
+//     // بناء رابط مع تكرار معلمة "colors" لكل لون
+//     const colorParams = selectedColorNames.map(name => `colors=${name}`).join('&');
+//     console.log("productselected:", this.productselected);
+
+//     // تأكد من أن productselected يحتوي على كائنات يمكن الوصول إلى categoryId منها
+//     if (this.productselected.length > 0) {
+//       for (let index = 0; index < this.productselected.length; index++) {
+//         const productId = this.productselected[index].id; // الحصول على معرف المنتج
+//         this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`;
+        
+//         this.filter.getAll().subscribe({
+//           next: data => {
+//             this.test = data; // تعيين القيمة بشكل صحيح
+            
+//             // Correct access to categoryId
+//             const categoryId = this.test?.categoryId; // Ensure this is the correct case
+            
+//             if (categoryId !== undefined) {
+//               this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${colorParams}`;
+//               console.log('URL: ', this.filter.url);
+              
+//               this.filter.getAll().subscribe({
+//                 next: data => {
+//                   this.products.push(...data); // استخدم push بدلاً من append
+//                   this.colorSelected.emit(this.products);
+//                   console.log("Products with selected colors", this.products);
+//                 },
+               
+//               });
+//             } else {
+//               console.log('CategoryId is undefined for product:', this.test);
+//             }
+//           },
+//           error: err => {
+//             console.log('Error fetching product details:', err);
+//           }
+//         });
+//       }
+//     } else {
+//       console.error('No products selected.');
+//     }
+//   } else {
+//     console.error('No colors selected.');
+//   }
+// }
+
 viewResults(): void {
   if (this.selectedColors.length >= 1) {
     // بناء معلمات الألوان باستخدام الأسماء
@@ -91,41 +148,42 @@ viewResults(): void {
 
     // تأكد من أن productselected يحتوي على كائنات يمكن الوصول إلى categoryId منها
     if (this.productselected.length > 0) {
-      for (let index = 0; index < this.productselected.length; index++) {
-        const productId = this.productselected[index].id; // الحصول على معرف المنتج
+      const requests: Observable<Productsearch[]>[] = this.productselected.map(product => {
+        const productId = product.id; // الحصول على معرف المنتج
         this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`;
-        
-        this.filter.getAll().subscribe({
-          next: data => {
-            this.test = data; // تعيين القيمة بشكل صحيح
-            
-            // Correct access to categoryId
-            const categoryId = this.test?.categoryId; // Ensure this is the correct case
+
+        return this.filter.getAll().pipe(
+          switchMap(data => {
+            const categoryId = data?.categoryId; // تأكد من الحصول على categoryId بشكل صحيح
             
             if (categoryId !== undefined) {
-              this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${colorParams}`;
+              this.filter.url =  `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${colorParams}`;
               console.log('URL: ', this.filter.url);
-              
-              this.filter.getAll().subscribe({
-                next: data => {
-                  this.products.push(...data); // استخدم push بدلاً من append
-                  this.colorSelected.emit(this.products);
-                  console.log("Products with selected colors", this.products);
-                },
-                error: err => {
-                  this.colorSelected.emit(this.products);
-                  console.log('Error fetching products for selected colors:', err);
-                }
-              });
+              return this.filter.getAll(); // إرجاع Observable<Productsearch[]> مباشرة
             } else {
-              console.log('CategoryId is undefined for product:', this.test);
+              console.log('CategoryId is undefined for product:', data);
+              return of([] as Productsearch[]); // إرجاع مصفوفة فارغة من النوع Productsearch
             }
-          },
-          error: err => {
-            console.log('Error fetching product details:', err);
-          }
-        });
-      }
+          }),
+          catchError(err => {
+            console.error('Error fetching product details:', err);
+            return of([] as Productsearch[]); // إرجاع مصفوفة فارغة في حالة الخطأ
+          })
+        );
+      });
+
+      // استخدام forkJoin لجمع جميع الطلبات
+      forkJoin(requests).subscribe({
+        next: allProducts => {
+          const flattenedProducts = allProducts.flat(); // تسطيح المصفوفة
+          this.products.push(...flattenedProducts); // استخدم push لدمج المنتجات
+          this.colorSelected.emit(this.products); // Emit once after all requests
+          console.log("Products with selected colors", this.products);
+        },
+        error: err => {
+          console.error('Error fetching products:', err);
+        }
+      });
     } else {
       console.error('No products selected.');
     }
@@ -133,8 +191,6 @@ viewResults(): void {
     console.error('No colors selected.');
   }
 }
-
-
 ngOnInit(): void {
   this.checkWindowSize();
 }
@@ -149,6 +205,62 @@ checkWindowSize() {
     this.close();
   }
 }
+// viewResults(): void {
+//   if (this.selectedColors.length >= 1) {
+//     const selectedColorNames = this.selectedColors
+//       .map(hslValue => {
+//         const color = this.colors.find(color => color.hsl === hslValue);
+//         return color ? color.name : null;
+//       })
+//       .filter(name => name !== null);
+
+//     const colorParams = selectedColorNames.map(name => `colors=${name}`).join('&');
+//     console.log("productselected:", this.productselected);
+
+//     if (this.productselected.length > 0) {
+//       for (let index = 0; index < this.productselected.length; index++) {
+//         const productId = this.productselected[index].id;
+//         this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`;
+
+//         this.filter.getAll().subscribe({
+//           next: data => {
+//             this.test = data;
+//             const categoryId = this.test?.categoryId;
+
+//             if (categoryId !== undefined) {
+//               this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${colorParams}`;
+//               console.log('URL: ', this.filter.url);
+
+//               this.filter.getAll().subscribe({
+//                 next: (data: Productsearch[]) => {
+//                   // Ensure no duplicates before pushing the products
+//                   data.forEach((product: Productsearch) => {
+//                     const exists = this.products.some((existingProduct: Productsearch) => existingProduct.id === product.id);
+//                     if (!exists) {
+//                       this.products.push(product);
+//                     }
+//                   });
+
+//                   console.log("Products with selected colors", this.products);
+//                 },
+//               });
+//             } else {
+//               console.log('CategoryId is undefined for product:', this.test);
+//             }
+//           },
+//           error: err => {
+//             console.log('Error fetching product details:', err);
+//           }
+//         });
+//       }
+//     } else {
+//       console.error('No products selected.');
+//     }
+//   } else {
+//     console.error('No colors selected.');
+//   }
+//   this.colorSelected.emit(this.products);
+// }
 
 
 } 

@@ -161,7 +161,7 @@ export class ChangeEmailComponent {
             console.log('success');
             setTimeout(() => {
               dialogRef.close(); // Close modal on success
-              this.router.navigate(['/login']);
+              this.router.navigate(['/auth/login']);
             }, 4000);
             this.modalMessage = 'Loading...';
           }

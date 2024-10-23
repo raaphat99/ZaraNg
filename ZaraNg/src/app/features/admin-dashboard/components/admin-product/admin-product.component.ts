@@ -40,24 +40,52 @@ export class AdminProductComponent {
   showVariant(product: any) {
     this.router.navigate(['/products/productvariant/', product.id]);
 }
-  viewproduct(p: Product) {
-    this.displayProductDialog = true;
-    this.selectedProduct = p;  
-    this.productid = this.selectedProduct?.id;  
-
-    this.api.url = ` http://localhost:5250/api/ProductAdmin/${this.productid}/variants`;
+viewproduct(p: Product) {
+  this.displayProductDialog = true;
+  this.selectedProduct = p;  
+  this.productid = this.selectedProduct?.id;  
   
+  console.log("Selected Product ID:", this.productid); // Log ID
+  console.log("Selected Product Category ID:", this.selectedProduct?.CategoryId); // Check Category ID
 
-    this.api.getAll().subscribe({
+  this.api.url = `http://localhost:5250/api/ProductAdmin/${this.productid}/variants`;
+
+  this.api.getAll().subscribe({
       next: (data: productV[]) => {  
-        this.productvariant = data; 
-        console.log("Filtered Products Variant", this.productvariant);
+          this.productvariant = data; 
+          console.log("Filtered Products Variant", this.productvariant); // Log product variants
       },
       error: err => {
-        console.log('Error fetching products Variant:', err);
+          console.log('Error fetching products Variant:', err);
       }
-    });
+  });
+}
+
+  // viewproduct(p: Product) {
+  //   this.displayProductDialog = true;
+  //   this.selectedProduct = p;  
+  //   this.productid = this.selectedProduct?.id;  
+    
+  //   console.log("Selected Product ID:", this.selectedProduct?.id);
+  //   console.log("Selected Product Category ID:", this.selectedProduct?.CategoryId); // Log the CategoryId
+
+  //   this.api.url = ` http://localhost:5250/api/ProductAdmin/${this.productid}/variants`;
+  
+
+  //   this.api.getAll().subscribe({
+  //     next: (data: productV[]) => {  
+  //       this.productvariant = data; 
+  //       console.log("Filtered Products Variant", this.productvariant);
+  //     },
+  //     error: err => {
+  //       console.log('Error fetching products Variant:', err);
+  //     }
+  //   });
+  // }
+  isExcludedCategory(categoryId: number): boolean {
+    return [62, 63, 64, 65].includes(categoryId);
   }
+  
 
   get productColors(): string {
     return Array.from(new Set(this.productvariant?.map(item => item.productColor))).join(', ') || '';

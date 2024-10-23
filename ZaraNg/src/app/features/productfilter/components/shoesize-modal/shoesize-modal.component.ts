@@ -3,6 +3,7 @@ import { FilterService } from '../../services/filter.service';
 import { CommonModule, formatCurrency } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product2 } from '../productfilter/productfilter.component';
+import { concatMap, EMPTY, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-shoesize-modal',
@@ -49,6 +50,69 @@ export class ShoesizeModalComponent {
   test:Productsearch|null=null;
 
 
+  // viewResults(): void {
+  //   // التأكد من أن هناك أحجام مختارة
+  //   if (this.selectedstyle.length > 0) {
+  //     // بناء معلمات الأحجام
+  //     const sizeParams = this.selectedstyle
+  //       .map(style => `sizes=${style}`)
+  //       .join('&');
+  
+  //     // التأكد من وجود منتجات مختارة
+  //     if (this.productselected.length > 0) {
+  //       this.products = []; // تفريغ قائمة المنتجات قبل طلب البيانات الجديدة
+  
+  //       // التكرار على كل منتج مختار
+  //       for (let index = 0; index < this.productselected.length; index++) {
+  //         const productId = this.productselected[index].id; // الحصول على معرف المنتج
+  //         this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`; // بناء الرابط للحصول على تفاصيل المنتج
+  //         console.log("Fetching product details URL:", this.filter.url); // تحقق من الرابط النهائي
+  
+  //         // طلب الحصول على تفاصيل المنتج
+  //         this.filter.getAll().subscribe({
+  //           next: data => {
+  //             this.test = data; // تعيين القيمة بشكل صحيح
+  
+  //             // الوصول الصحيح إلى categoryId
+  //             const categoryId = this.test?.categoryId; // تأكد من أن الحقل صحيح
+  
+  //             // التحقق من وجود categoryId
+  //             if (categoryId !== undefined) {
+  //               // بناء الرابط باستخدام categoryId ومعلمات الأحجام
+  //               this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${sizeParams}`;
+  //               console.log('Fetching URL for products with selected sizes:', this.filter.url);
+  
+  //               // طلب الحصول على المنتجات بناءً على الرابط الجديد
+  //               this.filter.getAll().subscribe({
+  //                 next: data => {
+  //                   this.products.push(...data); // إضافة المنتجات المستلمة إلى القائمة
+  //                   this.shsizeSelected.emit(this.products); // Emit the selected sizes
+  
+  //                   console.log(`Products for product ID ${productId}:`, data);
+  //                 },
+  //                 error: err => {
+  //                   this.shsizeSelected.emit(this.products);
+  //                   console.log(`Error fetching products for product ID ${productId}:`, err);
+  //                 }
+  //               });
+  //             } else {
+  //               console.log(`CategoryId is undefined for product ID ${productId}`);
+  //             }
+  //           },
+  //           error: err => {
+  //             console.log('Error fetching product details:', err);
+  //           }
+  //         });
+  //       }
+  //     } else {
+  //       console.log('No products selected.');
+  //     }
+  //   } else {
+  //     console.log('No sizes selected.');
+  //   }
+  // }
+
+
   viewResults(): void {
     // التأكد من أن هناك أحجام مختارة
     if (this.selectedstyle.length > 0) {
@@ -61,48 +125,44 @@ export class ShoesizeModalComponent {
       if (this.productselected.length > 0) {
         this.products = []; // تفريغ قائمة المنتجات قبل طلب البيانات الجديدة
   
-        // التكرار على كل منتج مختار
-        for (let index = 0; index < this.productselected.length; index++) {
-          const productId = this.productselected[index].id; // الحصول على معرف المنتج
+        // إعداد قائمة من الطلبات
+        const requests = this.productselected.map(product => {
+          const productId = product.id; // الحصول على معرف المنتج
           this.filter.url = `http://localhost:5250/api/ProductAdmin/${productId}`; // بناء الرابط للحصول على تفاصيل المنتج
           console.log("Fetching product details URL:", this.filter.url); // تحقق من الرابط النهائي
   
           // طلب الحصول على تفاصيل المنتج
-          this.filter.getAll().subscribe({
-            next: data => {
-              this.test = data; // تعيين القيمة بشكل صحيح
-  
-              // الوصول الصحيح إلى categoryId
-              const categoryId = this.test?.categoryId; // تأكد من أن الحقل صحيح
-  
-              // التحقق من وجود categoryId
+          return this.filter.getAll().pipe(
+            concatMap(data => {
+              const categoryId = data?.categoryId; // الوصول الصحيح إلى categoryId
               if (categoryId !== undefined) {
                 // بناء الرابط باستخدام categoryId ومعلمات الأحجام
                 this.filter.url = `http://localhost:5250/api/Products/filter?categoryId=${categoryId}&${sizeParams}`;
                 console.log('Fetching URL for products with selected sizes:', this.filter.url);
-  
-                // طلب الحصول على المنتجات بناءً على الرابط الجديد
-                this.filter.getAll().subscribe({
-                  next: data => {
-                    this.products.push(...data); // إضافة المنتجات المستلمة إلى القائمة
-                    this.shsizeSelected.emit(this.products); // Emit the selected sizes
-  
-                    console.log(`Products for product ID ${productId}:`, data);
-                  },
-                  error: err => {
-                    this.shsizeSelected.emit(this.products);
-                    console.log(`Error fetching products for product ID ${productId}:`, err);
-                  }
-                });
+                return this.filter.getAll(); // إرجاع الطلب الجديد
               } else {
                 console.log(`CategoryId is undefined for product ID ${productId}`);
+                return EMPTY; // إعادة EMPTY بدلاً من مصفوفة فارغة
               }
-            },
-            error: err => {
-              console.log('Error fetching product details:', err);
-            }
-          });
-        }
+            })
+          );
+        });
+  
+        // استخدام forkJoin لجمع جميع الطلبات
+        forkJoin(requests).subscribe({
+          next: results => {
+            results.forEach(productsData => {
+              if (productsData && productsData.length > 0) {
+                this.products.push(...productsData); // إضافة المنتجات المستلمة إلى القائمة
+              }
+            });
+            this.shsizeSelected.emit(this.products); // Emit the selected sizes
+            console.log("Products fetched successfully:", this.products);
+          },
+          error: err => {
+            console.log('Error fetching products for selected sizes:', err);
+          }
+        });
       } else {
         console.log('No products selected.');
       }
@@ -110,7 +170,6 @@ export class ShoesizeModalComponent {
       console.log('No sizes selected.');
     }
   }
-  
   
 
   clearSelection() {

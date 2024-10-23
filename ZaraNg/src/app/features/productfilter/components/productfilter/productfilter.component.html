@@ -21,10 +21,10 @@
  <product-list [products]="pro"></product-list>
 
 
-<app-color-modal #colorModal [productselected]="pro" (colorSelected)="handleColorSelection($event)"></app-color-modal>
-<app-characteristics-modal [productselected]="pro" #characteristicModal (characteristicsSelected)="handleCharacteristicsSelection($event)"></app-characteristics-modal>
+<app-color-modal #colorModal [productselected]="products" (colorSelected)="handleColorSelection($event)"></app-color-modal>
+<app-characteristics-modal [productselected]="products " #characteristicModal (characteristicsSelected)="handleCharacteristicsSelection($event)"></app-characteristics-modal>
 <app-style-modal #styleModal [productselected]="products" (styleSelected)="handleStyleSelection($event)"></app-style-modal>
 <app-top-modal #topModal [productselected]="products" (topSelected)="handletopSelection($event)"></app-top-modal>
-<app-size-modal #sizeModal [productselected]="pro" (sizeSelected)="handlesizeSelection($event)"></app-size-modal>
-<app-shoesize-modal #shsizeModal [productselected]="pro" (shsizeSelected)="handleshsizeSelection($event)"></app-shoesize-modal>
-<app-price-modal #priceModal [productselected]="pro" (priceSelected)="handleshpriceSelection($event)"></app-price-modal>
+<app-size-modal #sizeModal [productselected]="products" (sizeSelected)="handlesizeSelection($event)"></app-size-modal>
+<app-shoesize-modal #shsizeModal [productselected]="products " (shsizeSelected)="handleshsizeSelection($event)"></app-shoesize-modal>
+<app-price-modal #priceModal [productselected]="products" (priceSelected)="handleshpriceSelection($event)"></app-price-modal>

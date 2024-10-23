@@ -42,33 +42,35 @@ export class ProductfilterComponent {
 
       }
     });
-    for (let index = 0; index < this.products.length; index++) {
-        if(this.products[index].categoryId==12||this.products[index].categoryId==35){
-          this.filter.url='http://localhost:5250/api/Products/subcategory/'+this.products[0].categoryId;
-          this.filter.getAll().subscribe({
-            next: data => {
-              this.pro = data; 
-              this.cdr.detectChanges();  // أخبر Angular أن هناك تغييرات
-              console.log("Products with selected pro", this.pro);
-            },
-            error: err => {
-              console.log('Error fetching products for selected :', err);
-            }
-          });
-        }else{
-          this.filter.url='http://localhost:5250/api/Products/category/'+this.products[0].categoryId;
-          this.filter.getAll().subscribe({
-            next: data => {
-              this.pro = data; 
-              this.cdr.detectChanges();  // أخبر Angular أن هناك تغييرات
-              console.log("Products with selected pro", this.pro);
-            },
-            error: err => {
-              console.log('Error fetching products for selected :', err);
-            }
-          });
-        }  
-    }
+  
+    // for (let index = 0; index < this.products.length; index++) {
+    //     if(this.products[index].categoryId==12||this.products[index].categoryId==35){
+    //       this.filter.url='http://localhost:5250/api/Products/subcategory/'+this.products[0].categoryId;
+    //       this.filter.getAll().subscribe({
+    //         next: data => {
+    //           this.pro = data; 
+    //           this.cdr.detectChanges();  // أخبر Angular أن هناك تغييرات
+    //           console.log("Products with selected pro", this.pro);
+    //         },
+    //         error: err => {
+    //           console.log('Error fetching products for selected :', err);
+    //         }
+    //       });
+    //     }else{
+    //       this.filter.url='http://localhost:5250/api/Products/category/'+this.products[0].categoryId;
+    //       this.filter.getAll().subscribe({
+    //         next: data => {
+    //           this.pro = data; 
+    //           this.cdr.detectChanges();  // أخبر Angular أن هناك تغييرات
+    //           console.log("Products with selected pro", this.pro);
+    //         },
+    //         error: err => {
+    //           console.log('Error fetching products for selected :', err);
+    //         }
+    //       });
+    //     }  
+    // }
+    
 
   }
 
@@ -90,20 +92,21 @@ export class ProductfilterComponent {
   if(item==='VIEW ALL'){
 
     console.log("pro"+this.pro);
-    for (let index = 0; index < this.products.length; index++) {
-      if(this.products[index].categoryId==12||this.products[index].categoryId==35){
-        this.filter.url='http://localhost:5250/api/Products/subcategory/'+this.products[0].categoryId;
-        this.filter.getAll().subscribe({
-          next: data => {
-            this.pro = data; 
-            this.cdr.detectChanges();  // أخبر Angular أن هناك تغييرات
-            console.log("Products with selected pro", this.pro);
-          },
-          error: err => {
-            console.log('Error fetching products for selected :', err);
-          }
-        });
-      }else{
+    // for (let index = 0; index < this.products.length; index++) {
+    //   if(this.products[index].categoryId==12||this.products[index].categoryId==35){
+    //     this.filter.url='http://localhost:5250/api/Products/subcategory/'+this.products[0].categoryId;
+    //     this.filter.getAll().subscribe({
+    //       next: data => {
+    //         this.pro = data; 
+    //         this.cdr.detectChanges();  // أخبر Angular أن هناك تغييرات
+    //         console.log("Products with selected pro", this.pro);
+    //       },
+    //       error: err => {
+    //         console.log('Error fetching products for selected :', err);
+    //       }
+    //     });
+    //   }
+    for(let index = 0; index < this.products.length; index++){
         this.filter.url='http://localhost:5250/api/Products/category/'+this.products[0].categoryId;
         this.filter.getAll().subscribe({
           next: data => {
@@ -116,7 +119,7 @@ export class ProductfilterComponent {
           }
         });
       }  
-  }
+  
     this.pro;
     this.cdr.detectChanges();  // أخبر Angular أن هناك تغييرات
 
@@ -357,63 +360,81 @@ export class ProductfilterComponent {
   productvc: Productsearch[] = [];
   pro: Product2[] = [];
 
+  // handleColorSelection(color: Productsearch[]): void {
+  //   // Reset productvc to null before assigning the new color
+  //   this.productvc = [];  // Clear previous value
+  //   this.productvc = color;  // Assign the new value
+  //   console.log("color product v ", color);
+    
+  //   this.pro = []; // Clear the previous products
+    
+  //   this.productvc.forEach((prod) => {
+  //     this.filter.url = 'http://localhost:5250/api/ProductAdmin/' + prod.productId;
+  
+  //     this.filter.getAll().subscribe({
+  //       next: (data: any) => {
+  //         let transformedProducts = [];
+  
+  //         if (Array.isArray(data)) {
+  //           transformedProducts = data.map(p => ({
+  //             id: p.id,
+  //             name: p.name,
+  //             description: p.description,
+  //             price: p.price,
+  //             stockQuantity: p.stockQuantity,
+  //             sizeType: p.sizeType,
+  //             mainImageUrl: p.mainImageUrl,
+  //             created: new Date(p.created),
+  //             updated: new Date(p.updated)
+  //           }));
+  //         } else {
+  //           transformedProducts = [{
+  //             id: data.id,
+  //             name: data.name,
+  //             description: data.description,
+  //             price: data.price,
+  //             stockQuantity: data.stockQuantity,
+  //             sizeType: data.sizeType,
+  //             mainImageUrl: data.mainImageUrl,
+  //             created: new Date(data.created),
+  //             updated: new Date(data.updated)
+  //           }];
+  //         }
+  
+  //         // Check for duplicates before adding
+  //         transformedProducts.forEach(transProd => {
+  //           const exists = this.pro.some(p => p.id === transProd.id);
+  //           if (!exists) {
+  //             this.pro.push(transProd);
+  //           }
+  //         });
+  
+  //         console.log("Combined Products for color:", this.pro);
+  //       },
+  //       error: err => {
+  //         console.error('Error fetching products:', err);
+  //       }
+  //     });
+  //   });
+  // }
   handleColorSelection(color: Productsearch[]): void {
-    // Reset productvc to null before assigning the new color
-    this.productvc = [];  // Clear previous value
-    this.productvc = color;  // Assign the new value
+    this.productvc = []; // Clear previous value
+    this.productvc = color; // Assign the new value
     console.log("color product v ", color);
     
     this.pro = []; // Clear the previous products
-    
-    this.productvc.forEach((prod) => {
-      this.filter.url = 'http://localhost:5250/api/ProductAdmin/' + prod.id;
-  
-      this.filter.getAll().subscribe({
-        next: (data: any) => {
-          let transformedProducts = [];
-  
-          if (Array.isArray(data)) {
-            transformedProducts = data.map(p => ({
-              id: p.id,
-              name: p.name,
-              description: p.description,
-              price: p.price,
-              stockQuantity: p.stockQuantity,
-              sizeType: p.sizeType,
-              mainImageUrl: p.mainImageUrl,
-              created: new Date(p.created),
-              updated: new Date(p.updated)
-            }));
-          } else {
-            transformedProducts = [{
-              id: data.id,
-              name: data.name,
-              description: data.description,
-              price: data.price,
-              stockQuantity: data.stockQuantity,
-              sizeType: data.sizeType,
-              mainImageUrl: data.mainImageUrl,
-              created: new Date(data.created),
-              updated: new Date(data.updated)
-            }];
-          }
-  
-          // Check for duplicates before adding
-          transformedProducts.forEach(transProd => {
-            const exists = this.pro.some(p => p.id === transProd.id);
-            if (!exists) {
-              this.pro.push(transProd);
-            }
-          });
-  
-          console.log("Combined Products for color:", this.pro);
-        },
-        error: err => {
-          console.error('Error fetching products:', err);
-        }
-      });
-    });
-  }
+
+    // Call the filter service and pass the selected color
+    this.filter.filterProductsByVariant(color).subscribe(
+      (filteredProducts: Product2[]) => {
+        this.pro = filteredProducts; // Assign the filtered products
+        console.log("Filtered products: ", this.pro);
+      },
+      error => {
+        console.error('Error fetching filtered products', error);
+      }
+    );
+  }
   product:Productsearch[]=[]
   handleCharacteristicsSelection(selectedCharacteristics: Productsearch[]): void {
     console.log('Selected products for selectedCharacteristics:', selectedCharacteristics);
@@ -646,7 +667,7 @@ export class ProductfilterComponent {
     this.pro = [];  // Clear pro array
   
     this.productvc.forEach((prod) => {
-      this.filter.url = 'http://localhost:5250/api/ProductAdmin/' + prod.id;
+      this.filter.url = 'http://localhost:5250/api/ProductAdmin/' + prod.productId;
   
       this.filter.getAll().subscribe({
         next: (data: any) => {
