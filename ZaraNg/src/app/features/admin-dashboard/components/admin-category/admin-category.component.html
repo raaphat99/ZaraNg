@@ -1,0 +1,180 @@
+<app-header></app-header>
+
+<div class="category-container">
+  <div class="header-actions">
+    <h1>Category Management</h1>
+    <button class="add-button" (click)="showAddDialog()">Add Category</button>
+  </div>
+
+  <table class="category-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Parent Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Main categories with nested subcategories -->
+      <ng-container *ngFor="let category of categories">
+        <tr [ngClass]="{'expanded': category.expanded}">
+          <td>
+            <div class="category-name" (click)="toggleCategory(category)">
+              <span class="expand-icon" *ngIf="hasSubcategories(category)">
+                {{ category.expanded ? '▼' : '▶' }}
+              </span>
+              <span class="name-text">{{ category.name }}</span>
+            </div>
+          </td>
+          <td>{{ category.description }}</td>
+          <td>Main Category</td>
+          <td class="actions">
+            <button class="edit-button" (click)="showEditDialog(category)">Edit</button>
+            <button class="delete-button" (click)="confirmDelete(category)">Delete</button>
+
+          </td>
+        </tr>
+
+        <!-- Subcategories -->
+        <ng-container *ngIf="category.expanded">
+          <tr *ngFor="let subcategory of getSubcategories(category.id)" class="subcategory-row">
+            <td>
+              <div class="subcategory-name">
+                <span class="indent-line">│</span>
+                <span class="subcategory-indicator">└─</span>
+                {{ subcategory.name }}
+              </div>
+            </td>
+            <td>{{ subcategory.description }}</td>
+            <td>{{ category.name }}</td>
+            <td class="actions">
+              <button class="edit-button" (click)="showEditDialog(subcategory)">Edit</button>
+              <button class="delete-button" (click)="confirmDelete(subcategory)">Delete</button>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <!-- Add/Edit Category Dialog -->
+<!--    
+  <div *ngIf="displayCategoryDialog" class="dialog-overlay">
+    <div class="dialog">
+      <h2>{{ isNewCategory ? 'Add Category' : 'Edit Category' }}</h2>
+      <form (ngSubmit)="saveCategory()" #categoryForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" [(ngModel)]="selectedCategory!.name" name="name" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" [(ngModel)]="selectedCategory!.description" name="description"></textarea>
+        </div>
+  
+        <div class="form-group">
+          <label for="parentCategoryId">Parent Category:</label>
+          <select id="parentCategoryId" [(ngModel)]="selectedCategory!.parentCategoryId" name="parentCategoryId" required>
+            <option [value]="3">Man</option>
+            <option [value]="2">Woman</option>
+            <option [value]="4">Kids</option>
+            <option [value]="5">Beauty</option> 
+          </select>
+        </div>
+   -->
+        <!-- Conditionally hide the Size Type field for Beauty categories -->
+        <!-- <div class="form-group" *ngIf="selectedCategory!.parentCategoryId !== 5 && selectedCategory!.id !== 5">
+          <label for="sizeType">Size Type:</label>
+          <select id="sizeType" [(ngModel)]="selectedCategory!.sizeTypeId" name="sizeType">
+            <option [value]="1">Alpha</option> 
+            <option [value]="2">Numeric</option> 
+            <option [value]="3">Age-Based</option> 
+            <option [value]="4">OneToSix</option> 
+            <option [value]="5">SevenToFour</option> 
+          </select>
+        </div>
+  
+        <div class="dialog-actions">
+          <button type="submit" class="save-button">Save</button>
+          <button type="button" class="cancel-button" (click)="displayCategoryDialog = false">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div> -->
+  <div *ngIf="displayCategoryDialog" class="dialog-overlay">
+    <div class="dialog">
+      <h2>{{ isNewCategory ? 'Add Category' : 'Edit Category' }}</h2>
+  
+      <!-- Pop-up styled error message for missing fields -->
+      <div *ngIf="submitted && categoryForm.invalid && showErrorPopup" class="error-popup">
+        <p>Please fill in all required fields.</p>
+        <button (click)="closeErrorPopup()">OK</button>
+      </div>
+  
+      <form (ngSubmit)="saveCategory(categoryForm)" #categoryForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" [(ngModel)]="selectedCategory!.name" name="name" required #name="ngModel">
+          <div *ngIf="name.invalid && (name.touched || submitted)" class="error-message" style="color: red;">
+            Name is required.
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" [(ngModel)]="selectedCategory!.description" name="description"></textarea>
+        </div>
+  
+        <div class="form-group">
+          <label for="parentCategoryId">Parent Category:</label>
+          <select id="parentCategoryId" [(ngModel)]="selectedCategory!.parentCategoryId" name="parentCategoryId" required #parentCategoryId="ngModel">
+            <option [value]="3">Man</option>
+            <option [value]="2">Woman</option>
+            <option [value]="4">Kids</option>
+            <option [value]="5">Beauty</option>
+          </select>
+          <div *ngIf="parentCategoryId.invalid && (parentCategoryId.touched || submitted)" class="error-message" style="color: red;">
+            Parent category is required.
+          </div>
+        </div>
+  
+        <div class="form-group" *ngIf="selectedCategory!.parentCategoryId !== 5 && selectedCategory!.id !== 5">
+          <label for="sizeType">Size Type:</label>
+          <select id="sizeType" [(ngModel)]="selectedCategory!.sizeTypeId" name="sizeType" required #sizeType="ngModel">
+            <option [value]="1">Alpha</option>
+            <option [value]="2">Numeric</option>
+            <option [value]="3">Age-Based</option>
+            <option [value]="4">OneToSix</option>
+            <option [value]="5">SevenToFour</option>
+          </select>
+          <div *ngIf="sizeType.invalid && (sizeType.touched || submitted)" class="error-message" style="color: red;">
+            Size type is required.
+          </div>
+        </div>
+  
+        <div class="dialog-actions">
+          <button type="submit" class="save-button">Save</button>
+          <button type="button" class="cancel-button" (click)="closeDialog(categoryForm)">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+    <!-- Delete Confirmation Dialog -->
+    <div *ngIf="displayDeleteDialog" class="dialog-overlay">
+      <div class="dialog">
+        <h2>Confirm Deletion</h2>
+        <p>Are you sure you want to delete the category "{{ selectedCategory?.name }}"?</p>
+        <div class="dialog-actions">
+          <button class="confirm-button" (click)="deleteCategory()">Yes, Delete</button>
+          <button class="cancel-button" (click)="displayDeleteDialog = false">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+
+<app-footer></app-footer>

@@ -10,18 +10,20 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { ChangeEmailComponent } from './components/change-email/change-email.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { AddAddressComponent } from './components/add-address/add-address.component';
+import { UpdateAddressComponent } from './components/update-address/update-address.component';
 
 const routes: Routes = [
   { path: '', component: UserMainComponent },
-  { path: 'wallet', component: PaymentMethodComponent },   
+ // { path: 'wallet', component: PaymentMethodComponent },   
   { path: 'purchases', component: PurchasesComponent },   
   { path: 'purchases/:id', component: PurchaseDetialsComponent },
-  { path: 'returns', component: ReturnsComponent },
+  //{ path: 'returns', component: ReturnsComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'profile/:id/addresses', component: UserAddressesComponent },
   { path: 'profile/:id/add-address', component: AddAddressComponent },
   { path: 'profile/:id/change-email', component: ChangeEmailComponent },
   { path: 'profile/:id/change-password', component: ChangePasswordComponent },
+  { path: 'profile/:id/update-address/:id', component: UpdateAddressComponent },
 
 
 

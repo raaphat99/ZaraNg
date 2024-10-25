@@ -40,14 +40,13 @@
             <div *ngIf="!isCartEmpty()" id="shoppingBagContent">
                 <div class="product-container">
                     <div class="product-card" *ngFor="let product of cartItems; let i = index">
-                        <div class="product-image">
+                        <div class="product-image" (click)="navigateToProductDetails(product)">
                             <!-- Replace with actual product image -->
-                            <img [src]="product.img" alt="Product Image"
-                                style="width:100%; height:100%; object-fit:cover;">
+                            <img [src]="product.imageUrl" alt="Product Image">
                         </div>
                         <div class="product-details">
                             <div class="nameX">
-                                <div class="product-name">{{product.name}}</div>
+                                <div [class.fade]="isOutOfStock[i]" class="product-name">{{product.title}}</div>
                                 <div class="svgbtns">
                                     <svg class="wishlist-icon" (click)="addToWishlist(product)" width="24" heigth="24"
                                         height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -65,46 +64,46 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="product-price">{{product.price}} EGP</div>
-                            <div class="product-info">{{product.size}} | {{product.color}} </div>
+                            <div  [class.fade]="isOutOfStock[i]" class="product-price">{{product.price}} EGP</div>
+                            <div [class.fade]="isOutOfStock[i]" class="product-info">{{product.size}} | {{product.color}} </div>
                             <div class="quantity-selector">
-                                <button class="quantity-btn" (click)="decreaseQuantity(product)"><svg width="24"
+                                <button class="quantity-btn" (click)="decreaseQuantity(product,i)"><svg width="24"
                                         height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                         fill="inherit" stroke="inherit" aria-hidden="true"
                                         class="zds-quantity-selector__icon">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M19 12.5H5v-1h14v1Z"></path>
                                     </svg></button>
                                 <span class="quantity">{{product.quantity}}</span>
-                                <button class="quantity-btn" (click)="increaseQuantity(product)"><svg width="24"
+                                <button [disabled]="isOutOfStock[i]" [class.fade]="isOutOfStock[i]" class="quantity-btn" (click)="increaseQuantity(product,i)"><svg width="24"
                                         height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                         fill="inherit" stroke="inherit" aria-hidden="true"
                                         class="zds-quantity-selector__icon">
                                         <path d="M12.5 11.5V5h-1v6.5H5v1h6.5V19h1v-6.5H19v-1h-6.5Z"></path>
                                     </svg></button>
+                            <span style="display: block; color:gray;margin-left: 5px; " *ngIf="isOutOfStock[i]">Product out of stock</span>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
-                <div *ngIf="deletedProduct" class="deletion-message">
-                    <svg style="background-color: black;" width="24" height="24" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg" fill="white">
-                        <path d="M11.421 15.129l5.153-5.797-.748-.664-4.447 5.004-2.626-2.625-.707.707 3.375 3.375z">
-                        </path>
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M20.4 12a8.4 8.4 0 1 1-16.8 0 8.4 8.4 0 0 1 16.8 0zm-1 0a7.4 7.4 0 1 1-14.8 0 7.4 7.4 0 0 1 14.8 0z">
-                        </path>
-                    </svg>
-                    <span id="deletionMessage">1 product was deleted</span>
-                    <button (click)="undoDelete()">UNDO</button>
-                </div>
-                <div *ngIf="addedToWishlist" class="addedToW-message">
-                    <span id="addedToWMessage">SAVED</span>
-                    <button (click)="seeList()">SEE LIST</button>
-                </div>
             </div>
-            <div id="favoritesMessage" class="message" style="display: none;" onclick="onFavorite()">
-                <p>You don't have any favorites yet.</p>
-            </div>
+        </div>
+        <div *ngIf="deletedProduct" class="deletion-message">
+            <svg style="background-color: black;" width="24" height="24" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg" fill="white">
+                <path d="M11.421 15.129l5.153-5.797-.748-.664-4.447 5.004-2.626-2.625-.707.707 3.375 3.375z">
+                </path>
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M20.4 12a8.4 8.4 0 1 1-16.8 0 8.4 8.4 0 0 1 16.8 0zm-1 0a7.4 7.4 0 1 1-14.8 0 7.4 7.4 0 0 1 14.8 0z">
+                </path>
+            </svg>
+            <span id="deletionMessage">1 product was deleted</span>
+            <button (click)="undoDelete()">UNDO</button>
+        </div>
+        <div *ngIf="addedToWishlist" class="addedToW-message">
+            <span id="addedToWMessage">SAVED</span>
+            <button [routerLink]="['/shop/wishlist']">SEE LIST</button>
         </div>
     </div>
     <!-- Checkout Footer -->
@@ -125,7 +124,7 @@
             </div>
             <span class="vat-info">* INCLUDING VAT</span>
         </div>
-        <button class="continue-button">
+        <button class="continue-button" (click)="proceedToPayment()">
             CONTINUE
             <span class="arrow">→</span>
         </button>

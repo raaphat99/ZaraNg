@@ -4,35 +4,37 @@
   <div class="fullTextCon">
     <h1 class="TextPay">Purchases</h1>
   </div>
+
   <div *ngIf="orders.length === 0">
-      <div class="ContainerText">
-        <div aria-hidden="true">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
-            fill="inherit"
-            stroke="inherit"
-            class="SvgPurchases"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M8.667 5.5h-.5v21h15.8v-21h-15.3zm.5 20v-19h13.8v19h-13.8zm2.433-16h-.5v1h6.2v-1h-5.7zm-.5 8h9.8v1h-9.8v-1zm.5 4h-.5v1h9.8v-1h-9.3z"
-            ></path>
-          </svg>
-        </div>
-        <div class="TextEmpty">
-          <span>You have not placed any orders yet</span>
-        </div>
+    <div class="ContainerText">
+      <div aria-hidden="true">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          fill="inherit"
+          stroke="inherit"
+          class="SvgPurchases"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M8.667 5.5h-.5v21h15.8v-21h-15.3zm.5 20v-19h13.8v19h-13.8zm2.433-16h-.5v1h6.2v-1h-5.7zm-.5 8h9.8v1h-9.8v-1zm.5 4h-.5v1h9.8v-1h-9.3z"
+          ></path>
+        </svg>
       </div>
+      <div class="TextEmpty">
+        <span>You have not placed any orders yet</span>
+      </div>
+    </div>
   </div>
+
   <div *ngFor="let order of orders" class="order-card">
     <div class="order-header">
       <div class="order-info">
-        <span class="order-number">Order #{{ order.orderId }}</span>
-        <span class="order-date">{{ order.date }}</span>
+        <span class="order-number">Order {{ order.trackingNumber }}</span>
+        <span class="order-date">{{ order.created }}</span>
       </div>
       <span class="order-status">{{ order.status }}</span>
     </div>
@@ -40,25 +42,36 @@
     <div class="order-items">
       <div *ngFor="let item of order.items" class="order-item">
         <img
-          [src]="item.imageUrl"
+          [src]="item.productImage"
           alt="{{ item.name }}"
           class="order-item-img"
         />
         <div class="order-item-details">
           <span class="item-name">{{ item.name }}</span>
-          <span class="item-quantity">Quantiy: {{ item.quantity }}</span>
-          <span class="item-price">{{ item.price | number:'1.0-2' }} EGP</span>
+          <span class="item-quantity">Quantity: {{ item.quantity }}</span>
+          <span class="item-price"
+            >{{ item.unitPrice | number : "1.0-2" }} EGP</span
+          >
         </div>
+      </div>
+
+      <div *ngIf="order.items.length === 0">
+        <span>No items in this order.</span>
       </div>
     </div>
 
     <div class="order-footer">
-      <span class="order-total">Total: {{ order.totalAmount  | number:'1.0-2'  }} EGP</span>
-      <button class="order-action-btn" [routerLink]="['/user/purchases', order.orderId]">View Details</button>
+      <span class="order-total">
+        Total: {{ getOrderTotal(order.items) | number : "1.0-2" }} EGP
+      </span>
+      <button
+        class="order-action-btn"
+        [routerLink]="['/user/purchases', order.trackingNumber]"
+      >
+        View Details
+      </button>
     </div>
   </div>
 </div>
 
 <app-footer></app-footer>
-
-

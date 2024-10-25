@@ -1,0 +1,126 @@
+<app-header></app-header>
+<div class="order-container">
+  <h1>Order Management</h1>
+
+  <table class="order-table">
+    <thead>
+      <tr>
+        <th>Customer Name</th>
+        <th>Tracking Number</th>
+        <th>Total Price</th>
+        <th>Status</th>
+        <th>Order Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.customerName }}</td>
+        <td>{{ order.trackingNumber }}</td>
+        <td>{{ getOrderTotal(order.items) | number : "1.0-2" }} EGP</td>
+        <td
+          [ngClass]="{
+            'status-pending': order.status === 'Pending',
+            'status-shipped': order.status === 'Shipped',
+            'status-delivered': order.status === 'Delivered',
+            'status-canceled': order.status === 'Canceled'
+          }"
+        >
+          {{ order.status }}
+        </td>
+        <td>{{ order.created }}</td>
+        <td>
+          <button class="view-button" (click)="viewOrder(order)">
+            View Details
+          </button>
+          <button (click)="editOrderStatus(order)" class="edit-button">Edit Status</button>
+          <button class="delete-button" (click)="confirmDeleteOrder(order)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="displayOrderDialog" class="order-details-dialog">
+    <h2>Order Details</h2>
+    <button class="close-button" (click)="displayOrderDialog = false">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="inherit"
+        stroke="inherit"
+        style="box-sizing: border-box; fill: rgb(0, 0, 0)"
+      >
+        <path
+          d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"
+          style="box-sizing: border-box"
+        ></path>
+      </svg>
+    </button>
+
+    <div *ngIf="selectedOrder">
+      <h3>Tracking Number: {{ selectedOrder?.trackingNumber }}</h3>
+      <p><strong>Order Date:</strong> {{ selectedOrder?.created }}</p>
+      <p><strong>Status:</strong> {{ selectedOrder?.status }}</p>
+      <p>
+        <strong>Total Price:</strong
+        >{{ getOrderTotal(selectedOrder.items) | number : "1.0-2" }} EGP
+      </p>
+      <h4>Items:</h4>
+      <ul>
+        <li *ngFor="let item of selectedOrder.items">
+          {{ item.name }} - {{ item.quantity }} x
+          {{ item.unitPrice }} (Subtotal:
+          {{ item.quantity * item.unitPrice | number : "1.0-2" }} EGP)
+          <br />
+          <img
+            *ngIf="item.productImage"
+            [src]="item.productImage"
+            alt="{{ item.name }}"
+            class="product-image"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="displayDeleteDialog" class="order-delete-dialog">
+    <h2>Confirm Deletion</h2>
+    <p>Are you sure you want to delete the order with tracking number {{ selectedOrder?.trackingNumber }}?</p>
+    <div style="text-align: center;">
+    <button class="confirm-button" (click)="deleteOrder(selectedOrder)">Yes, Delete</button>
+    <button class="cancel-button" (click)="displayDeleteDialog = false">Cancel</button>
+    </div>
+  </div>
+<div *ngIf="displayEditDialog" class="status-dialog">
+  <h2>Edit Status for {{ selectedOrderr?.trackingNumber }}</h2>
+  <br>
+
+  <p>Select The New Order Status:</p>
+
+  <select class="styled-select" [(ngModel)]="selectedOrderr.newStatus" >
+    <option value="Pending">Pending</option>
+    <option value="Shipped">Shipped</option>
+    <option value="Delivered">Delivered</option>
+    <option value="Canceled">Canceled</option>
+  </select>
+
+  <div *ngIf="statusError" class="status-error" style="color: red;">
+    {{ statusError }}
+  </div>
+
+  <br>
+
+  <button class="edit-button" (click)="saveOrderStatus(selectedOrderr.newStatus)">Save Changes</button>
+  <button class="cancel-button" (click)="selectedOrderr = null; displayEditDialog = false;">Cancel</button>
+</div>
+
+
+  
+ 
+
+</div>
+<app-footer></app-footer>

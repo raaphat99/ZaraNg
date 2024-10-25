@@ -101,42 +101,35 @@ private router: Router
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
- 
-  onSubmit() {
-    // Open the modal when login is initiated
-    const dialogRef = this.dialog.open(this.modalTemplate, { disableClose: true });
   
+onSubmit() {
+  // Open the modal when login is initiated
+  const dialogRef = this.dialog.open(this.modalTemplate, { disableClose: true });
     // Call the login API
-    this.authService.login(
-       this.user.email,
-       this.user.password
-    ).subscribe({
-      next: (response) => {
-        // Close the modal after 2 seconds for a valid response
-        
-          if (response.token) {
-            this.modalMessage = "Login success!";
-            setTimeout(() => {
-              dialogRef.close(); // Close modal on success
-              this.router.navigate(['/home']);
-             
-            }, 4000);
-            this.modalMessage = 'Loading...';
-          }  
-      },
-      error: (error) => {
-        // Handle API errors (e.g., 401 Unauthorized, 500 Server Error)
-        setTimeout(() => {this.modalMessage = "The credentials you entered don't match any of Zara accounts, try again.";}, 500);
-
-        setTimeout(() => dialogRef.close(), 3000); // Close modal after 3s on error
-        this.modalMessage = 'Loading...';
+  this.authService.login(this.user.email, this.user.password).subscribe({
+    next: (response) => {
+      if (response.token) {
+        this.modalMessage = 'Login successful!';
+        setTimeout(() => {
+          dialogRef.close();  
+          if (this.authService.isAdmin()) {
+            this.router.navigate(['/admin']);  
+          } else {
+            this.router.navigate(['/home']); 
+          }
+        }, 2000);  
       }
-
-    });
-  }
-  
+    },
+    error: (error) => {
+      setTimeout(() => {
+        this.modalMessage = "The credentials you entered don't match any accounts. Try again.";
+      }, 500);
+      setTimeout(() => dialogRef.close(), 3000);  
+      this.modalMessage = 'Loading...';
+    },
+  });
 }
-
+}
 interface LoginForm {
   email: string;
   password: string;

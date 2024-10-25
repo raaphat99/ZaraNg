@@ -1,0 +1,19 @@
+export enum Material {
+  Cotton,
+  Polyester,
+  TheSkin,
+  Rafia,
+  Leather,
+  Burlap,
+  Lstered,
+  Vinyl,
+  Linen,
+  Shiny,
+  Sequins,
+  TedSkin,
+  Denim,
+  Wool,
+  Viscose,
+  Elastane,
+  Silk
+}

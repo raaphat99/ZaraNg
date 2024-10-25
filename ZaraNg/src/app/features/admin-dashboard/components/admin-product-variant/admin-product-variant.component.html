@@ -1,0 +1,133 @@
+<header></header>
+
+<div class="order-container">
+  <h1>Product Variant Management</h1>
+  <button class="delete-button" style="margin-bottom: 10px;" (click)="addproductvariant()">ADD PRODUCT VARIANT</button>
+  
+  <table class="order-table">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Product Color</th>
+        <th>Price</th>
+        <th>Stock Quantity</th>
+        <th>Product Material</th>
+        <th>Product Size</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody style="color: black;">
+      <tr *ngFor="let product1 of pv">
+        <td *ngIf="product1.stockQuantity>0">{{ product?.name }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.productColor }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.price }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.stockQuantity }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.productMaterial }}</td>
+        <td *ngIf="product1.stockQuantity>0">{{ product1.sizeName }}</td>
+        <td *ngIf="product1.stockQuantity>0">
+          <button class="edit-button" (click)="editproductv(product1)">Edit</button>
+          <button class="delete-button" (click)="ViewDetails(product1)">Show Image</button>
+          <button class="delete-button" (click)="addimage(product1)">Add Image</button> 
+          <button class="delete-button" (click)="delet(product1)">Delete</button> 
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Add Product Variant Form -->
+<div *ngIf="showAddForm" class="variant-form-container">
+  <form #variantForm="ngForm" (ngSubmit)="onSubmitVariant(variantForm)" novalidate>
+    <h1 style="text-align: center;">ADD PRODUCT VARIANT</h1>
+    
+    <label>Colors</label>
+    <select [(ngModel)]="productvariant.productColor" name="ProductColor" required>
+      <option [ngValue]="item" *ngFor="let item of colors">{{item}}</option>
+    </select>
+
+    <label>Material</label>
+    <select [(ngModel)]="productvariant.productMaterial" name="ProductMaterial" required>
+      <option [ngValue]="item" *ngFor="let item of material">{{item}}</option>
+    </select>
+
+    <label>Sizes</label>
+    <select [(ngModel)]="productvariant.sizeId" name="SizeId" required>
+      <option [ngValue]="item.id" *ngFor="let item of size">{{item.sizevalue}}</option>
+    </select>
+
+    <label>Product Price</label>
+    <input type="number" [(ngModel)]="productvariant.price" name="Price" placeholder="Price" required min="1" #price="ngModel" [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched)}">
+    <div *ngIf="price.invalid && (price.dirty || price.touched)" class="error" style="color: red;">Product price is required and must be at least 1.</div>
+
+    <label>Product Stock Quantity</label>
+    <input type="number" [(ngModel)]="productvariant.stockQuantity" name="StockQuantity" placeholder="Stock Quantity" required min="0" #stockQuantity="ngModel" [ngClass]="{'is-invalid': stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)}">
+    <div *ngIf="stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)" class="error" style="color: red;">Product stock quantity is required and must be at least 0.</div>
+
+    <button type="submit" [disabled]="variantForm.invalid">Add Variant</button>
+  </form>
+</div>
+
+<!-- Edit Product Variant Form -->
+<div *ngIf="showEditForm" class="variant-form-container">
+  <form #variantForm="ngForm" (ngSubmit)="onsubmitEdit()" novalidate>
+    <h1 style="text-align: center;">Edit PRODUCT VARIANT</h1>
+    
+    <label>Colors</label>
+    <select [(ngModel)]="prov!.productColor" name="ProductColor" required>
+      <option [ngValue]="item" *ngFor="let item of colors">{{item}}</option>
+    </select>
+
+    <label>Material</label>
+    <select [(ngModel)]="prov!.productMaterial" name="ProductMaterial" required>
+      <option [ngValue]="item" *ngFor="let item of material">{{item}}</option>
+    </select>
+
+    <label>Sizes</label>
+    <select [(ngModel)]="prov!.sizeId" name="SizeId" required>
+      <option [ngValue]="item.id" *ngFor="let item of size">{{item.sizevalue}}</option>
+    </select>
+
+    <label>Product Price</label>
+    <input type="number" [(ngModel)]="prov!.price" name="Price" placeholder="Price" required min="1" #price="ngModel" [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched)}">
+    <div *ngIf="price.invalid && (price.dirty || price.touched)" class="error" style="color: red;">Product price is required and must be at least 1.</div>
+
+    <label>Product Stock Quantity</label>
+    <input type="number" [(ngModel)]="prov!.stockQuantity" name="StockQuantity" placeholder="Stock Quantity" required min="0" #stockQuantity="ngModel" [ngClass]="{'is-invalid': stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)}">
+    <div *ngIf="stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)" class="error" style="color: red;">Product stock quantity is required and must be at least 0.</div>
+
+    <button type="submit" [disabled]="variantForm.invalid">Update Variant</button>
+  </form>
+</div>
+
+<!-- Image Upload Form -->
+<div *ngIf="showImageForm" class="variant-form-container">
+  <form (ngSubmit)="ImageAdd()">
+    <label>Image Url</label>
+    <input type="file" (change)="onFileSelected($event)">
+    <button type="submit" [disabled]="!selectedFile">Add Variant Image</button>
+  </form>
+</div>
+
+
+
+
+
+<div class="custom-modal" [ngClass]="{'show': showModal}">
+  <div class="modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+      <p>{{ modalMessage }}</p>
+      <button class="btn1" [routerLink]="['/admin', 'products']">Go To Product List</button>
+  </div>
+</div>
+
+<div class="custom-modal" [ngClass]="{'show': displayProductDialog}">
+  <div class="modal-content">
+      <span class="close-btn" (click)="closeModal2()">&times;</span>
+      <p>{{ modalMessage }}</p>
+      <div *ngIf="vimage!.length > 0">
+          <img [src]="vimage![0].imageUrl" alt="{{ modalMessage }}" class="product-image">
+      </div>
+      <button class="btn1" [routerLink]="['/admin', 'products']">Go To Product List</button>
+  </div>
+</div>

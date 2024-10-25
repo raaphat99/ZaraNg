@@ -6,12 +6,15 @@ import { SharedModule } from './shared/shared.module';
 import { CartComponent } from './features/shopping/cart/cart.component';
 import { WishlistComponent } from './features/shopping/wishlist/wishlist.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './features/home/components/home/home.component';
 import { LoginComponent } from "./features/authentication/components/login/login.component";
 import { RegisterComponent } from "./features/authentication/components/register/register.component";
+import { ProductfilterComponent } from "./features/productfilter/components/productfilter/productfilter.component";
+import { AdminMainComponent } from "./features/admin-dashboard/components/admin-main/admin-main.component";
+import { AdminCustomersComponent } from "./features/admin-dashboard/components/admin-customers/admin-customers.component";
+import { UpdateAddressComponent } from "./features/user/components/update-address/update-address.component";
+import { AdminCategoryComponent } from "./features/admin-dashboard/components/admin-category/admin-category.component";
+import { AdminRegisterComponent } from "./features/admin-dashboard/components/admin-register/admin-register.component";
 
 @Component({
   selector: 'app-root',
@@ -26,7 +29,14 @@ import { RegisterComponent } from "./features/authentication/components/register
     WishlistComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AdminMainComponent,
+    AdminCustomersComponent,
+    UpdateAddressComponent,
+    AdminMainComponent,
+    AdminCategoryComponent,
+    AdminRegisterComponent
+   
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

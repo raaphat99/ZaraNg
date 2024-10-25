@@ -37,6 +37,21 @@ label {
     margin: 10px 0 5px;
 }
 
+.active-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.active-label input {
+    margin: 0;
+    margin-top: -2px;
+    margin-right: 6px;
+}
+
 input,
 select {
     padding: 10px;
@@ -96,14 +111,22 @@ button {
 .modal-btn {
     width: 100%;
     text-align: center;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border: 1px solid black;
     padding: 1em;
-    margin: 0.5em 0;
+    margin-top: 1em;
+    transition: all 0.4s ease;
 }
 
 .modal-btn:hover {
-    opacity: 70%;
+    background-color: black;
+    color: white;
+}
+
+.recommended-size img {
+    max-width: 100%;
+    height: auto;
+    text-align: center;
+    margin: 2em 0;
 }
 
 

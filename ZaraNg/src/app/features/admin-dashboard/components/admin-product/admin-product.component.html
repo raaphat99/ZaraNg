@@ -1,0 +1,127 @@
+<header></header>
+<div class="order-container">
+  <h1>Product Management</h1>
+
+  <table class="order-table">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Product Description</th>
+        <th>Price</th>
+        <th>StockQuantity</th>
+        <th>Category Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody style="color: black;">
+      <tr *ngFor="let product of allproduct">
+        <td *ngIf="product.stockQuantity>0">{{ product.name }}</td>
+        <td  *ngIf="product.stockQuantity>0">{{ product.description }}</td>
+        <td  *ngIf="product.stockQuantity>0">{{ product.price }}</td>
+        <td  *ngIf="product.stockQuantity>0">{{ product.stockQuantity }}</td>
+        <td  *ngIf="product.stockQuantity>0">{{ product.categoryName }}</td>
+        
+        <td *ngIf="product.stockQuantity>0">
+          <button class="view-button" (click)="viewproduct(product)">
+            View Details
+          </button>
+          <button class="edit-button" [routerLink]="['/admin/products/update/', product.id]">
+            Edit                                    
+          </button>
+          <button class="delete-button" (click)="confirmDelete(product)">
+            Delete                                    
+          </button>
+          <button class="delete-button" [routerLink]="['/admin/products/productvariant/', product.id]">
+            Show Variant
+          </button> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="displayDeleteDialog" class="dialog-overlay">
+    <div class="dialog">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete the product "{{ selectedProduct?.name }}"?</p>
+      <div class="dialog-actions">
+        <button class="confirm-button" (click)="deleteProduct()">Yes, Delete</button>
+        <button class="cancel-button" (click)="displayDeleteDialog = false">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  
+  <!-- <div *ngIf="displayProductDialog" class="order-details-dialog">
+    <h2>Product Details</h2>
+    <button class="close-button" (click)="displayProductDialog = false">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="inherit"
+        stroke="inherit"
+        style="box-sizing: border-box; fill: rgb(0, 0, 0)"
+      >
+        <path
+          d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"
+          style="box-sizing: border-box"
+        ></path>
+      </svg>
+    </button>
+    <div *ngIf="selectedProduct">
+      <div *ngIf="productvariant && productvariant.length > 0">
+        <img [src]="productvariant[0].imageUrls[0]" alt="Product Image" *ngIf="productvariant[0].imageUrls && productvariant[0].imageUrls.length > 0" class="product-image" />
+    </div>
+
+      <h3>Product Name: {{ selectedProduct.name }}</h3>
+      <p><strong>Product Variant Color:</strong> {{ productColors }}</p>
+      <p><strong>Product Variant Size:</strong> {{ productSizes }}</p>
+      <p><strong>Product Variant Material:</strong> {{ productMaterials }}</p>
+  </div>
+  
+      
+
+  
+  
+</div> -->
+<div *ngIf="displayProductDialog" class="order-details-dialog">
+  <h2>Product Details</h2>
+  <button class="close-button" (click)="displayProductDialog = false">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="inherit"
+      stroke="inherit"
+      style="box-sizing: border-box; fill: rgb(0, 0, 0)"
+    >
+      <path
+        d="M12 12.707l6.846 6.846.708-.707L12.707 12l6.847-6.846-.707-.708L12 11.293 5.154 4.446l-.707.708L11.293 12l-6.846 6.846.707.707L12 12.707z"
+        style="box-sizing: border-box"
+      ></path>
+    </svg>
+  </button>
+
+  <div *ngIf="selectedProduct">
+    <div *ngIf="productvariant && productvariant.length > 0">
+      <img [src]="productvariant[0].imageUrls[0]" alt="Product Image" *ngIf="productvariant[0].imageUrls && productvariant[0].imageUrls.length > 0" class="product-image" />
+    </div>
+
+    <h3>Product Name: {{ selectedProduct.name }}</h3>
+
+    <!-- Conditionally display fields based on CategoryId -->
+    <div *ngIf="selectedProduct">
+      <p *ngIf="productColors"><strong>Product Variant Color:</strong> {{ productColors }}</p>
+      <p *ngIf="productSizes"><strong>Product Variant Size:</strong> {{ productSizes }}</p>
+      <p *ngIf="productMaterials"><strong>Product Variant Material:</strong> {{ productMaterials }}</p>
+    </div>
+  
+       
+  </div>
+</div>
+
+<app-footer></app-footer>

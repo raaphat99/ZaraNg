@@ -248,7 +248,7 @@
           d="M12 21.6a9.6 9.6 0 0 0 9.6-9.6 9.6 9.6 0 1 0-19.2 0 9.6 9.6 0 0 0 9.6 9.6zm0-1a8.6 8.6 0 1 0 0-17.2 8.6 8.6 0 0 0 0 17.2z"
         ></path>
       </svg>
-        <span style="color: red;">{{summary}}</span>
+        <span *ngIf="errorSummary" style="color: red;">{{summary}}</span>
       </div>
 
       <input

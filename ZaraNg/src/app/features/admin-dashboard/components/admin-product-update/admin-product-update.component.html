@@ -1,0 +1,52 @@
+<div class="form-container">
+    <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)" novalidate>
+      <h1 style="text-align: center;">EDIT PRODUCT</h1>
+  
+      <!-- Form Fields -->
+      <label>Product Name</label>
+      <input type="text" [(ngModel)]="product!.name" name="name" placeholder="Product Name" required minlength="3" maxlength="100" #name="ngModel" [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error" style="color: red;">Product name is required and must be at least 3 characters long.</div>
+  
+      <label>Product Description</label>
+      <input type="text" [(ngModel)]="product!.description" name="description" placeholder="Description" required minlength="5" maxlength="500" #description="ngModel" [ngClass]="{'is-invalid': description.invalid && (description.dirty || description.touched)}">
+      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="error" style="color: red;">Product description is required and must be at least 5 characters long.</div>
+  
+      <label>Product Price</label>
+      <input type="number" [(ngModel)]="product!.price" name="price" placeholder="Price" required min="1" #price="ngModel" [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched)}">
+      <div *ngIf="price.invalid && (price.dirty || price.touched)" class="error" style="color: red;">Product price is required and must be at least 1.</div>
+  
+      <label>Product Stock Quantity</label>
+      <input type="number" [(ngModel)]="product!.stockQuantity" name="stockQuantity" placeholder="Stock Quantity" required min="0" #stockQuantity="ngModel" [ngClass]="{'is-invalid': stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)}">
+      <div *ngIf="stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)" class="error" style="color: red;">Product stock quantity is required and must be at least 0.</div>
+  
+      <label>Product Main Category</label>
+      <select [(ngModel)]="product!.CategoryId" name="mainCategoryId" #mainCategoryId="ngModel" (change)="onMainCategoryChange($event)">
+        <option value="">Select Main Category</option>
+        <option *ngFor="let item of category" [value]="item.id">{{ item.name }}</option>
+      </select>
+      
+  
+      <label>Product Sub Category</label>
+      <select [(ngModel)]="product!.CategoryId" name="subCategoryId" #subCategoryId="ngModel" [disabled]="!selectedMainCategory">
+        <option value="">Select Sub Category</option>
+        <option *ngFor="let item of Scat" [value]="item.id">{{ item.name }}</option>
+      </select>
+  
+      <button type="submit" [disabled]="productForm.invalid">EDIT</button>
+    </form>
+  </div>
+  
+  <!-- Modal -->
+  <div class="custom-modal" [ngClass]="{'show': showModal}">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+      <p>{{ modalMessage }}</p>
+      <button class="btn1" [routerLink]="['/admin', 'products']">Go To List</button>
+    </div>
+  </div>
+  <!-- <div class="custom-modal" [ngClass]="{'show': showModal}">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+      <p>Please fill in all required fields.</p>
+    </div>
+  </div> -->

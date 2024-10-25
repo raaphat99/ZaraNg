@@ -1,0 +1,237 @@
+.order-container {
+    padding: 20px;
+    margin-top: 140px;
+  }
+  
+  h1,h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .order-table th,
+  .order-table td {
+    border: 0.8px solid #000;
+    padding: 8px;
+  }
+  
+  .order-table th {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .order-table td {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  p{
+      margin-bottom: 20px;
+      font-weight: 300;
+      font-stretch: 100%;
+      line-height: 16px;
+      font-family: inherit;
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;  
+  }
+  .view-button,
+  .delete-button,
+  .edit-button {
+    padding: 5px 15px;
+    margin-right: 20px;
+    text-decoration: none;
+    background-color: #fff;
+    color: black;
+    border: 0.8px solid black;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .delete-button {
+    margin-top: 5px;
+  }
+  
+  .view-button:hover,
+  .delete-button:hover {
+    background-color: #000;
+    border: 0.8px solid black;
+    color: white;
+    border-radius: 4px;
+  }
+  h2 {
+    display: inline;
+    margin-bottom: 10px;
+  }
+  svg {
+    margin-left: 330px;
+  }
+  .order-details-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 0.8px solid #000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+  }
+  .order-delete-dialog{
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 0.8px solid #000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      z-index: 1000; 
+  }
+  .close-button {
+    padding: 5px 10px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .product-image {
+    width: 200px;
+    height: 50vh;
+    margin-left: 150px;
+    text-align: center;
+  }
+  .status-pending {
+    color: orange;
+  }
+  
+  .status-shipped {
+    color: green;
+  }
+  
+  .status-delivered {
+    color: blue;
+  }
+  
+  .status-canceled {
+    color: red;
+  }
+  
+  .confirm-button {
+    background-color: red;
+    color: white;
+    padding: 8px 20px;
+    margin-right: 20px;
+    border: 0.8px solid rgb(0, 0, 0);
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .cancel-button {
+    background-color: #fff;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 8px 20px;
+    margin-right: 20px;
+    color: black;
+    border: 0.8px solid black;
+    font-weight: 300;
+    font-stretch: 100%;
+    line-height: 16px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border-radius: 4px;
+  }
+  /* Overlay that dims the background */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent dark background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+/* The actual dialog box */
+.dialog {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%; /* Ensure responsiveness */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center the text */
+}
+
+/* Buttons inside the dialog */
+.dialog-actions {
+  margin-top: 20px;
+}
+
+.confirm-button, .cancel-button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.confirm-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #bdc3c7;
+  color: white;
+}
+

@@ -1,59 +1,87 @@
 <app-header></app-header>
 
 <div class="purchase-details">
-    <ng-container *ngIf="orderDetails; else noOrderDetails">
-      <h1>Order #{{ orderDetails.orderId }} - {{ orderDetails.status }}</h1>
-      <p>Placed on: {{ orderDetails.date }}</p>
-      
-      <h2>Items</h2>
-      <table>
-        <tr>
-          <th>Item</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-        </tr>
-        <tr *ngFor="let item of orderDetails.items">
-          <td>
-            <div class="item-info">
-              <img src="{{ item.imageUrl }}" alt="{{ item.name }}" class="item-image" />
-              <div class="item-details">
-                <span class="item-name">{{ item.name }}</span>
-                <span class="item-size">Size: {{ item.size }}</span>
-                <span class="item-color">Color: {{ item.color }}</span>
-              </div>
-            </div>
-          </td>
-          <td>{{ item.price | number:'1.0-2' }} EGP</td>
-          <td>{{ item.quantity }}</td>
-          <td>{{ item.price * item.quantity | number:'1.0-2' }} EGP</td>
-        </tr>
-      </table>
-  
-      <h2>Your Information</h2>
-      <p>Name: {{ orderDetails.customer.name }}</p>
-      <p>Email: {{ orderDetails.customer.email }}</p>
-      <p>Phone: {{ orderDetails.customer.phone }}</p>
-    
-      <h2>Shipping Address</h2>
-      <p>{{ orderDetails.shippingAddress }}</p>
-    
-      <h2>Payment</h2>
-      <p>Item Totals: {{ orderDetails.totalAmount | number:'1.0-2' }} EGP</p>
-      <p>Delivery: 50 EGP</p>
-      <p>Payment Method: {{ orderDetails.paymentMethod }}</p>
-      <h3>Grand Total: {{ (orderDetails.totalAmount + 50) | number:'1.0-2' }} EGP</h3>
-    
-      <!-- <button class="order-action-btn">Request Return</button> -->
-      <button class="order-action-btn" [routerLink]="['/returns']">Request Return</button>
+  <ng-container *ngIf="orderDetails; else noOrderDetails">
+    <h1>
+      Order {{ orderDetails.trackingNumber }} - {{ orderDetails.status }}
+    </h1>
+    <p>Placed on: {{ orderDetails.orderDate | date }}</p>
 
-    </ng-container>
-  
-    <ng-template #noOrderDetails>
-      <h1>Order Details Found</h1>
-      <p>It seems there is no order associated with this ID. Please check the order number or contact support for assistance.</p>
-    </ng-template>
+    <h2>Items</h2>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </tr>
+      <tr *ngFor="let item of orderDetails.items">
+        <td>
+          <div class="item-info">
+            <img
+              src="{{ item.productImage }}"
+              alt="{{ item.name }}"
+              class="item-image"
+            />
+            <div class="item-details">
+              <span class="item-name">{{ item.name }}</span>
+              <span class="item-size">Size: {{ item.size }}</span>
+              <span class="item-color">Color: {{ item.color }}</span>
+            </div>
+          </div>
+        </td>
+        <td>{{ item.unitPrice | number : "1.0-2" }} EGP</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.unitPrice * item.quantity | number : "1.0-2" }} EGP</td>
+      </tr>
+    </table>
+
+    <h2>Your Information</h2>
+    <p>Name: {{ orderDetails.customer.name }}</p>
+    <p>Email: {{ orderDetails.customer.email }}</p>
+    <p>Shipping Address: {{ orderDetails.customer.shippingAddress }}</p>
+
+    <h2>Payment</h2>
+    <p>
+      Item Totals:
+      {{ calculateItemTotal(orderDetails.items) | number : "1.0-2" }} EGP
+    </p>
+    <p>
+      Delivery:
+      {{
+        (calculateItemTotal(orderDetails.items) > 4000
+          ? 0
+          : orderDetails.shippingCost
+        ) | number : "1.0-2"
+      }}
+      EGP
+    </p>
+
+    <p>Payment Method: {{ orderDetails.paymentMethod }}</p>
+
+    <h3>
+      Grand Total:
+      {{
+        calculateItemTotal(orderDetails.items) +
+          (calculateItemTotal(orderDetails.items) > 4000
+            ? 0
+            : orderDetails.shippingCost) | number : "1.0-2"
+      }}
+      EGP
+    </h3>
+
+    <!-- <button class="order-action-btn" [routerLink]="['/returns']">
+      Request Return
+    </button> -->
+  </ng-container>
+
+  <ng-template #noOrderDetails>
+    <h1>No Order Details Found</h1>
+    <p>
+      It seems there is no order associated with this ID. Please check the order
+      number or contact support for assistance.
+    </p>
+  </ng-template>
 </div>
 
 <app-footer></app-footer>
-  

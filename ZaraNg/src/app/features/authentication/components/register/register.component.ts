@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators, AbstractControl, ValidationErrors,ReactiveFormsModule} from '@angular/forms';
 import { ButtonComponent } from "../../../../shared/components/button/button.component";
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
@@ -131,20 +130,34 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    if(!this.registerForm.valid){
+      this.errorSummary = true;
+      
+    }
     if (this.registerForm.valid) {
       const { email, password, name, surname } = this.registerForm.value;
       this.authService.register(email, password, name, surname).subscribe({
         next: (response) => {
           if (response) {
             console.log('Registration successful');
-            this.router.navigate(['/home']);
+            this.authService.login(email, password).subscribe({
+              next: (response) => {
+                if (response) {
+                  console.log('Login successful');
+                  this.router.navigate(['/home']);
+                }
+              },
+              error: (error) => {
+                console.error('Login failed', error);
+              }
+            });
+            
             // Handle successful registration (e.g., navigate to login page or show success message)
           }
         },
         error: (error) => {
           console.error('Registration failed', error);
-          this.summary = 'Email already in use';
-          this.errorSummary = true;
+         console.log(email, password, name, surname);
 
           // Handle registration error (e.g., show error message to user)
         }

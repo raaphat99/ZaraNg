@@ -3,50 +3,73 @@ import { CommonModule } from '@angular/common';
 import { HostListener } from '@angular/core';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import {
+  UserAddressDTO,
+  UserAddressesService,
+} from '../../services/user-addresses.service';
+import { AuthService } from '../../../../core/services/auth.service';
 @Component({
   selector: 'app-user-addresses',
   standalone: true,
   imports: [CommonModule, HeaderComponent, FooterComponent, RouterLink],
   templateUrl: './user-addresses.component.html',
-  styleUrl: './user-addresses.component.css'
+  styleUrl: './user-addresses.component.css',
 })
-
-
 export class UserAddressesComponent {
+  userName: string | null = null;
+  addresses: UserAddressDTO[] = [];
+  optionsMenu: boolean[] = [];
 
-
- 
-   addresses:UserAddress[]=[
-    {
-      userName:'AMIR SHERIF',
-      street:'Mostashar',
-      area:'sinbllawien',
-      city:'El-Senbillawien',
-      state:'dakahlia',
-      phone:'0123456789',
-    selected:true},
-      {
-        userName:'Ahmed Raffat',
-        street:'Galaa',
-        area:'Mansoura',
-        city:'Mansurah',
-        state:'dakahlia',
-        phone:'0123456789',
-        selected:false},
-      
-    ]
-    optionsMenu: boolean[] = [];
-
-  constructor() {
+  constructor(
+    private router: Router,
+    private userAddressesService: UserAddressesService,
+    private authService: AuthService
+  ) {
     // Initialize the optionsMenu array with false for each address
-    for (let i = 0; i < this.addresses.length; i++) {
-      this.optionsMenu.push(false);
+    // for (let i = 0; i < this.addresses.length; i++) {
+    //   this.optionsMenu.push(false);
+    // }
+  }
+  ngOnInit(): void {
+    this.loadAddresses();
+    this.checkLoginStatus();
+  }
+  checkLoginStatus(): void {
+    this.userName = this.authService.getUserName();
+  }
+  loadAddresses() {
+    this.userAddressesService.GetUserAddresses().subscribe({
+      next: (data) => {
+        this.addresses = data;
+      },
+      error: (error) => {
+        console.error('Error loading cart items:', error);
+      },
+    });
+  }
+
+  //method to delete address
+  deleteAddress(addressId: number | undefined) {
+    this.userAddressesService.DeleteUserAddress(addressId).subscribe({
+      next: () => {
+        console.log('Address deleted successfully');
+        this.loadAddresses();
+        this.router.navigate(['user/profile/:id/addresses']);
+      },
+      error: (error) => {
+        console.error('Error deleting address:', error);
+      },
+    });
+  }
+
+  //method to edit address
+  editAddress(addressId: number | undefined) {
+    if (addressId) {
+      this.router.navigate(['/update-address', addressId]);
     }
   }
- 
 
-  
   // Toggles the menu visibility for the clicked icon
   toggleOptionsMenu(event: MouseEvent, index: number): void {
     event.stopPropagation(); // Prevents event propagation to the document click listener
@@ -56,15 +79,13 @@ export class UserAddressesComponent {
   isModalVisible: boolean = false; // Track modal visibility
 
   // Toggles the modal when the icon is clicked
-  modalHasDelete:boolean=false;
+  modalHasDelete: boolean = false;
   toggleModal(event: MouseEvent, index: number): void {
     event.stopPropagation(); // Prevent the click event from propagating
     this.isModalVisible = !this.isModalVisible;
-    this.modalHasDelete = this.addresses[index]?.selected || false;
-
+    this.modalHasDelete = this.addresses[index]?.active || false;
   }
-   
-      
+
   // Detects clicks outside of the menu or icon
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -76,7 +97,11 @@ export class UserAddressesComponent {
       const menu = document.querySelectorAll('.menu')[i];
 
       // Close the menu if the click target is outside both the icon and the menu
-      if (isOpen && !icon.contains(target1) && (!menu || !menu.contains(target1))) {
+      if (
+        isOpen &&
+        !icon.contains(target1) &&
+        (!menu || !menu.contains(target1))
+      ) {
         this.optionsMenu[i] = false;
       }
     });
@@ -84,22 +109,13 @@ export class UserAddressesComponent {
     const modal = document.querySelector('.modal');
 
     // Close the modal if the click is outside both the modal and the icon
-    if (this.isModalVisible && modal && !modal.contains(target2) && !target2.closest('.icon')) {
+    if (
+      this.isModalVisible &&
+      modal &&
+      !modal.contains(target2) &&
+      !target2.closest('.icon')
+    ) {
       this.isModalVisible = false;
-    }}
-  
-  
-
-}
- 
-  
-interface UserAddress{
-  userName:string
-  street:string
-  area:string
-  city:string
-  state:string
-  phone:string
-  selected:boolean
-
+    }
+  }
 }

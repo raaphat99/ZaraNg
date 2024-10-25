@@ -1,11 +1,85 @@
 <div class="find-size-modal" [class.show]="isOpen">
     <div class="find-size-modal-content">
+        <button class="close-btn" (click)="closeModal()">×</button>
 
+        <!-- Tab Navigation -->
+        <!-- <ul class="tabs">
+            <li [class.active]="activeTab === 'input'" (click)="setTab('input')">Basic Information</li>
+            <li [class.active]="activeTab === 'result'" (click)="setTab('result')">Recommended Size</li>
+        </ul> -->
+
+        <!-- Input Tab Content -->
+        <div *ngIf="activeTab === 'input'">
+            <h2>Basic Information</h2>
+
+            <form #measurementForm="ngForm" (ngSubmit)="onSubmit(measurementForm)">
+                <label for="name">Name:</label>
+                <input type="text" id="name" [(ngModel)]="name" name="name" placeholder="Enter your name" required>
+
+                <label for="gender">Gender:</label>
+                <select id="gender" [(ngModel)]="gender" name="gender" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <label for="height">Height:</label>
+                <select id="height" [(ngModel)]="height" name="height">
+                    <option value="0">0 CM</option>
+                    <option *ngFor="let h of heightOptions" [value]="h">{{h}} CM</option>
+                </select>
+
+                <label for="weight">Weight:</label>
+                <select id="weight" [(ngModel)]="weight" name="weight">
+                    <option value="0">0 KG</option>
+                    <option *ngFor="let w of weightOptions" [value]="w">{{w}} KG</option>
+                </select>
+
+                <label for="age">Age:</label>
+                <select id="age" [(ngModel)]="age" name="age">
+                    <option value="0">0 YEARS</option>
+                    <option *ngFor="let a of ageOptions" [value]="a">{{a}} YEARS</option>
+                </select>
+
+                <!-- Active Checkbox -->
+                <label class="active-label">
+                    <input type="checkbox" name="activeCheckbox" type="checkbox" [value]="true"
+                        (change)="onCheckboxChange($event)" [checked]="isActive" />
+                    <span>Active</span>
+                </label>
+
+                <button type="submit" class="modal-btn">Continue</button>
+            </form>
+
+        </div>
+
+        <!-- Result Tab Content -->
+        <div *ngIf="activeTab === 'result'">
+            <h2>Recommended Size</h2>
+            <p>Name: {{ name }}</p>
+            <p>Gender: {{ gender }}</p>
+            <p>Height: {{ height }} CM</p>
+            <p>Weight: {{ weight }} KG</p>
+            <p>Age: {{ age }} Years</p>
+            <h3>Your Recommended Size: {{ recommendedSize }}</h3>
+
+            <div class="recommended-size">
+                <img [src]="recommendedSizeImage" alt="Recommended Size Image" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- <div class="find-size-modal" [class.show]="isOpen">
+    <div class="find-size-modal-content">
         <button class="close-btn" (click)="closeModal()">×</button>
 
         <h2>Basic Information</h2>
 
-        <form>
+        <form #measurementForm="ngForm" (ngSubmit)="onSubmit(measurementForm)">
             <label for="name">Name:</label>
             <input type="text" id="name" [(ngModel)]="name" name="name" placeholder="Enter your name" required>
 
@@ -33,7 +107,8 @@
                 <option value="0">0 YEARS</option>
                 <option *ngFor="let a of ageOptions" [value]="a">{{a}} YEARS</option>
             </select>
+
+            <button type="submit" class="modal-btn">Continue</button>
         </form>
     </div>
-    <button class="modal-btn">Continue</button>
-</div>
+</div> -->

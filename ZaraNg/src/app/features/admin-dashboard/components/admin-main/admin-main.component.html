@@ -1,0 +1,59 @@
+<app-header></app-header>
+
+<div class="dashboard-container">
+  <h1>Admin Dashboard</h1>
+  <div class="content">
+    <!-- Summary Section -->
+    <div class="flex-row">
+      <div class="card">
+        <div class="flex">
+          <div class="flex">
+            <span style="padding-right: 0.5rem">Number of Categories:</span>
+            <div>{{ totalCategories }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="flex">
+          <div class="flex">
+            <span style="padding-right: 0.5rem">Number of Products:</span>
+            <div>{{ totalProducts }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="flex">
+          <div class="flex">
+            <span style="padding-right: 0.5rem">Number of Orders:</span>
+            <div>{{ totalOrders }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="flex">
+          <div class="flex">
+            <span style="padding-right: 0.5rem">Number of Customers:</span>
+            <div>{{ totalCustomers }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- Admin Actions -->
+    <div class="action-section">
+      <div class="action-card" *ngFor="let section of sections">
+        <div class="action-header" (click)="toggleActions(section)">
+          <span>{{ section.name }}</span>
+        </div>
+        <div class="action-body" *ngIf="section.isExpanded">
+          <a
+            *ngFor="let action of section.actions"
+            [routerLink]="action.link"
+            class="action-button"
+            >{{ action.label }}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+<app-footer></app-footer>

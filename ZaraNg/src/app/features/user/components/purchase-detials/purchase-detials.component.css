@@ -1,163 +1,158 @@
 .purchase-details {
-    max-width: 800px; 
-    margin: 160px auto; 
-    padding: 20px; 
-    border: 0.8px solid black;
-  }
-  .purchase-details h1 {
-    font-weight: 300;
+  max-width: 800px;
+  margin: 160px auto;
+  padding: 20px;
+  border: 0.8px solid black;
+}
+.purchase-details h1 {
+  font-weight: 300;
   font-stretch: 100%;
   line-height: 16px;
   font-family: inherit;
   font-size: 14px;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-    margin-bottom: 10px; 
-    color: black;
-
-  }
-  
-  .purchase-details p {
-    font-weight: 300;
-    font-stretch: 100%;
-    line-height: 16px;
-    font-family: inherit;
-    font-size: 11px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: black;
-    margin-top: 16px;
-    margin-bottom: 20px; 
-
-  }
-  
-  .purchase-details h2 {
-    font-weight: 300;
-    font-stretch: 100%;
-    line-height: 16px;
-    font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-      color: black;
-      margin-bottom: 10px;
-  }
-  
-  .purchase-details h3 {
-    font-weight: 300;
-    font-stretch: 100%;
-    line-height: 16px;
-    font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-      margin-bottom: 10px; 
-      color: black;
-      margin-bottom: 10px;
-
-  }
-  
-  table {
-    width: 100%; 
-    border-collapse: collapse; 
-    margin-bottom: 10px; 
-    
-  }
-  
-  th, td {
-    padding: 10px; 
-    text-align: center;
-  }
-  td{
-    font-weight: 300;
-    font-stretch: 100%;
-    line-height: 16px;
-    font-family: inherit;
-    font-size: 12px;
-    padding-bottom: 20px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-      color: black;
-      
-  }
-  td div{
-    padding-bottom: 10px;
-  }
-  th {
-    background-color: #000;
-    color: #fff; 
-    font-weight: 300;
-    font-stretch: 100%;
-    line-height: 16px;
-    font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
+  margin-bottom: 10px;
+  color: black;
 }
-  
-  .order-action-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #000;
-    border: 0.8px solid black;
-    cursor: pointer;
-    font-weight: 300;
-    font-stretch: 100%;
-    line-height: 16px;
-    font-family: inherit;
-    font-size: 12px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    width: 100%;
-    transition: background-color 0.3s;
-  }
-  
-  .order-action-btn:hover {
-    background-color: #000; 
-    color: white;
-  }
-  .item-info {
-    display: flex;
-    align-items: center; 
-  }
-  
-  .item-image {
-    width: 40px;
-    height: auto;
-    margin-right: 10px; 
-  }
-  
-  .item-details {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .item-name {
-    font-weight: 300;
-    font-stretch: 100%;
-    line-height: 16px;
-    font-family: inherit;
-    font-size: 11px;
-    padding-top: 15px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-      color: black; 
-      padding-bottom: 5px;
-  }
-  
-  .item-size, .item-color {
-    font-weight: 300;
-    font-stretch: 100%;
-    line-height: 16px;
-    font-family: inherit;
-    font-size: 11px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-      color: black; 
-      padding-bottom: 5px;
-      text-align: left;
 
-  }
-  
-  
+.purchase-details p {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: black;
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.purchase-details h2 {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.purchase-details h3 {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: black;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+td {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 12px;
+  padding-bottom: 20px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: black;
+}
+td div {
+  padding-bottom: 10px;
+}
+th {
+  background-color: #000;
+  color: #fff;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.order-action-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #000;
+  border: 0.8px solid black;
+  cursor: pointer;
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.order-action-btn:hover {
+  background-color: #000;
+  color: white;
+}
+.item-info {
+  display: flex;
+  align-items: center;
+}
+
+.item-image {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 11px;
+  padding-top: 15px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: black;
+  padding-bottom: 5px;
+  margin-right: 100px;
+}
+
+.item-size,
+.item-color {
+  font-weight: 300;
+  font-stretch: 100%;
+  line-height: 16px;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: black;
+  padding-bottom: 5px;
+  text-align: left;
+}

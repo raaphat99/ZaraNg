@@ -8,18 +8,21 @@ import { FormsModule } from '@angular/forms';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { provideHttpClient } from '@angular/common/http';
 import { ProductService } from './services/product.service';
-import { HeaderComponent } from "../../shared/components/header/header.component";
+import { HeaderComponent } from '../../shared/components/header/header.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { SizeModalComponent } from './components/size-modal/size-modal.component';
 import { ToastrService } from 'ngx-toastr';
-
+import { WishlistComponent } from '../shopping/wishlist/wishlist.component';
+import { WishlistNotificationComponent } from '../../shared/components/wishlist-notification/wishlist-notification.component';
+import { CustomModalComponent } from '../../shared/components/custom-modal/custom-modal.component';
+import { ProductfilterComponent } from '../productfilter/components/productfilter/productfilter.component';
 
 @NgModule({
   declarations: [
     ProductListComponent,
     ProductDetailsComponent,
     ProductCardComponent,
-    SizeModalComponent
+    SizeModalComponent,
   ],
   imports: [
     CommonModule,
@@ -27,10 +30,14 @@ import { ToastrService } from 'ngx-toastr';
     ProductRoutingModule,
     HeaderComponent,
     FooterComponent,
+    WishlistComponent,
+    WishlistNotificationComponent,
+    CustomModalComponent
 ],
   providers: [
     ProductService, 
     provideHttpClient(),
-  ]
+  ],
+  exports:[ProductListComponent]
 })
-export class ProductModule { }
+export class ProductModule {}

@@ -16,6 +16,10 @@ import { City } from '../../viewmodels/city';
 import { Governorate } from '../../viewmodels/governorate';
 import { egyptGovernoratesList } from '../../static-data/egypt-governorates';
 import { egyptCities } from '../../static-data/egypt-cities';
+import { AuthService } from '../../../../core/services/auth.service';
+import { Router } from '@angular/router';
+import { UserAddressesService , UserAddressDTO } from '../../services/user-addresses.service';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 @Component({
   selector: 'app-add-address',
   standalone: true,
@@ -26,14 +30,25 @@ import { egyptCities } from '../../static-data/egypt-cities';
     ButtonComponent,
     HeaderComponent,
     FooterComponent,
+    
   ],
   templateUrl: './add-address.component.html',
   styleUrl: './add-address.component.css',
 })
 export class AddAddressComponent implements OnInit {
+  addAddressform!: FormGroup;
   governorates: Governorate[] = egyptGovernoratesList;
   cities: City[] = egyptCities;
 
+  adressParam :UserAddressDTO= {
+    name: '',
+    phoneNumber: '',
+    country: 'Egypt',
+    state: '',
+    area: '',
+    city: '',
+    street: '',
+  };
   filteredCities: City[] = [];
   address: Address = {
     name: '',
@@ -46,19 +61,52 @@ export class AddAddressComponent implements OnInit {
     governorate: '',
     region: 'Egypt',
   };
-
+constructor(
+  private authService: AuthService,
+    private fb: FormBuilder,
+    private router : Router,
+    private userAddressesService:UserAddressesService
+){  
+}
+isEditing = false;
+currentAddressId: number | null = null;
+showSummary:boolean=false;
+summary:string="Please fill all require fields";
   ngOnInit() {
-    this.filteredCities = this.cities;
-  }
+    this.addAddressform = this.fb.group({
+      name: ['', [Validators.required]],
+      surname: ['', [Validators.required]],
+      street: ['', Validators.required],
+      moreInfo: [''],
+      governorate: ['', Validators.required],
+      city: [{ value: '', disabled: true }, Validators.required],
+      phonePrefix: ['', Validators.required],
+      phoneNumber: ['', Validators.required],});
+      this.addAddressform.get('governorate')?.valueChanges.subscribe(() => {
+        this.onGovernorateChange();
+      });
+    }
+  
 
   onGovernorateChange() {
-    this.address.city = ''; // Reset city when governorate changes
-    this.filteredCities = this.cities.filter(
-      (city) =>
-        city.governorate_id === this.getGovernorateId(this.address.governorate)
-    );
-  }
+    const governorateControl = this.addAddressform.get('governorate');
+    const cityControl = this.addAddressform.get('city');
 
+    if (governorateControl && cityControl) {
+      const selectedGovernorate = governorateControl.value;
+      cityControl.setValue('');
+
+      if (selectedGovernorate) {
+        this.filteredCities = this.cities.filter(
+          (city) => city.governorate_id === this.getGovernorateId(selectedGovernorate)
+        );
+        cityControl.enable();
+      } else {
+        this.filteredCities = [];
+        cityControl.disable();
+      }
+    }
+  }
   getGovernorateId(governorateName: string): string {
     const governorate = this.governorates.find(
       (g) => g.governorate_name_en === governorateName
@@ -76,15 +124,22 @@ export class AddAddressComponent implements OnInit {
 
   onBlur(field: string) {
     this.focusedFields[field] = false;
+    const control = this.addAddressform.get(field);
+    if (control) {
+      control.markAsTouched();
+    }
   }
 
   getErrorMessage(field: string): string {
-    switch (field) {
-      case 'moreInfo':
-        return 'optional';
-      default:
-        return 'Required field ';
+    const control = this.addAddressform.get(field);
+    if (control?.hasError('required')) {
+      return 'Field is required';
     }
+    if (field === 'city' ) {
+      return 'Please select a governorate first';
+    }
+  
+    return 'Please enter ' + field;
   }
 
   getInstructionMessage(field: string): string {
@@ -115,18 +170,13 @@ export class AddAddressComponent implements OnInit {
   }
 
   showErrorMessage(field: string): boolean {
-    return (
-      this.touchedFields[field] &&
-      !this.focusedFields[field] &&
-      this.isFieldEmpty(field)
-    );
+    const control = this.addAddressform.get(field);
+    return control ? (control.invalid && (control.touched || control.dirty)) : false;
   }
 
   showInstructionMessage(field: string): boolean {
-    return (
-      this.focusedFields[field] ||
-      (!this.isFieldEmpty(field) && this.touchedFields[field])
-    );
+    const control = this.addAddressform.get(field);
+    return this.focusedFields[field] || (control ? (!control.value && control.touched) : false);
   }
 
   getMessageType(field: string): 'instruction' | 'warning' | null {
@@ -137,7 +187,6 @@ export class AddAddressComponent implements OnInit {
     }
     return null;
   }
-
   getMessage(field: string): string {
     const messageType = this.getMessageType(field);
     if (messageType === 'warning') {
@@ -147,5 +196,54 @@ export class AddAddressComponent implements OnInit {
     }
     return '';
   }
-  onSubmit() {}
+
+
+  onSubmit() {
+    if(!this.addAddressform.valid){
+      this.showSummary=true;
+    }
+    if (this.addAddressform.valid) {
+      const { name, surname, street, moreInfo, governorate, city, phonePrefix, phoneNumber } = this.addAddressform.value;
+      
+      this.adressParam = {
+        phoneNumber: phonePrefix + phoneNumber,
+        name: this.authService.getUserName() ?? '',
+        country: 'Egypt',
+        state: governorate,
+        city: city,
+        area: moreInfo,
+        street: street
+      };
+  
+      if (this.isEditing && this.currentAddressId) {
+        // If editing, include the ID and call update service
+        this.adressParam.id = this.currentAddressId;
+        this.userAddressesService.UpdateUserAddress(this.adressParam).subscribe({
+          next: (response) => {
+            console.log('Address updated successfully');
+            this.router.navigate(['user/profile/:id/addresses']);
+          },
+          error: (error) => {
+            console.error('Error updating address:', error);
+            // Handle error appropriately
+          }
+        });
+      } else {
+        // If adding new address, call create service
+        this.userAddressesService.CreateUserAddress(this.adressParam).subscribe({
+          next: (response) => {
+            console.log('Address created successfully');
+            this.router.navigate(['user/profile/:id/addresses']);
+          },
+          error: (error) => {
+            console.error('Error creating address:', error);
+            // Handle error appropriately
+          }
+        });
+      }
+    }
+  }
+}
+interface CustomJwtPayload extends JwtPayload {
+  name: string; // Add any other custom claims if needed
 }

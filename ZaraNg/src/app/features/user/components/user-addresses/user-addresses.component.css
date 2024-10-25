@@ -29,6 +29,7 @@ margin-bottom: 40px;
 
 #main {
 display: flex;
+justify-content: flex-start;
 flex-direction: column;
 border: .5px solid gray;
 height: 400px;
@@ -52,7 +53,7 @@ color: rgb(104, 93, 93);
 display: flex;
 flex-direction: row;
 justify-content: space-between;
-align-items: center;
+align-items: flex-start;
 padding: 0 20px 0 20px;
 margin: 20px 0 10px 0;
 }

@@ -1,108 +1,46 @@
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import localeEg from '@angular/common/locales/ar-EG';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
+import { Order } from '../../viewmodels/purchases';
+import { OrderService } from '../../services/order.service';
 
-
-interface Order {
-  orderId: string;
-  date: string;
-  items: {
-    name: string;
-    quantity: number;
-    price: number;
-    imageUrl: string;
-  }[];
-  totalAmount: number;
-  status: string;
-}
 registerLocaleData(localeEg);
 @Component({
   selector: 'app-purchases',
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './purchases.component.html',
-  styleUrl: './purchases.component.css'
+  styleUrl: './purchases.component.css',
 })
-export class PurchasesComponent {
-   orders: Order[] = [
-    {
-      orderId: 'Z123456789',
-      date: 'October 1, 2024',
-      items: [
-        {
-          name: 'Black T-Shirt',
-          quantity: 2,
-          price: 25.99,
-          imageUrl: '1.jpeg'
-        },
-        {
-          name: 'Denim Jeans',
-          quantity: 1,
-          price: 55.99,
-          imageUrl: '2.jpeg'
-        }
-        ,
-        {
-          name: 'Denim Jeans',
-          quantity: 1,
-          price: 55.99,
-          imageUrl: '2.jpeg'
-        }
-      ],
-      totalAmount: 1007.97,
-      status: 'Delivered'
-    },
-    {
-      orderId: '123456789',
-      date: 'October 1, 2024',
-      items: [
-        {
-          name: 'Black T-Shirt',
-          quantity: 2,
-          price: 25.99,
-          imageUrl: '1.jpeg'
-        },
-        {
-          name: 'Denim Jeans',
-          quantity: 1,
-          price: 55.99,
-          imageUrl: '2.jpeg'
-        },
-        {
-          name: 'Denim Jeans',
-          quantity: 1,
-          price: 55.99,
-          imageUrl: '2.jpeg'
-        },
-        {
-          name: 'Denim Jeans',
-          quantity: 1,
-          price: 55.99,
-          imageUrl: '2.jpeg'
-        }, {
-          name: 'Black T-Shirt',
-          quantity: 2,
-          price: 25.99,
-          imageUrl: '1.jpeg'
-        },
-        {
-          name: 'Denim Jeans',
-          quantity: 1,
-          price: 55.99,
-          imageUrl: '2.jpeg'
-        },
-        {
-          name: 'Denim Jeans',
-          quantity: 1,
-          price: 55.99,
-          imageUrl: '2.jpeg'
-        }
-      ],
-      totalAmount: 1007.97,
-      status: 'Pending'
-    }
-  ];
+export class PurchasesComponent implements OnInit {
+  orders: Order[] = [];
+  constructor(
+    private orderService: OrderService,
+    private cdr: ChangeDetectorRef
+  ) {}
+  ngOnInit(): void {
+    this.loadOrders();
+  }
+
+  loadOrders(): void {
+    this.orderService.getOrders().subscribe({
+      next: (data) => {
+        this.orders = data;
+        console.log('Orders:', this.orders);
+        console.log('Fetched Orders:', JSON.stringify(this.orders, null, 2));
+      },
+      error: (err) => {
+        console.error('Error fetching orders:', err);
+      },
+    });
+  }
+  getOrderTotal(items: any[]): number {
+    return items.reduce(
+      (total, item) => total + item.unitPrice * item.quantity,
+      0
+    );
+  }
 }
