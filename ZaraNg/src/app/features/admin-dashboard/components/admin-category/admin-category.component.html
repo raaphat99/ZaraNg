@@ -32,6 +32,7 @@
           <td class="actions">
             <button class="edit-button" (click)="showEditDialog(category)">Edit</button>
             <button class="delete-button" (click)="confirmDelete(category)">Delete</button>
+
           </td>
         </tr>
 
@@ -160,6 +161,19 @@
       </form>
     </div>
   </div>
+    <!-- Delete Confirmation Dialog -->
+    <div *ngIf="displayDeleteDialog" class="dialog-overlay">
+      <div class="dialog">
+        <h2>Confirm Deletion</h2>
+        <p>Are you sure you want to delete the category "{{ selectedCategory?.name }}"?</p>
+        <div class="dialog-actions">
+          <button class="confirm-button" (click)="deleteCategory()">Yes, Delete</button>
+          <button class="cancel-button" (click)="displayDeleteDialog = false">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   
 
 

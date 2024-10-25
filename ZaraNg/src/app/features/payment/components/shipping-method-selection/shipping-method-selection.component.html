@@ -31,7 +31,7 @@
 
                 <div class="row-2">
                     <div id="user-address">
-                        <p>Mansoura</p>
+                        <p *ngIf="activeAddress">{{ activeAddress.city }}</p>
                         <a (click)="addressModal.openModal($event)">Edit</a>
                         <address-modal #addressModal></address-modal>
                     </div>
@@ -52,7 +52,7 @@
                             <label for="est-delivery-date">{{ threeDaysFromNow | date: 'EEEE d, MMMM' }} - {{ fourDaysFromNow | date: 'EEEE d, MMMM' }}</label>
                         </div>
                         <span *ngIf="orderTotalPrice >= 4000">Free</span>
-                        <span *ngIf="orderTotalPrice < 4000">89$</span>
+                        <span *ngIf="orderTotalPrice < 4000">89 EGP</span>
                     </div>
                     <p>Free shipping over 3,999 EGP applies only for full price items</p>
                 </div>

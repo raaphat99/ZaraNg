@@ -38,6 +38,20 @@
       </tr>
     </tbody>
   </table>
+  <div *ngIf="displayDeleteDialog" class="dialog-overlay">
+    <div class="dialog">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete the product "{{ selectedProduct?.name }}"?</p>
+      <div class="dialog-actions">
+        <button class="confirm-button" (click)="deleteProduct()">Yes, Delete</button>
+        <button class="cancel-button" (click)="displayDeleteDialog = false">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
   
   <!-- <div *ngIf="displayProductDialog" class="order-details-dialog">
     <h2>Product Details</h2>

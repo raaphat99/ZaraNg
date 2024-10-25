@@ -113,32 +113,48 @@ export class AdminCategoryComponent implements OnInit {
   }
   
   
-
   confirmDelete(category: Category) {
-    this.selectedCategory = category;
-    this.displayDeleteDialog = true;
+    console.log('Category to delete:', category); // Check if the category is being passed correctly
+    if (category.id) {
+      this.selectedCategory = category;
+      console.log('Selected category ID:', this.selectedCategory.id); // Log the ID
+      this.displayDeleteDialog = true;
+    } else {
+      console.error("Category ID is missing");
+    }
   }
+  
 
   deleteCategory() {
+    console.log('Selected category:', this.selectedCategory); // Log the selected category
+  
     if (this.selectedCategory?.id) {
+      console.log('Attempting to delete category with ID:', this.selectedCategory.id); // Log the ID
+      
       this.categoryService.deleteCategory(this.selectedCategory.id).subscribe({
         next: () => {
-          // If deleting a subcategory, reload its parent's subcategories
+          console.log('Category deleted successfully');
+  
           if (this.selectedCategory?.parentCategoryId) {
             this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
           } else {
-            // If deleting a main category, reload all categories
             this.loadCategories();
           }
-          this.displayDeleteDialog = false;
+          this.displayDeleteDialog = false; // Close the dialog
           this.selectedCategory = null;
         },
         error: (error) => {
-          console.error('Error deleting category:', error);
+          console.error('Error deleting category:', error); // Log detailed error
         }
       });
+    } else {
+      console.error('No category ID to delete');
     }
   }
+  
+  
+  
+
   closeDialog(categoryForm?: NgForm) {
     this.displayCategoryDialog = false;
     this.resetForm(categoryForm);
@@ -152,53 +168,6 @@ export class AdminCategoryComponent implements OnInit {
   }
   
   
-
-//   saveCategory() {
-//     if (this.selectedCategory) {
-//       // Ensure main categories have parentCategoryId as 0 or null
-//       if (!this.selectedCategory.parentCategoryId) {
-//         this.selectedCategory.parentCategoryId = 0;
-//       }
-  
-//       if (this.isNewCategory) {
-//         console.log('Creating new category:', this.selectedCategory);  // Log the category details
-//         this.categoryService.createCategory(this.selectedCategory).subscribe({
-//           next: () => {
-//             console.log('Category created successfully');
-//             this.loadCategories();
-//             if (this.selectedCategory?.parentCategoryId) {
-//               this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
-//             } else {
-//               this.loadCategories();  // Reload all categories after creating a main category
-//             }
-//             this.displayCategoryDialog = false;
-//           },
-//           error: (error) => {
-//             console.error('Error creating category:', error);  // Log the error
-//           }
-//         });
-//       } else {
-//         console.log('Updating category:', this.selectedCategory);
-//         this.categoryService.updateCategory(this.selectedCategory.id, this.selectedCategory).subscribe({
-//           next: () => {
-//             console.log('Category updated successfully');
-//             if (this.selectedCategory?.parentCategoryId) {
-//               this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
-//             } else {
-//               this.loadCategories();  // Reload all categories after updating a main category
-//             }
-//             this.displayCategoryDialog = false;
-//           },
-//           error: (error) => {
-//             console.error('Error updating category:', error);  // Log the error
-//           }
-//         });
-//       }
-//     } else {
-//       console.error('No category selected to save');
-//     }
-//   }
-// }
 
 
 // Close the error pop-up
@@ -256,4 +225,77 @@ saveCategory(categoryForm: NgForm) {
 closeErrorPopup() {
   this.showErrorPopup = false;
 }
+
+
+//   saveCategory() {
+//     if (this.selectedCategory) {
+//       // Ensure main categories have parentCategoryId as 0 or null
+//       if (!this.selectedCategory.parentCategoryId) {
+//         this.selectedCategory.parentCategoryId = 0;
+//       }
+  
+//       if (this.isNewCategory) {
+//         console.log('Creating new category:', this.selectedCategory);  // Log the category details
+//         this.categoryService.createCategory(this.selectedCategory).subscribe({
+//           next: () => {
+//             console.log('Category created successfully');
+//             this.loadCategories();
+//             if (this.selectedCategory?.parentCategoryId) {
+//               this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
+//             } else {
+//               this.loadCategories();  // Reload all categories after creating a main category
+//             }
+//             this.displayCategoryDialog = false;
+//           },
+//           error: (error) => {
+//             console.error('Error creating category:', error);  // Log the error
+//           }
+//         });
+//       } else {
+//         console.log('Updating category:', this.selectedCategory);
+//         this.categoryService.updateCategory(this.selectedCategory.id, this.selectedCategory).subscribe({
+//           next: () => {
+//             console.log('Category updated successfully');
+//             if (this.selectedCategory?.parentCategoryId) {
+//               this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
+//             } else {
+//               this.loadCategories();  // Reload all categories after updating a main category
+//             }
+//             this.displayCategoryDialog = false;
+//           },
+//           error: (error) => {
+//             console.error('Error updating category:', error);  // Log the error
+//           }
+//         });
+//       }
+//     } else {
+//       console.error('No category selected to save');
+//     }
+//   }
+// }
+  // deleteCategory() {
+  //   if (this.selectedCategory?.id) {
+  //     this.categoryService.deleteCategory(this.selectedCategory.id).subscribe({
+  //       next: () => {
+  //         // If deleting a subcategory, reload its parent's subcategories
+  //         if (this.selectedCategory?.parentCategoryId) {
+  //           this.loadSubCategoriesForCategory(this.selectedCategory.parentCategoryId);
+  //         } else {
+  //           // If deleting a main category, reload all categories
+  //           this.loadCategories();
+  //         }
+  //         this.displayDeleteDialog = false;
+  //         this.selectedCategory = null;
+  //       },
+  //       error: (error) => {
+  //         console.error('Error deleting category:', error);
+  //       }
+  //     });
+  //   }
+  // }
+    
+  // confirmDelete(category: Category) {
+  //   this.selectedCategory = category;
+  //   this.displayDeleteDialog = true;
+  // }
 }

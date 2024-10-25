@@ -47,6 +47,8 @@ export class AdminCategoryServiceService {
   deleteCategory(id: number): Observable<void> {
     const token = localStorage.getItem('token');
     const headers = { 'Authorization': `Bearer ${token}` };
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, {headers});
+  
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
   }
+  
 }
