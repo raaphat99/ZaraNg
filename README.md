@@ -24,7 +24,7 @@ ZaraNg is an Angular-based web application that replicates the functionality and
 To get a local copy up and running, follow these simple steps:
 
 **1. Clone the repository:**
-git clone https://github.com/yourusername/ZaraNg.git
+git clone https://github.com/raaphat99/ZaraNg.git
 
 **2. Navigate to the project directory:**
 cd ZaraNg
